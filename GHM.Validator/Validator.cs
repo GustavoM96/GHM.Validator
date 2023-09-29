@@ -4,42 +4,45 @@ namespace GHM.Validator;
 
 public class Validator : IValidator
 {
-    private readonly string _errorMessage = "Error: ";
-    private readonly string _successMessage = "OK: ";
+    public Validation ValidateIfNotDefault<T>(T obj, string message)
+    {
+        var isDefault = EqualityComparer<T>.Default.Equals(obj, default);
+        return isDefault ? Validation.Error(message) : Validation.Success(message);
+    }
 
     public Validation ValidateIfNotNull(object obj, string message)
     {
-        return obj != null
-            ? Validation.Success(_successMessage + message)
-            : Validation.Error(_errorMessage + message);
+        return obj != null ? Validation.Success(message) : Validation.Error(message);
     }
 
     public Validation ValidateIfNull(object obj, string message)
     {
-        return obj == null
-            ? Validation.Success(_successMessage + message)
-            : Validation.Error(_errorMessage + message);
+        return obj == null ? Validation.Success(message) : Validation.Error(message);
     }
 
-    public Validation ValidateIfEqual(object objBase, object objToComapere, string message)
+    public Validation ValidateIfEqual(object obj, object objToComapere, string message)
     {
-        return objBase.Equals(objToComapere)
-            ? Validation.Success(_successMessage + message)
-            : Validation.Error(_errorMessage + message);
+        return obj.Equals(objToComapere) ? Validation.Success(message) : Validation.Error(message);
+    }
+
+    public Validation ValidateIfNotZero(int number, string message)
+    {
+        return number != 0 ? Validation.Success(message) : Validation.Error(message);
+    }
+
+    public Validation ValidateIfNotZero(decimal number, string message)
+    {
+        return number != 0 ? Validation.Success(message) : Validation.Error(message);
     }
 
     public Validation ValidateIfBiggerOrEqualThan(int number, int numberToCompare, string message)
     {
-        return number >= numberToCompare
-            ? Validation.Success(_successMessage + message)
-            : Validation.Error(_errorMessage + message);
+        return number >= numberToCompare ? Validation.Success(message) : Validation.Error(message);
     }
 
     public Validation ValidateIfBiggerThan(int number, int numberToCompare, string message)
     {
-        return number > numberToCompare
-            ? Validation.Success(_successMessage + message)
-            : Validation.Error(_errorMessage + message);
+        return number > numberToCompare ? Validation.Success(message) : Validation.Error(message);
     }
 
     public Validation ValidateIfBiggerOrEqualThan(
@@ -48,52 +51,74 @@ public class Validator : IValidator
         string message
     )
     {
-        return number >= numberToCompare
-            ? Validation.Success(_successMessage + message)
-            : Validation.Error(_errorMessage + message);
+        return number >= numberToCompare ? Validation.Success(message) : Validation.Error(message);
     }
 
     public Validation ValidateIfBiggerThan(decimal number, decimal numberToCompare, string message)
     {
-        return number > numberToCompare
-            ? Validation.Success(_successMessage + message)
-            : Validation.Error(_errorMessage + message);
+        return number > numberToCompare ? Validation.Success(message) : Validation.Error(message);
     }
 
     public Validation ValidateIfNotEmpty(string text, string message)
     {
-        return !string.IsNullOrEmpty(text)
-            ? Validation.Success(_successMessage + message)
-            : Validation.Error(_errorMessage + message);
+        return string.IsNullOrEmpty(text) ? Validation.Error(message) : Validation.Success(message);
     }
 
     public Validation ValidateIfParseToBigInt(string text, string message)
     {
         return long.TryParse(text, out var _)
-            ? Validation.Success(_successMessage + message)
-            : Validation.Error(_errorMessage + message);
+            ? Validation.Success(message)
+            : Validation.Error(message);
     }
 
     public Validation ValidateIfNotEmpty<T>(IEnumerable<T> list, string message)
     {
-        return list.Any()
-            ? Validation.Success(_successMessage + message)
-            : Validation.Error(_errorMessage + message);
+        return list.Any() ? Validation.Success(message) : Validation.Error(message);
+    }
+
+    public Validation ValidateIfOlderThan<T>(DateTime date, DateTime dateToCompare, string message)
+    {
+        return date > dateToCompare ? Validation.Success(message) : Validation.Error(message);
+    }
+
+    public Validation ValidateIfOlderOrEqualThan<T>(
+        DateTime date,
+        DateTime dateToCompare,
+        string message
+    )
+    {
+        return date >= dateToCompare ? Validation.Success(message) : Validation.Error(message);
+    }
+
+    public bool ThrowIfDefault<T>(T obj, string message)
+    {
+        var isDefault = EqualityComparer<T>.Default.Equals(obj, default);
+        return isDefault ? throw new ArgumentException(message) : true;
     }
 
     public bool ThrowIfNotNull(object obj, string message)
     {
-        return obj == null ? true : throw new ArgumentException(message);
+        return obj != null ? throw new ArgumentException(message) : true;
     }
 
     public bool ThrowIfNull(object obj, string message)
     {
-        return obj != null ? true : throw new ArgumentException(message);
+        return obj == null ? throw new ArgumentException(message) : true;
     }
 
-    public bool ThrowIfNotEqual(object objBase, object objToComapere, string message)
+    public bool ThrowIfNotEqual(object obj, object objToComapere, string message)
     {
-        return objBase.Equals(objToComapere) ? true : throw new ArgumentException(message);
+        return obj.Equals(objToComapere) ? true : throw new ArgumentException(message);
+    }
+
+    public bool ThrowIfZero(int number, string message)
+    {
+        return number == 0 ? throw new ArgumentException(message) : true;
+    }
+
+    public bool ThrowIfZero(decimal number, string message)
+    {
+        return number == 0 ? throw new ArgumentException(message) : true;
     }
 
     public bool ThrowIfBiggerOrEqualThan(int number, int numberToCompare, string message)
@@ -129,5 +154,15 @@ public class Validator : IValidator
     public bool ThrowIfEmpty<T>(IEnumerable<T> list, string message)
     {
         return list.Any() ? true : throw new ArgumentException(message);
+    }
+
+    public bool ThrowIfOlderThan<T>(DateTime date, DateTime dateToCompare, string message)
+    {
+        return date > dateToCompare ? throw new ArgumentException(message) : true;
+    }
+
+    public bool ThrowIfOlderOrEqualThan<T>(DateTime date, DateTime dateToCompare, string message)
+    {
+        return date >= dateToCompare ? throw new ArgumentException(message) : true;
     }
 }
