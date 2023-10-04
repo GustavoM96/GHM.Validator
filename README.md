@@ -16,7 +16,7 @@ service.AddGhmValidator()
 
 ## Example
 
-## Validation Object
+## Validation object
 Validation is a object with properties(Message, IsValid)
 ```csharp
 var validationSuccess = Validation.Success("Successful message")
@@ -65,7 +65,7 @@ public bool ValidateCreateUserRequest(CreateUserRequest request)
 You can use it to return a validation result with method struct object 
 
 ```csharp
-Validation ValidateIfNotDefault<T>(T obj, string message);
+    Validation ValidateIfNotDefault<T>(T obj, string message);
     Validation ValidateIfNotNull(object obj, string message);
     Validation ValidateIfNull(object obj, string message);
     Validation ValidateIfEqual(object obj, object objToComapere, string message);
@@ -87,7 +87,7 @@ Validation ValidateIfNotDefault<T>(T obj, string message);
 You can use it to throw exception with method struct object 
 
 ```csharp
-bool ThrowIfDefault<T>(T obj, string message);
+    bool ThrowIfDefault<T>(T obj, string message);
     bool ThrowIfNotNull(object obj, string message);
     bool ThrowIfNull(object obj, string message);
     bool ThrowIfNotEqual(object obj, object objToComapere, string message);
