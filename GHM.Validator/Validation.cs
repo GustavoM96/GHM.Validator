@@ -11,13 +11,7 @@ public struct Validation
         Message = message;
     }
 
-    public static Validation Success(string message)
-    {
-        return new Validation(true, message);
-    }
+    public static Validation Success(string message) => new(true, message);
 
-    public static Validation Error(string message)
-    {
-        return new Validation(false, message);
-    }
+    public static Validation Error(string message) => new(false, message);
 }

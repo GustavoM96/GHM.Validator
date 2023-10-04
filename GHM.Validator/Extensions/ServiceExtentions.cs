@@ -5,7 +5,7 @@ namespace GHM.Validator.Extensions;
 
 public static class ServiceExtentions
 {
-    public static IServiceCollection AddValidation(this IServiceCollection services)
+    public static IServiceCollection AddGhmValidator(this IServiceCollection services)
     {
         services.AddScoped<IValidator, Validator>();
         return services;

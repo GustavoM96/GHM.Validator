@@ -13,7 +13,7 @@ public interface IValidator
     Validation ValidateIfBiggerOrEqualThan(decimal number, decimal numberToCompare, string message);
     Validation ValidateIfBiggerThan(decimal number, decimal numberToCompare, string message);
     Validation ValidateIfNotEmpty(string text, string message);
-    Validation ValidateIfParseToBigInt(string text, string message);
+    Validation ValidateIfParseToLong(string text, string message);
     Validation ValidateIfNotEmpty<T>(IEnumerable<T> list, string message);
     Validation ValidateIfOlderThan<T>(DateTime date, DateTime dateToCompare, string message);
     Validation ValidateIfOlderOrEqualThan<T>(DateTime date, DateTime dateToCompare, string message);
@@ -29,7 +29,7 @@ public interface IValidator
     bool ThrowIfBiggerOrEqualThan(decimal number, decimal numberToCompare, string message);
     bool ThrowIfBiggerThan(decimal number, decimal numberToCompare, string message);
     bool ThrowIfEmpty(string text, string message);
-    bool ThrowIfNotParseToBigInt(string text, string message);
+    bool ThrowIfNotParseToLong(string text, string message);
     bool ThrowIfEmpty<T>(IEnumerable<T> list, string message);
     bool ThrowIfOlderThan<T>(DateTime date, DateTime dateToCompare, string message);
     bool ThrowIfOlderOrEqualThan<T>(DateTime date, DateTime dateToCompare, string message);

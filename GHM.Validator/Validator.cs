@@ -64,7 +64,7 @@ public class Validator : IValidator
         return string.IsNullOrEmpty(text) ? Validation.Error(message) : Validation.Success(message);
     }
 
-    public Validation ValidateIfParseToBigInt(string text, string message)
+    public Validation ValidateIfParseToLong(string text, string message)
     {
         return long.TryParse(text, out var _)
             ? Validation.Success(message)
@@ -146,7 +146,7 @@ public class Validator : IValidator
         return string.IsNullOrEmpty(text) ? throw new ArgumentException(message) : true;
     }
 
-    public bool ThrowIfNotParseToBigInt(string text, string message)
+    public bool ThrowIfNotParseToLong(string text, string message)
     {
         return long.TryParse(text, out var _) ? true : throw new ArgumentException(message);
     }
