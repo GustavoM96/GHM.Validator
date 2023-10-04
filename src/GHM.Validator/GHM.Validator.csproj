@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Title>GHM Validator</Title>
+		<PackageId>GHM.Validator</PackageId>
+		<Authors>Gustavo Henrique Messias</Authors>
+		<Company>Gustavo Henrique Messias</Company>
+		<Description>A package for validate data</Description>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/GustavoM96/GHM.Validator</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/GustavoM96/GHM.Validator</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+		<PackageIcon>logo.png</PackageIcon>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+		<None Include="docs\README.md" Pack="true" PackagePath="\" />
+		<None Include="img\logo.png" Pack="true" PackagePath="\" />
+	</ItemGroup>
+
+</Project>
