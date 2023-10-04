@@ -11,7 +11,7 @@ using  GHM.Validator.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
-service.AddGhmValidator()
+service.AddGhmValidator();
 ```
 
 ## Example
@@ -19,16 +19,15 @@ service.AddGhmValidator()
 ## Validation object
 Validation is a object with properties(Message, IsValid)
 ```csharp
-var validationSuccess = Validation.Success("Successful message")
+var validationSuccess = Validation.Success("Successful message");
 
-validationSuccess.Message // "Successful message"
-validationSuccess.IsValid // true
+validationSuccess.Message; // "Successful message"
+validationSuccess.IsValid; // true
 
-var validationError = Validation.Error("Error message")
+var validationError = Validation.Error("Error message");
 
-validationError.Message // "Error message"
-validationError.IsValid // false
-
+validationError.Message; // "Error message"
+validationError.IsValid; // false
 ```
 
 ### Validate request data
@@ -41,8 +40,8 @@ public Validation[] ValidateCreateUserRequest(CreateUserRequest request)
     return new Validation[]
     {
         validator.ValidateIfNotNull(request.Name,"Name must not be null"),
-        validator.ValidateIfNotZero(request.Age,"Age must not be 0"),
-    }
+        validator.ValidateIfNotZero(request.Age,"Age must not be 0")
+    };
 }
 ```
 
@@ -51,10 +50,10 @@ public Validation[] ValidateCreateUserRequest(CreateUserRequest request)
 public bool ValidateCreateUserRequest(CreateUserRequest request)
 {
     IValidator validator;
-    validator.ThrowIfNull(request.Name,"Name must not be null"),
-    validator.ThrowIfZero(request.Age,"Age must not be 0"),
+    validator.ThrowIfNull(request.Name,"Name must not be null");
+    validator.ThrowIfZero(request.Age,"Age must not be 0");
 
-    return true
+    return true;
 }
 ```
 
