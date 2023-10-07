@@ -3,8 +3,8 @@ namespace GHM.Validator.Interfaces;
 public interface IValidationService
 {
     Validation ValidateIfNotDefault<T>(T obj, string message);
-    Validation ValidateIfNotNull(object obj, string message);
-    Validation ValidateIfNull(object obj, string message);
+    Validation ValidateIfNotNull(object? obj, string message);
+    Validation ValidateIfNull(object? obj, string message);
     Validation ValidateIfEqual(object obj, object objToComapere, string message);
     Validation ValidateIfNotZero(int number, string message);
     Validation ValidateIfNotZero(decimal number, string message);

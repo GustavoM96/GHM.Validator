@@ -7,6 +7,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BED6CD40-347
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GHM.Validator", "src\GHM.Validator\GHM.Validator.csproj", "{2566F6C9-B412-41F5-8DCB-889AA6958D9F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{630264BD-51C9-4032-BC4E-9BD7F6113F14}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GHM.Validator.Test", "tests\GHM.Validator.Test\GHM.Validator.Test.csproj", "{E6011848-2C99-4894-8F91-0F90D43FDF08}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -35,8 +39,21 @@ Global
 		{2566F6C9-B412-41F5-8DCB-889AA6958D9F}.Release|x64.Build.0 = Release|Any CPU
 		{2566F6C9-B412-41F5-8DCB-889AA6958D9F}.Release|x86.ActiveCfg = Release|Any CPU
 		{2566F6C9-B412-41F5-8DCB-889AA6958D9F}.Release|x86.Build.0 = Release|Any CPU
+		{E6011848-2C99-4894-8F91-0F90D43FDF08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6011848-2C99-4894-8F91-0F90D43FDF08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6011848-2C99-4894-8F91-0F90D43FDF08}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E6011848-2C99-4894-8F91-0F90D43FDF08}.Debug|x64.Build.0 = Debug|Any CPU
+		{E6011848-2C99-4894-8F91-0F90D43FDF08}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E6011848-2C99-4894-8F91-0F90D43FDF08}.Debug|x86.Build.0 = Debug|Any CPU
+		{E6011848-2C99-4894-8F91-0F90D43FDF08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6011848-2C99-4894-8F91-0F90D43FDF08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6011848-2C99-4894-8F91-0F90D43FDF08}.Release|x64.ActiveCfg = Release|Any CPU
+		{E6011848-2C99-4894-8F91-0F90D43FDF08}.Release|x64.Build.0 = Release|Any CPU
+		{E6011848-2C99-4894-8F91-0F90D43FDF08}.Release|x86.ActiveCfg = Release|Any CPU
+		{E6011848-2C99-4894-8F91-0F90D43FDF08}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{2566F6C9-B412-41F5-8DCB-889AA6958D9F} = {BED6CD40-3473-4FBF-BF95-738AFC27B75E}
+		{E6011848-2C99-4894-8F91-0F90D43FDF08} = {630264BD-51C9-4032-BC4E-9BD7F6113F14}
 	EndGlobalSection
 EndGlobal

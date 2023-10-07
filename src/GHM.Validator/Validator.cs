@@ -10,12 +10,12 @@ public class Validator : IValidator
         return isDefault ? Validation.Error(message) : Validation.Success(message);
     }
 
-    public Validation ValidateIfNotNull(object obj, string message)
+    public Validation ValidateIfNotNull(object? obj, string message)
     {
         return obj != null ? Validation.Success(message) : Validation.Error(message);
     }
 
-    public Validation ValidateIfNull(object obj, string message)
+    public Validation ValidateIfNull(object? obj, string message)
     {
         return obj == null ? Validation.Success(message) : Validation.Error(message);
     }
@@ -96,12 +96,12 @@ public class Validator : IValidator
         return isDefault ? throw new ArgumentException(message) : true;
     }
 
-    public bool ThrowIfNotNull(object obj, string message)
+    public bool ThrowIfNotNull(object? obj, string message)
     {
         return obj != null ? throw new ArgumentException(message) : true;
     }
 
-    public bool ThrowIfNull(object obj, string message)
+    public bool ThrowIfNull(object? obj, string message)
     {
         return obj == null ? throw new ArgumentException(message) : true;
     }
@@ -156,12 +156,12 @@ public class Validator : IValidator
         return list.Any() ? true : throw new ArgumentException(message);
     }
 
-    public bool ThrowIfOlder<T>(DateTime date, DateTime dateToCompare, string message)
+    public bool ThrowIfOlder(DateTime date, DateTime dateToCompare, string message)
     {
         return date < dateToCompare ? throw new ArgumentException(message) : true;
     }
 
-    public bool ThrowIfOlderOrEqual<T>(DateTime date, DateTime dateToCompare, string message)
+    public bool ThrowIfOlderOrEqual(DateTime date, DateTime dateToCompare, string message)
     {
         return date <= dateToCompare ? throw new ArgumentException(message) : true;
     }
