@@ -109,13 +109,16 @@ public class IThrowerServiceSuccessTests
     {
         // Arrange
         int obj = 12;
-        int objToCompare = 12;
+        int objToCompare = 13;
+        int objEqual = 12;
 
         // Act
         var result = _throwerService.ThrowIfGreater(obj, objToCompare, "thrower message");
+        var resultEqual = _throwerService.ThrowIfGreater(obj, objEqual, "thrower message");
 
         // Assert
         Assert.True(result);
+        Assert.True(resultEqual);
     }
 
     [Fact]
@@ -137,13 +140,16 @@ public class IThrowerServiceSuccessTests
     {
         // Arrange
         decimal obj = 12;
-        decimal objToCompare = 12;
+        decimal objToCompare = 13;
+        decimal objEqual = 12;
 
         // Act
         var result = _throwerService.ThrowIfGreater(obj, objToCompare, "thrower message");
+        var resultEqual = _throwerService.ThrowIfGreater(obj, objEqual, "thrower message");
 
         // Assert
         Assert.True(result);
+        Assert.True(resultEqual);
     }
 
     [Fact]
@@ -191,12 +197,19 @@ public class IThrowerServiceSuccessTests
         // Arrange
         DateTime dateOlder = DateTime.MinValue;
         DateTime dateYonger = dateOlder;
+        DateTime dateYongerEqual = DateTime.MinValue;
 
         // Act
         var result = _throwerService.ThrowIfOlder(dateYonger, dateOlder, "thrower message");
+        var resultEqual = _throwerService.ThrowIfOlder(
+            dateYonger,
+            dateYongerEqual,
+            "thrower message"
+        );
 
         // Assert
         Assert.True(result);
+        Assert.True(resultEqual);
     }
 
     [Fact]
@@ -207,7 +220,7 @@ public class IThrowerServiceSuccessTests
         DateTime dateOlder = dateYonger.AddSeconds(-1);
 
         // Act
-        var result = _throwerService.ThrowIfOlder(dateYonger, dateOlder, "thrower message");
+        var result = _throwerService.ThrowIfOlderOrEqual(dateYonger, dateOlder, "thrower message");
 
         // Assert
         Assert.True(result);
