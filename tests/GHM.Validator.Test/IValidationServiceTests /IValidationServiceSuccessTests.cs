@@ -202,11 +202,7 @@ public class IValidationServiceSuccessTests
 
         // Act
         var result = _validationService.ValidateIfOlderOrEqual(dateOlder, dateYonger, _message);
-        var resultEqual = _validationService.ValidateIfOlderOrEqual(
-            dateYonger,
-            dateYongerEqual,
-            _message
-        );
+        var resultEqual = _validationService.ValidateIfOlderOrEqual(dateYonger, dateYongerEqual, _message);
 
         // Assert
         Assert.True(result.IsValid);

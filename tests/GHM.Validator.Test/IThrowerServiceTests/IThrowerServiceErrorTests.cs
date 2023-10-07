@@ -102,8 +102,7 @@ public class IThrowerServiceErrorTests
         // Act
         void GetResult() => _throwerService.ThrowIfGreaterOrEqual(obj, objToCompare, _message);
 
-        void GetResultEqual() =>
-            _throwerService.ThrowIfGreaterOrEqual(obj, objToCompareEqual, _message);
+        void GetResultEqual() => _throwerService.ThrowIfGreaterOrEqual(obj, objToCompareEqual, _message);
 
         // Assert
         Assert.ThrowsAny<Exception>(GetResult);
@@ -135,8 +134,7 @@ public class IThrowerServiceErrorTests
         // Act
         void GetResult() => _throwerService.ThrowIfGreaterOrEqual(obj, objToCompare, _message);
 
-        void GetResultEqual() =>
-            _throwerService.ThrowIfGreaterOrEqual(obj, objToCompareEqual, _message);
+        void GetResultEqual() => _throwerService.ThrowIfGreaterOrEqual(obj, objToCompareEqual, _message);
 
         // Assert
         Assert.ThrowsAny<Exception>(GetResult);
@@ -223,8 +221,7 @@ public class IThrowerServiceErrorTests
 
         // Act
         void GetResult() => _throwerService.ThrowIfOlder(dateOlder, dateYonger, _message);
-        void GetResultEqual() =>
-            _throwerService.ThrowIfOlderOrEqual(dateOlder, dateOlderEqual, _message);
+        void GetResultEqual() => _throwerService.ThrowIfOlderOrEqual(dateOlder, dateOlderEqual, _message);
 
         // Assert
         Assert.ThrowsAny<Exception>(GetResult);

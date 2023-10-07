@@ -45,11 +45,7 @@ public class Validator : IValidator
         return number > numberToCompare ? Validation.Success(message) : Validation.Error(message);
     }
 
-    public Validation ValidateIfGreaterOrEqual(
-        decimal number,
-        decimal numberToCompare,
-        string message
-    )
+    public Validation ValidateIfGreaterOrEqual(decimal number, decimal numberToCompare, string message)
     {
         return number >= numberToCompare ? Validation.Success(message) : Validation.Error(message);
     }
@@ -66,9 +62,7 @@ public class Validator : IValidator
 
     public Validation ValidateIfParseToLong(string text, string message)
     {
-        return long.TryParse(text, out var _)
-            ? Validation.Success(message)
-            : Validation.Error(message);
+        return long.TryParse(text, out var _) ? Validation.Success(message) : Validation.Error(message);
     }
 
     public Validation ValidateIfNotEmpty<T>(IEnumerable<T> list, string message)
