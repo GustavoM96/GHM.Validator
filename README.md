@@ -2,7 +2,21 @@
 
 GHM.Validator is a nuget package with the aim of validating data.
 
-## IServiceCollectionExtentions
+## Install Package
+
+.NET CLI
+
+```sh
+dotnet add package GHM.Validator --version 1.0.0
+```
+
+Package Manager
+
+```sh
+NuGet\Install-Package GHM.Validator -Version 1.0.0
+```
+
+## IServiceCollectionExtensions
 
 To add scoped interface `IValidator` to implementation `Validator`, call extension method to your serviceCollection.
 
