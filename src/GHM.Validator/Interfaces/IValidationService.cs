@@ -15,6 +15,6 @@ public interface IValidationService
     Validation ValidateIfNotEmpty(string text, string message);
     Validation ValidateIfParseToLong(string text, string message);
     Validation ValidateIfNotEmpty<T>(IEnumerable<T> list, string message);
-    Validation ValidateIfOlder<T>(DateTime date, DateTime dateToCompare, string message);
-    Validation ValidateIfOlderOrEqual<T>(DateTime date, DateTime dateToCompare, string message);
+    Validation ValidateIfOlder(DateTime date, DateTime dateToCompare, string message);
+    Validation ValidateIfOlderOrEqual(DateTime date, DateTime dateToCompare, string message);
 }

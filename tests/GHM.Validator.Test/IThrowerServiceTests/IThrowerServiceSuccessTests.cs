@@ -5,6 +5,7 @@ namespace GHM.Validator.Test.IThrowerServiceTests;
 public class IThrowerServiceSuccessTests
 {
     private readonly IThrowerService _throwerService;
+    private readonly string _message = "thrower message";
 
     public IThrowerServiceSuccessTests()
     {
@@ -18,7 +19,7 @@ public class IThrowerServiceSuccessTests
         int obj = 12;
 
         // Act
-        var result = _throwerService.ThrowIfDefault(obj, "thrower message");
+        var result = _throwerService.ThrowIfDefault(obj, _message);
 
         // Assert
         Assert.True(result);
@@ -31,7 +32,7 @@ public class IThrowerServiceSuccessTests
         int? obj = null;
 
         // Act
-        var result = _throwerService.ThrowIfNotNull(obj, "thrower message");
+        var result = _throwerService.ThrowIfNotNull(obj, _message);
 
         // Assert
         Assert.True(result);
@@ -44,7 +45,7 @@ public class IThrowerServiceSuccessTests
         int? obj = 12;
 
         // Act
-        var result = _throwerService.ThrowIfNull(obj, "thrower message");
+        var result = _throwerService.ThrowIfNull(obj, _message);
 
         // Assert
         Assert.True(result);
@@ -58,7 +59,7 @@ public class IThrowerServiceSuccessTests
         int objToCompare = 12;
 
         // Act
-        var result = _throwerService.ThrowIfNotEqual(obj, objToCompare, "thrower message");
+        var result = _throwerService.ThrowIfNotEqual(obj, objToCompare, _message);
 
         // Assert
         Assert.True(result);
@@ -71,7 +72,7 @@ public class IThrowerServiceSuccessTests
         int obj = 12;
 
         // Act
-        var result = _throwerService.ThrowIfZero(obj, "thrower message");
+        var result = _throwerService.ThrowIfZero(obj, _message);
 
         // Assert
         Assert.True(result);
@@ -84,7 +85,7 @@ public class IThrowerServiceSuccessTests
         decimal obj = 12;
 
         // Act
-        var result = _throwerService.ThrowIfZero(obj, "thrower message");
+        var result = _throwerService.ThrowIfZero(obj, _message);
 
         // Assert
         Assert.True(result);
@@ -98,7 +99,7 @@ public class IThrowerServiceSuccessTests
         int objToCompare = 13;
 
         // Act
-        var result = _throwerService.ThrowIfGreaterOrEqual(obj, objToCompare, "thrower message");
+        var result = _throwerService.ThrowIfGreaterOrEqual(obj, objToCompare, _message);
 
         // Assert
         Assert.True(result);
@@ -113,8 +114,8 @@ public class IThrowerServiceSuccessTests
         int objEqual = 12;
 
         // Act
-        var result = _throwerService.ThrowIfGreater(obj, objToCompare, "thrower message");
-        var resultEqual = _throwerService.ThrowIfGreater(obj, objEqual, "thrower message");
+        var result = _throwerService.ThrowIfGreater(obj, objToCompare, _message);
+        var resultEqual = _throwerService.ThrowIfGreater(obj, objEqual, _message);
 
         // Assert
         Assert.True(result);
@@ -129,7 +130,7 @@ public class IThrowerServiceSuccessTests
         decimal objToCompare = 12.1M;
 
         // Act
-        var result = _throwerService.ThrowIfGreaterOrEqual(obj, objToCompare, "thrower message");
+        var result = _throwerService.ThrowIfGreaterOrEqual(obj, objToCompare, _message);
 
         // Assert
         Assert.True(result);
@@ -144,8 +145,8 @@ public class IThrowerServiceSuccessTests
         decimal objEqual = 12;
 
         // Act
-        var result = _throwerService.ThrowIfGreater(obj, objToCompare, "thrower message");
-        var resultEqual = _throwerService.ThrowIfGreater(obj, objEqual, "thrower message");
+        var result = _throwerService.ThrowIfGreater(obj, objToCompare, _message);
+        var resultEqual = _throwerService.ThrowIfGreater(obj, objEqual, _message);
 
         // Assert
         Assert.True(result);
@@ -159,7 +160,7 @@ public class IThrowerServiceSuccessTests
         string obj = "test";
 
         // Act
-        var result = _throwerService.ThrowIfEmpty(obj, "thrower message");
+        var result = _throwerService.ThrowIfEmpty(obj, _message);
 
         // Assert
         Assert.True(result);
@@ -172,7 +173,7 @@ public class IThrowerServiceSuccessTests
         string obj = "123456";
 
         // Act
-        var result = _throwerService.ThrowIfNotParseToLong(obj, "thrower message");
+        var result = _throwerService.ThrowIfNotParseToLong(obj, _message);
 
         // Assert
         Assert.True(result);
@@ -185,7 +186,7 @@ public class IThrowerServiceSuccessTests
         string[] obj = new[] { "test" };
 
         // Act
-        var result = _throwerService.ThrowIfEmpty(obj, "thrower message");
+        var result = _throwerService.ThrowIfEmpty(obj, _message);
 
         // Assert
         Assert.True(result);
@@ -196,16 +197,12 @@ public class IThrowerServiceSuccessTests
     {
         // Arrange
         DateTime dateOlder = DateTime.MinValue;
-        DateTime dateYonger = dateOlder;
-        DateTime dateYongerEqual = DateTime.MinValue;
+        DateTime dateYonger = DateTime.MaxValue;
+        DateTime dateYongerEqual = DateTime.MaxValue;
 
         // Act
-        var result = _throwerService.ThrowIfOlder(dateYonger, dateOlder, "thrower message");
-        var resultEqual = _throwerService.ThrowIfOlder(
-            dateYonger,
-            dateYongerEqual,
-            "thrower message"
-        );
+        var result = _throwerService.ThrowIfOlder(dateYonger, dateOlder, _message);
+        var resultEqual = _throwerService.ThrowIfOlder(dateYonger, dateYongerEqual, _message);
 
         // Assert
         Assert.True(result);
@@ -216,11 +213,11 @@ public class IThrowerServiceSuccessTests
     public void Test_ThrowIfOlderOrEqual_Success()
     {
         // Arrange
+        DateTime dateOlder = DateTime.MinValue;
         DateTime dateYonger = DateTime.MaxValue;
-        DateTime dateOlder = dateYonger.AddSeconds(-1);
 
         // Act
-        var result = _throwerService.ThrowIfOlderOrEqual(dateYonger, dateOlder, "thrower message");
+        var result = _throwerService.ThrowIfOlderOrEqual(dateYonger, dateOlder, _message);
 
         // Assert
         Assert.True(result);

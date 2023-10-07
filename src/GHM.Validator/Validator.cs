@@ -76,16 +76,12 @@ public class Validator : IValidator
         return list.Any() ? Validation.Success(message) : Validation.Error(message);
     }
 
-    public Validation ValidateIfOlder<T>(DateTime date, DateTime dateToCompare, string message)
+    public Validation ValidateIfOlder(DateTime date, DateTime dateToCompare, string message)
     {
         return date < dateToCompare ? Validation.Success(message) : Validation.Error(message);
     }
 
-    public Validation ValidateIfOlderOrEqual<T>(
-        DateTime date,
-        DateTime dateToCompare,
-        string message
-    )
+    public Validation ValidateIfOlderOrEqual(DateTime date, DateTime dateToCompare, string message)
     {
         return date <= dateToCompare ? Validation.Success(message) : Validation.Error(message);
     }
