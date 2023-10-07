@@ -35,17 +35,17 @@ public class Validator : IValidator
         return number != 0 ? Validation.Success(message) : Validation.Error(message);
     }
 
-    public Validation ValidateIfBiggerOrEqualThan(int number, int numberToCompare, string message)
+    public Validation ValidateIfGreaterOrEqual(int number, int numberToCompare, string message)
     {
         return number >= numberToCompare ? Validation.Success(message) : Validation.Error(message);
     }
 
-    public Validation ValidateIfBiggerThan(int number, int numberToCompare, string message)
+    public Validation ValidateIfGreater(int number, int numberToCompare, string message)
     {
         return number > numberToCompare ? Validation.Success(message) : Validation.Error(message);
     }
 
-    public Validation ValidateIfBiggerOrEqualThan(
+    public Validation ValidateIfGreaterOrEqual(
         decimal number,
         decimal numberToCompare,
         string message
@@ -54,7 +54,7 @@ public class Validator : IValidator
         return number >= numberToCompare ? Validation.Success(message) : Validation.Error(message);
     }
 
-    public Validation ValidateIfBiggerThan(decimal number, decimal numberToCompare, string message)
+    public Validation ValidateIfGreater(decimal number, decimal numberToCompare, string message)
     {
         return number > numberToCompare ? Validation.Success(message) : Validation.Error(message);
     }
@@ -76,18 +76,18 @@ public class Validator : IValidator
         return list.Any() ? Validation.Success(message) : Validation.Error(message);
     }
 
-    public Validation ValidateIfOlderThan<T>(DateTime date, DateTime dateToCompare, string message)
+    public Validation ValidateIfOlder<T>(DateTime date, DateTime dateToCompare, string message)
     {
-        return date > dateToCompare ? Validation.Success(message) : Validation.Error(message);
+        return date < dateToCompare ? Validation.Success(message) : Validation.Error(message);
     }
 
-    public Validation ValidateIfOlderOrEqualThan<T>(
+    public Validation ValidateIfOlderOrEqual<T>(
         DateTime date,
         DateTime dateToCompare,
         string message
     )
     {
-        return date >= dateToCompare ? Validation.Success(message) : Validation.Error(message);
+        return date <= dateToCompare ? Validation.Success(message) : Validation.Error(message);
     }
 
     public bool ThrowIfDefault<T>(T obj, string message)
@@ -121,22 +121,22 @@ public class Validator : IValidator
         return number == 0 ? throw new ArgumentException(message) : true;
     }
 
-    public bool ThrowIfBiggerOrEqualThan(int number, int numberToCompare, string message)
+    public bool ThrowIfGreaterOrEqual(int number, int numberToCompare, string message)
     {
         return number >= numberToCompare ? throw new ArgumentException(message) : true;
     }
 
-    public bool ThrowIfBiggerThan(int number, int numberToCompare, string message)
+    public bool ThrowIfGreater(int number, int numberToCompare, string message)
     {
         return number > numberToCompare ? throw new ArgumentException(message) : true;
     }
 
-    public bool ThrowIfBiggerOrEqualThan(decimal number, decimal numberToCompare, string message)
+    public bool ThrowIfGreaterOrEqual(decimal number, decimal numberToCompare, string message)
     {
         return number >= numberToCompare ? throw new ArgumentException(message) : true;
     }
 
-    public bool ThrowIfBiggerThan(decimal number, decimal numberToCompare, string message)
+    public bool ThrowIfGreater(decimal number, decimal numberToCompare, string message)
     {
         return number > numberToCompare ? throw new ArgumentException(message) : true;
     }
@@ -156,13 +156,13 @@ public class Validator : IValidator
         return list.Any() ? true : throw new ArgumentException(message);
     }
 
-    public bool ThrowIfOlderThan<T>(DateTime date, DateTime dateToCompare, string message)
+    public bool ThrowIfOlder<T>(DateTime date, DateTime dateToCompare, string message)
     {
-        return date > dateToCompare ? throw new ArgumentException(message) : true;
+        return date < dateToCompare ? throw new ArgumentException(message) : true;
     }
 
-    public bool ThrowIfOlderOrEqualThan<T>(DateTime date, DateTime dateToCompare, string message)
+    public bool ThrowIfOlderOrEqual<T>(DateTime date, DateTime dateToCompare, string message)
     {
-        return date >= dateToCompare ? throw new ArgumentException(message) : true;
+        return date <= dateToCompare ? throw new ArgumentException(message) : true;
     }
 }
