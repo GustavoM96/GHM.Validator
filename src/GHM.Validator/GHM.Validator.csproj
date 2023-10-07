@@ -5,10 +5,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Title>GHM Validator</Title>
-	<tags>validation</tags>
 	<PackageId>GHM.Validator</PackageId>
 	<Authors>Gustavo Henrique Messias</Authors>
 	<Company>Gustavo Henrique Messias</Company>
+	<PackageTags>validation</PackageTags>
 	<Description>A package for validate data</Description>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	<PackageProjectUrl>https://github.com/GustavoM96/GHM.Validator</PackageProjectUrl>
