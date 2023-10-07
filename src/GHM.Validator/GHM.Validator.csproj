@@ -5,17 +5,18 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Title>GHM Validator</Title>
-		<PackageId>GHM.Validator</PackageId>
-		<Authors>Gustavo Henrique Messias</Authors>
-		<Company>Gustavo Henrique Messias</Company>
-		<Description>A package for validate data</Description>
-		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<PackageProjectUrl>https://github.com/GustavoM96/GHM.Validator</PackageProjectUrl>
-		<RepositoryUrl>https://github.com/GustavoM96/GHM.Validator</RepositoryUrl>
-		<RepositoryType>git</RepositoryType>
-		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-		<PackageIcon>logo.png</PackageIcon>
-		<PackageReadmeFile>README.md</PackageReadmeFile>
+	<tags>validation</tags>
+	<PackageId>GHM.Validator</PackageId>
+	<Authors>Gustavo Henrique Messias</Authors>
+	<Company>Gustavo Henrique Messias</Company>
+	<Description>A package for validate data</Description>
+	<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	<PackageProjectUrl>https://github.com/GustavoM96/GHM.Validator</PackageProjectUrl>
+	<RepositoryUrl>https://github.com/GustavoM96/GHM.Validator</RepositoryUrl>
+	<RepositoryType>git</RepositoryType>
+	<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+	<PackageIcon>logo.png</PackageIcon>
+	<PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
