@@ -7,7 +7,7 @@ public static class ServiceExtentions
 {
     public static IServiceCollection AddGhmValidator(this IServiceCollection services)
     {
-        services.AddScoped<IValidator, Validator>();
+        services.AddScoped<IValidate, Validate>();
         return services;
     }
 }

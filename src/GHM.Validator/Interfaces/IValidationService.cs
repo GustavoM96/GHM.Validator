@@ -1,20 +1,20 @@
 namespace GHM.Validator.Interfaces;
 
-public interface IValidationService
+public interface IValidate
 {
-    Validation ValidateIfNotDefault<T>(T obj, string message);
-    Validation ValidateIfNotNull(object? obj, string message);
-    Validation ValidateIfNull(object? obj, string message);
-    Validation ValidateIfEqual(object obj, object objToComapere, string message);
-    Validation ValidateIfNotZero(int number, string message);
-    Validation ValidateIfNotZero(decimal number, string message);
-    Validation ValidateIfGreaterOrEqual(int number, int numberToCompare, string message);
-    Validation ValidateIfGreater(int number, int numberToCompare, string message);
-    Validation ValidateIfGreaterOrEqual(decimal number, decimal numberToCompare, string message);
-    Validation ValidateIfGreater(decimal number, decimal numberToCompare, string message);
-    Validation ValidateIfNotEmpty(string text, string message);
-    Validation ValidateIfParseToLong(string text, string message);
-    Validation ValidateIfNotEmpty<T>(IEnumerable<T> list, string message);
-    Validation ValidateIfOlder(DateTime date, DateTime dateToCompare, string message);
-    Validation ValidateIfOlderOrEqual(DateTime date, DateTime dateToCompare, string message);
+    Validation IfNotDefault<T>(T obj, string message);
+    Validation IfNotNull(object? obj, string message);
+    Validation IfNull(object? obj, string message);
+    Validation IfEqual(object obj, object objToComapere, string message);
+    Validation IfNotZero(int number, string message);
+    Validation IfNotZero(decimal number, string message);
+    Validation IfGreaterOrEqual(int number, int numberToCompare, string message);
+    Validation IfGreater(int number, int numberToCompare, string message);
+    Validation IfGreaterOrEqual(decimal number, decimal numberToCompare, string message);
+    Validation IfGreater(decimal number, decimal numberToCompare, string message);
+    Validation IfNotEmpty(string text, string message);
+    Validation IfParseToLong(string text, string message);
+    Validation IfNotEmpty<T>(IEnumerable<T> list, string message);
+    Validation IfOlder(DateTime date, DateTime dateToCompare, string message);
+    Validation IfOlderOrEqual(DateTime date, DateTime dateToCompare, string message);
 }

@@ -5,11 +5,11 @@ namespace GHM.Validator.Test.IValidationServiceTests;
 public class IValidationServiceSuccessTests
 {
     private readonly string _message = "validation message";
-    private readonly IValidationService _validationService;
+    private readonly IValidate _validate;
 
     public IValidationServiceSuccessTests()
     {
-        _validationService = new Validator();
+        _validate = new Validate();
     }
 
     [Fact]
@@ -19,7 +19,7 @@ public class IValidationServiceSuccessTests
         int obj = 12;
 
         // Act
-        var result = _validationService.ValidateIfNotDefault(obj, _message);
+        var result = _validate.IfNotDefault(obj, _message);
 
         // Assert
         Assert.True(result.IsValid);
@@ -32,7 +32,7 @@ public class IValidationServiceSuccessTests
         int? obj = 12;
 
         // Act
-        var result = _validationService.ValidateIfNotNull(obj, _message);
+        var result = _validate.IfNotNull(obj, _message);
 
         // Assert
         Assert.True(result.IsValid);
@@ -45,7 +45,7 @@ public class IValidationServiceSuccessTests
         int? obj = null;
 
         // Act
-        var result = _validationService.ValidateIfNull(obj, _message);
+        var result = _validate.IfNull(obj, _message);
 
         // Assert
         Assert.True(result.IsValid);
@@ -59,7 +59,7 @@ public class IValidationServiceSuccessTests
         int objToCompare = 12;
 
         // Act
-        var result = _validationService.ValidateIfEqual(obj, objToCompare, _message);
+        var result = _validate.IfEqual(obj, objToCompare, _message);
 
         // Assert
         Assert.True(result.IsValid);
@@ -72,7 +72,7 @@ public class IValidationServiceSuccessTests
         int obj = 12;
 
         // Act
-        var result = _validationService.ValidateIfNotZero(obj, _message);
+        var result = _validate.IfNotZero(obj, _message);
 
         // Assert
         Assert.True(result.IsValid);
@@ -85,7 +85,7 @@ public class IValidationServiceSuccessTests
         decimal obj = 12;
 
         // Act
-        var result = _validationService.ValidateIfNotZero(obj, _message);
+        var result = _validate.IfNotZero(obj, _message);
 
         // Assert
         Assert.True(result.IsValid);
@@ -99,7 +99,7 @@ public class IValidationServiceSuccessTests
         int objToCompare = 11;
 
         // Act
-        var result = _validationService.ValidateIfGreater(obj, objToCompare, _message);
+        var result = _validate.IfGreater(obj, objToCompare, _message);
 
         // Assert
         Assert.True(result.IsValid);
@@ -114,8 +114,8 @@ public class IValidationServiceSuccessTests
         int objEqual = 12;
 
         // Act
-        var result = _validationService.ValidateIfGreaterOrEqual(obj, objToCompare, _message);
-        var resultEqual = _validationService.ValidateIfGreaterOrEqual(obj, objEqual, _message);
+        var result = _validate.IfGreaterOrEqual(obj, objToCompare, _message);
+        var resultEqual = _validate.IfGreaterOrEqual(obj, objEqual, _message);
 
         // Assert
         Assert.True(result.IsValid);
@@ -130,7 +130,7 @@ public class IValidationServiceSuccessTests
         decimal objToCompare = 11.9M;
 
         // Act
-        var result = _validationService.ValidateIfGreater(obj, objToCompare, _message);
+        var result = _validate.IfGreater(obj, objToCompare, _message);
 
         // Assert
         Assert.True(result.IsValid);
@@ -145,8 +145,8 @@ public class IValidationServiceSuccessTests
         decimal objEqual = 12;
 
         // Act
-        var result = _validationService.ValidateIfGreaterOrEqual(obj, objToCompare, _message);
-        var resultEqual = _validationService.ValidateIfGreaterOrEqual(obj, objEqual, _message);
+        var result = _validate.IfGreaterOrEqual(obj, objToCompare, _message);
+        var resultEqual = _validate.IfGreaterOrEqual(obj, objEqual, _message);
 
         // Assert
         Assert.True(result.IsValid);
@@ -160,7 +160,7 @@ public class IValidationServiceSuccessTests
         string obj = "test";
 
         // Act
-        var result = _validationService.ValidateIfNotEmpty(obj, _message);
+        var result = _validate.IfNotEmpty(obj, _message);
 
         // Assert
         Assert.True(result.IsValid);
@@ -173,7 +173,7 @@ public class IValidationServiceSuccessTests
         string obj = "123456";
 
         // Act
-        var result = _validationService.ValidateIfParseToLong(obj, _message);
+        var result = _validate.IfParseToLong(obj, _message);
 
         // Assert
         Assert.True(result.IsValid);
@@ -186,7 +186,7 @@ public class IValidationServiceSuccessTests
         string[] obj = new[] { "test" };
 
         // Act
-        var result = _validationService.ValidateIfNotEmpty(obj, _message);
+        var result = _validate.IfNotEmpty(obj, _message);
 
         // Assert
         Assert.True(result.IsValid);
@@ -201,8 +201,8 @@ public class IValidationServiceSuccessTests
         DateTime dateYongerEqual = DateTime.MaxValue;
 
         // Act
-        var result = _validationService.ValidateIfOlderOrEqual(dateOlder, dateYonger, _message);
-        var resultEqual = _validationService.ValidateIfOlderOrEqual(dateYonger, dateYongerEqual, _message);
+        var result = _validate.IfOlderOrEqual(dateOlder, dateYonger, _message);
+        var resultEqual = _validate.IfOlderOrEqual(dateYonger, dateYongerEqual, _message);
 
         // Assert
         Assert.True(result.IsValid);
@@ -217,7 +217,7 @@ public class IValidationServiceSuccessTests
         DateTime dateYonger = DateTime.MaxValue;
 
         // Act
-        var result = _validationService.ValidateIfOlder(dateOlder, dateYonger, _message);
+        var result = _validate.IfOlder(dateOlder, dateYonger, _message);
 
         // Assert
         Assert.True(result.IsValid);

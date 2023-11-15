@@ -4,12 +4,12 @@ namespace GHM.Validator.Test.IThrowerServiceTests;
 
 public class IThrowerServiceErrorTests
 {
-    private readonly IThrowerService _throwerService;
+    private readonly IThrower _thrower;
     private readonly string _message = "thrower message";
 
     public IThrowerServiceErrorTests()
     {
-        _throwerService = new Validator();
+        _thrower = new Thower();
     }
 
     [Fact]
@@ -19,7 +19,7 @@ public class IThrowerServiceErrorTests
         int obj = default;
 
         // Act
-        void GetResult() => _throwerService.ThrowIfDefault(obj, _message);
+        void GetResult() => _thrower.IfDefault(obj, _message);
 
         // Assert
         Assert.ThrowsAny<Exception>(GetResult);
@@ -32,7 +32,7 @@ public class IThrowerServiceErrorTests
         int? obj = 12;
 
         // Act
-        void GetResult() => _throwerService.ThrowIfNotNull(obj, _message);
+        void GetResult() => _thrower.IfNotNull(obj, _message);
 
         // Assert
         Assert.ThrowsAny<Exception>(GetResult);
@@ -45,7 +45,7 @@ public class IThrowerServiceErrorTests
         int? obj = null;
 
         // Act
-        void GetResult() => _throwerService.ThrowIfNull(obj, _message);
+        void GetResult() => _thrower.IfNull(obj, _message);
 
         // Assert
         Assert.ThrowsAny<Exception>(GetResult);
@@ -59,7 +59,7 @@ public class IThrowerServiceErrorTests
         int objToCompare = 11;
 
         // Act
-        void GetResult() => _throwerService.ThrowIfNotEqual(obj, objToCompare, _message);
+        void GetResult() => _thrower.IfNotEqual(obj, objToCompare, _message);
 
         // Assert
         Assert.ThrowsAny<Exception>(GetResult);
@@ -72,7 +72,7 @@ public class IThrowerServiceErrorTests
         int obj = 0;
 
         // Act
-        void GetResult() => _throwerService.ThrowIfZero(obj, _message);
+        void GetResult() => _thrower.IfZero(obj, _message);
 
         // Assert
         Assert.ThrowsAny<Exception>(GetResult);
@@ -85,7 +85,7 @@ public class IThrowerServiceErrorTests
         decimal obj = 0;
 
         // Act
-        void GetResult() => _throwerService.ThrowIfZero(obj, _message);
+        void GetResult() => _thrower.IfZero(obj, _message);
 
         // Assert
         Assert.ThrowsAny<Exception>(GetResult);
@@ -100,9 +100,9 @@ public class IThrowerServiceErrorTests
         int objToCompareEqual = 12;
 
         // Act
-        void GetResult() => _throwerService.ThrowIfGreaterOrEqual(obj, objToCompare, _message);
+        void GetResult() => _thrower.IfGreaterOrEqual(obj, objToCompare, _message);
 
-        void GetResultEqual() => _throwerService.ThrowIfGreaterOrEqual(obj, objToCompareEqual, _message);
+        void GetResultEqual() => _thrower.IfGreaterOrEqual(obj, objToCompareEqual, _message);
 
         // Assert
         Assert.ThrowsAny<Exception>(GetResult);
@@ -117,7 +117,7 @@ public class IThrowerServiceErrorTests
         int objToCompare = 11;
 
         // Act
-        void GetResult() => _throwerService.ThrowIfGreater(obj, objToCompare, _message);
+        void GetResult() => _thrower.IfGreater(obj, objToCompare, _message);
 
         // Assert
         Assert.ThrowsAny<Exception>(GetResult);
@@ -132,9 +132,9 @@ public class IThrowerServiceErrorTests
         decimal objToCompareEqual = 12;
 
         // Act
-        void GetResult() => _throwerService.ThrowIfGreaterOrEqual(obj, objToCompare, _message);
+        void GetResult() => _thrower.IfGreaterOrEqual(obj, objToCompare, _message);
 
-        void GetResultEqual() => _throwerService.ThrowIfGreaterOrEqual(obj, objToCompareEqual, _message);
+        void GetResultEqual() => _thrower.IfGreaterOrEqual(obj, objToCompareEqual, _message);
 
         // Assert
         Assert.ThrowsAny<Exception>(GetResult);
@@ -149,7 +149,7 @@ public class IThrowerServiceErrorTests
         decimal objToCompare = 11;
 
         // Act
-        void GetResult() => _throwerService.ThrowIfGreater(obj, objToCompare, _message);
+        void GetResult() => _thrower.IfGreater(obj, objToCompare, _message);
 
         // Assert
         Assert.ThrowsAny<Exception>(GetResult);
@@ -163,8 +163,8 @@ public class IThrowerServiceErrorTests
         string objNull = null!;
 
         // Act
-        void GetResult() => _throwerService.ThrowIfEmpty(obj, _message);
-        void GetResultNull() => _throwerService.ThrowIfEmpty(objNull, _message);
+        void GetResult() => _thrower.IfEmpty(obj, _message);
+        void GetResultNull() => _thrower.IfEmpty(objNull, _message);
 
         // Assert
         Assert.ThrowsAny<Exception>(GetResult);
@@ -178,7 +178,7 @@ public class IThrowerServiceErrorTests
         string obj = "12345-6";
 
         // Act
-        void GetResult() => _throwerService.ThrowIfNotParseToLong(obj, _message);
+        void GetResult() => _thrower.IfNotParseToLong(obj, _message);
 
         // Assert
         Assert.ThrowsAny<Exception>(GetResult);
@@ -191,7 +191,7 @@ public class IThrowerServiceErrorTests
         string[] obj = Array.Empty<string>();
 
         // Act
-        void GetResult() => _throwerService.ThrowIfEmpty(obj, _message);
+        void GetResult() => _thrower.IfEmpty(obj, _message);
 
         // Assert
         Assert.ThrowsAny<Exception>(GetResult);
@@ -205,7 +205,7 @@ public class IThrowerServiceErrorTests
         DateTime dateYonger = DateTime.MaxValue;
 
         // Act
-        void GetResult() => _throwerService.ThrowIfOlder(dateOlder, dateYonger, _message);
+        void GetResult() => _thrower.IfOlder(dateOlder, dateYonger, _message);
 
         // Assert
         Assert.ThrowsAny<Exception>(GetResult);
@@ -220,8 +220,8 @@ public class IThrowerServiceErrorTests
         DateTime dateOlderEqual = DateTime.MinValue;
 
         // Act
-        void GetResult() => _throwerService.ThrowIfOlder(dateOlder, dateYonger, _message);
-        void GetResultEqual() => _throwerService.ThrowIfOlderOrEqual(dateOlder, dateOlderEqual, _message);
+        void GetResult() => _thrower.IfOlder(dateOlder, dateYonger, _message);
+        void GetResultEqual() => _thrower.IfOlderOrEqual(dateOlder, dateOlderEqual, _message);
 
         // Assert
         Assert.ThrowsAny<Exception>(GetResult);
