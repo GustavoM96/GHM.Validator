@@ -2,7 +2,7 @@
 
 namespace GHM.Validator;
 
-public class Thower : IThrower
+public class Thrower : IThrower
 {
     public bool IfDefault<T>(T obj, string message)
     {

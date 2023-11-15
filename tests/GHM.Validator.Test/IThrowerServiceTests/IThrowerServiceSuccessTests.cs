@@ -9,7 +9,7 @@ public class IThrowerServiceSuccessTests
 
     public IThrowerServiceSuccessTests()
     {
-        _thrower = new Thower();
+        _thrower = new Thrower();
     }
 
     [Fact]

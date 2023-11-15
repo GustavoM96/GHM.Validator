@@ -9,7 +9,7 @@ public class IThrowerServiceErrorTests
 
     public IThrowerServiceErrorTests()
     {
-        _thrower = new Thower();
+        _thrower = new Thrower();
     }
 
     [Fact]
