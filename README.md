@@ -7,18 +7,18 @@ GHM.Validator is a nuget package with the aim of validating data.
 .NET CLI
 
 ```sh
-dotnet add package GHM.Validator --version 1.0.0
+dotnet add package GHM.Validator --version 2.0.0
 ```
 
 Package Manager
 
 ```sh
-NuGet\Install-Package GHM.Validator -Version 1.0.0
+NuGet\Install-Package GHM.Validator -Version 2.0.0
 ```
 
 ## IServiceCollectionExtensions
 
-To add scoped interface `IValidator` to implementation `Validator`, call extension method to your serviceCollection.
+To add scoped interface `IValidate` to implementate `Validate` or `IThrower` to implementate `Thrower` , call extension method to your serviceCollection.
 
 ```csharp
 using  GHM.Validator.Extensions;
@@ -52,12 +52,12 @@ validationError.IsValid; // false
 
 public Validation[] ValidateCreateUserRequest(CreateUserRequest request)
 {
-    IValidator validator;
+    IValidate validate;
 
     return new Validation[]
     {
-        validator.ValidateIfNotNull(request.Name,"Name must not be null"),
-        validator.ValidateIfNotZero(request.Age,"Age must not be 0")
+        validate.IfNotNull(request.Name,"Name must not be null"),
+        validate.IfNotZero(request.Age,"Age must not be 0")
     };
 }
 ```
@@ -67,9 +67,9 @@ public Validation[] ValidateCreateUserRequest(CreateUserRequest request)
 ```csharp
 public bool ValidateCreateUserRequest(CreateUserRequest request)
 {
-    IValidator validator;
-    validator.ThrowIfNull(request.Name,"Name must not be null");
-    validator.ThrowIfZero(request.Age,"Age must not be 0");
+    IThrower thrower;
+    thrower.IfNull(request.Name,"Name must not be null");
+    thrower.IfZero(request.Age,"Age must not be 0");
 
     return true;
 }
@@ -77,63 +77,55 @@ public bool ValidateCreateUserRequest(CreateUserRequest request)
 
 ## Returns
 
-### Base Interface
-
-IValidator is inherited from IThrowerService and IValidationService.
-
-```csharp
-public interface IValidator : IThrowerService, IValidationService { }
-```
-
 ### Validation Return
 
-You can use it to return a validation result with method struct object.
+You can use it to return a validation result with validate's method.
 
 ```csharp
 
-public interface IValidationService
+public interface IValidate
 {
-    Validation ValidateIfNotDefault<T>(T obj, string message);
-    Validation ValidateIfNotNull(object? obj, string message);
-    Validation ValidateIfNull(object? obj, string message);
-    Validation ValidateIfEqual(object obj, object objToComapere, string message);
-    Validation ValidateIfNotZero(int number, string message);
-    Validation ValidateIfNotZero(decimal number, string message);
-    Validation ValidateIfGreaterOrEqual(int number, int numberToCompare, string message);
-    Validation ValidateIfGreater(int number, int numberToCompare, string message);
-    Validation ValidateIfGreaterOrEqual(decimal number, decimal numberToCompare, string message);
-    Validation ValidateIfGreater(decimal number, decimal numberToCompare, string message);
-    Validation ValidateIfNotEmpty(string text, string message);
-    Validation ValidateIfParseToLong(string text, string message);
-    Validation ValidateIfNotEmpty<T>(IEnumerable<T> list, string message);
-    Validation ValidateIfOlder(DateTime date, DateTime dateToCompare, string message);
-    Validation ValidateIfOlderOrEqual(DateTime date, DateTime dateToCompare, string message);
+    Validation IfNotDefault<T>(T obj, string message);
+    Validation IfNotNull(object? obj, string message);
+    Validation IfNull(object? obj, string message);
+    Validation IfEqual(object obj, object objToComapere, string message);
+    Validation IfNotZero(int number, string message);
+    Validation IfNotZero(decimal number, string message);
+    Validation IfGreaterOrEqual(int number, int numberToCompare, string message);
+    Validation IfGreater(int number, int numberToCompare, string message);
+    Validation IfGreaterOrEqual(decimal number, decimal numberToCompare, string message);
+    Validation IfGreater(decimal number, decimal numberToCompare, string message);
+    Validation IfNotEmpty(string text, string message);
+    Validation IfParseToLong(string text, string message);
+    Validation IfNotEmpty<T>(IEnumerable<T> list, string message);
+    Validation IfOlder(DateTime date, DateTime dateToCompare, string message);
+    Validation IfOlderOrEqual(DateTime date, DateTime dateToCompare, string message);
 }
 
 ```
 
 ### Throw Exception
 
-You can use it to throw exception with method struct object.
+You can use it to throw exception with thrower's method.
 
 ```csharp
-public interface IThrowerService
+public interface IThrower
 {
-    bool ThrowIfDefault<T>(T obj, string message);
-    bool ThrowIfNotNull(object? obj, string message);
-    bool ThrowIfNull(object? obj, string message);
-    bool ThrowIfNotEqual(object obj, object objToComapere, string message);
-    bool ThrowIfZero(int number, string message);
-    bool ThrowIfZero(decimal number, string message);
-    bool ThrowIfGreaterOrEqual(int number, int numberToCompare, string message);
-    bool ThrowIfGreater(int number, int numberToCompare, string message);
-    bool ThrowIfGreaterOrEqual(decimal number, decimal numberToCompare, string message);
-    bool ThrowIfGreater(decimal number, decimal numberToCompare, string message);
-    bool ThrowIfEmpty(string text, string message);
-    bool ThrowIfNotParseToLong(string text, string message);
-    bool ThrowIfEmpty<T>(IEnumerable<T> list, string message);
-    bool ThrowIfOlder(DateTime date, DateTime dateToCompare, string message);
-    bool ThrowIfOlderOrEqual(DateTime date, DateTime dateToCompare, string message);
+    bool IfDefault<T>(T obj, string message);
+    bool IfNotNull(object? obj, string message);
+    bool IfNull(object? obj, string message);
+    bool IfNotEqual(object obj, object objToComapere, string message);
+    bool IfZero(int number, string message);
+    bool IfZero(decimal number, string message);
+    bool IfGreaterOrEqual(int number, int numberToCompare, string message);
+    bool IfGreater(int number, int numberToCompare, string message);
+    bool IfGreaterOrEqual(decimal number, decimal numberToCompare, string message);
+    bool IfGreater(decimal number, decimal numberToCompare, string message);
+    bool IfEmpty(string text, string message);
+    bool IfNotParseToLong(string text, string message);
+    bool IfEmpty<T>(IEnumerable<T> list, string message);
+    bool IfOlder(DateTime date, DateTime dateToCompare, string message);
+    bool IfOlderOrEqual(DateTime date, DateTime dateToCompare, string message);
 }
 ```
 
