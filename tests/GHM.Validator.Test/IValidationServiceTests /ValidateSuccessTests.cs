@@ -2,12 +2,12 @@ using GHM.Validator.Interfaces;
 
 namespace GHM.Validator.Test.IValidationServiceTests;
 
-public class IValidationServiceSuccessTests
+public class ValidateSuccessTests
 {
     private readonly string _message = "validation message";
     private readonly IValidate _validate;
 
-    public IValidationServiceSuccessTests()
+    public ValidateSuccessTests()
     {
         _validate = new Validate();
     }

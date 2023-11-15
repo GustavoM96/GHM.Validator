@@ -5,11 +5,11 @@ namespace GHM.Validator.Test.IValidationServiceTests;
 public class IValidationServiceErrorTests
 {
     private readonly string _message = "validation message";
-    private readonly IValidate _validation;
+    private readonly IValidate _validate;
 
     public IValidationServiceErrorTests()
     {
-        _validation = new Validate();
+        _validate = new Validate();
     }
 
     [Fact]
@@ -19,7 +19,7 @@ public class IValidationServiceErrorTests
         int obj = default;
 
         // Act
-        var result = _validation.IfNotDefault(obj, _message);
+        var result = _validate.IfNotDefault(obj, _message);
 
         // Assert
         Assert.False(result.IsValid);
@@ -32,7 +32,7 @@ public class IValidationServiceErrorTests
         int? obj = null;
 
         // Act
-        var result = _validation.IfNotNull(obj, _message);
+        var result = _validate.IfNotNull(obj, _message);
 
         // Assert
         Assert.False(result.IsValid);
@@ -45,7 +45,7 @@ public class IValidationServiceErrorTests
         int? obj = 12;
 
         // Act
-        var result = _validation.IfNull(obj, _message);
+        var result = _validate.IfNull(obj, _message);
 
         // Assert
         Assert.False(result.IsValid);
@@ -59,7 +59,7 @@ public class IValidationServiceErrorTests
         int objToCompare = 13;
 
         // Act
-        var result = _validation.IfEqual(obj, objToCompare, _message);
+        var result = _validate.IfEqual(obj, objToCompare, _message);
 
         // Assert
         Assert.False(result.IsValid);
@@ -72,7 +72,7 @@ public class IValidationServiceErrorTests
         int obj = 0;
 
         // Act
-        var result = _validation.IfNotZero(obj, _message);
+        var result = _validate.IfNotZero(obj, _message);
 
         // Assert
         Assert.False(result.IsValid);
@@ -85,7 +85,7 @@ public class IValidationServiceErrorTests
         decimal obj = 0;
 
         // Act
-        var result = _validation.IfNotZero(obj, _message);
+        var result = _validate.IfNotZero(obj, _message);
 
         // Assert
         Assert.False(result.IsValid);
@@ -100,8 +100,8 @@ public class IValidationServiceErrorTests
         int objToCompare = 13;
 
         // Act
-        var result = _validation.IfGreater(obj, objToCompare, _message);
-        var resultEqual = _validation.IfGreater(obj, objEqual, _message);
+        var result = _validate.IfGreater(obj, objToCompare, _message);
+        var resultEqual = _validate.IfGreater(obj, objEqual, _message);
 
         // Assert
         Assert.False(result.IsValid);
@@ -116,7 +116,7 @@ public class IValidationServiceErrorTests
         int objToCompare = 13;
 
         // Act
-        var result = _validation.IfGreaterOrEqual(obj, objToCompare, _message);
+        var result = _validate.IfGreaterOrEqual(obj, objToCompare, _message);
 
         // Assert
         Assert.False(result.IsValid);
@@ -131,8 +131,8 @@ public class IValidationServiceErrorTests
         decimal objToCompare = 12.1M;
 
         // Act
-        var result = _validation.IfGreater(obj, objToCompare, _message);
-        var resultEqual = _validation.IfGreater(obj, objEqual, _message);
+        var result = _validate.IfGreater(obj, objToCompare, _message);
+        var resultEqual = _validate.IfGreater(obj, objEqual, _message);
 
         // Assert
         Assert.False(result.IsValid);
@@ -147,7 +147,7 @@ public class IValidationServiceErrorTests
         decimal objToCompare = 12.1M;
 
         // Act
-        var result = _validation.IfGreaterOrEqual(obj, objToCompare, _message);
+        var result = _validate.IfGreaterOrEqual(obj, objToCompare, _message);
 
         // Assert
         Assert.False(result.IsValid);
@@ -161,8 +161,8 @@ public class IValidationServiceErrorTests
         string objNull = null!;
 
         // Act
-        var result = _validation.IfNotEmpty(obj, _message);
-        var resultNull = _validation.IfNotEmpty(objNull, _message);
+        var result = _validate.IfNotEmpty(obj, _message);
+        var resultNull = _validate.IfNotEmpty(objNull, _message);
 
         // Assert
         Assert.False(result.IsValid);
@@ -176,7 +176,7 @@ public class IValidationServiceErrorTests
         string obj = "12345-6";
 
         // Act
-        var result = _validation.IfParseToLong(obj, _message);
+        var result = _validate.IfParseToLong(obj, _message);
 
         // Assert
         Assert.False(result.IsValid);
@@ -189,7 +189,7 @@ public class IValidationServiceErrorTests
         string[] obj = Array.Empty<string>();
 
         // Act
-        var result = _validation.IfNotEmpty(obj, _message);
+        var result = _validate.IfNotEmpty(obj, _message);
 
         // Assert
         Assert.False(result.IsValid);
@@ -204,8 +204,8 @@ public class IValidationServiceErrorTests
         DateTime dateYongerEqual = DateTime.MaxValue;
 
         // Act
-        var result = _validation.IfOlder(dateYonger, dateOlder, _message);
-        var resultEqual = _validation.IfOlder(dateYongerEqual, dateYonger, _message);
+        var result = _validate.IfOlder(dateYonger, dateOlder, _message);
+        var resultEqual = _validate.IfOlder(dateYongerEqual, dateYonger, _message);
 
         // Assert
         Assert.False(resultEqual.IsValid);
@@ -220,7 +220,7 @@ public class IValidationServiceErrorTests
         DateTime dateOlder = DateTime.MinValue;
 
         // Act
-        var result = _validation.IfOlderOrEqual(dateYonger, dateOlder, _message);
+        var result = _validate.IfOlderOrEqual(dateYonger, dateOlder, _message);
 
         Assert.False(result.IsValid);
     }

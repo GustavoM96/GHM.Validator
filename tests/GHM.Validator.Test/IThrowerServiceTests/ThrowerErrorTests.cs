@@ -2,12 +2,12 @@ using GHM.Validator.Interfaces;
 
 namespace GHM.Validator.Test.IThrowerServiceTests;
 
-public class IThrowerServiceErrorTests
+public class ThrowerErrorTests
 {
     private readonly IThrower _thrower;
     private readonly string _message = "thrower message";
 
-    public IThrowerServiceErrorTests()
+    public ThrowerErrorTests()
     {
         _thrower = new Thrower();
     }
