@@ -1,4 +1,8 @@
-# GHM.Validator
+<p align="center">
+<img src="logo.png" alt="logo" width="200px"/>
+</p>
+
+<h1 align="center"> GHM.Validator </h1>
 
 GHM.Validator is a nuget package aims to validate data.
 
