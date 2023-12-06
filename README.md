@@ -1,6 +1,6 @@
 # GHM.Validator
 
-GHM.Validator is a nuget package with the aim of validating data.
+GHM.Validator is a nuget package aims to validate data.
 
 ## Install Package
 
@@ -21,7 +21,7 @@ NuGet\Install-Package GHM.Validator -Version 2.0.0
 To add scoped interface `IValidate` to implementate `Validate` or `IThrower` to implementate `Thrower` , call extension method to your serviceCollection.
 
 ```csharp
-using  GHM.Validator.Extensions;
+using GHM.Validator.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
@@ -30,25 +30,10 @@ service.AddGhmValidator();
 
 ## Example
 
-## Validation object
-
-Validation is a object with properties(Message, IsValid).
+### To validate request data
 
 ```csharp
-var validationSuccess = Validation.Success("Successful message");
-
-validationSuccess.Message; // "Successful message"
-validationSuccess.IsValid; // true
-
-var validationError = Validation.Error("Error message");
-
-validationError.Message; // "Error message"
-validationError.IsValid; // false
-```
-
-### Validate request data
-
-```csharp
+using GHM.Validator;
 
 public Validation[] ValidateCreateUserRequest(CreateUserRequest request)
 {
@@ -62,12 +47,15 @@ public Validation[] ValidateCreateUserRequest(CreateUserRequest request)
 }
 ```
 
-### Throw if request data is invalid
+### To throw if request data is invalid
 
 ```csharp
+using GHM.Validator;
+
 public bool ValidateCreateUserRequest(CreateUserRequest request)
 {
     IThrower thrower;
+
     thrower.IfNull(request.Name,"Name must not be null");
     thrower.IfZero(request.Age,"Age must not be 0");
 
@@ -75,11 +63,31 @@ public bool ValidateCreateUserRequest(CreateUserRequest request)
 }
 ```
 
-## Returns
+## Classes
 
-### Validation Return
+### Validation
 
-You can use it to return a validation result with validate's method.
+Validation is a object with properties(Message, IsValid).
+
+```csharp
+using GHM.Validator;
+
+var validationSuccess = Validation.Success("Successful message");
+
+validationSuccess.Message; // "Successful message"
+validationSuccess.IsValid; // true
+
+var validationError = Validation.Error("Error message");
+
+validationError.Message; // "Error message"
+validationError.IsValid; // false
+```
+
+## Interfaces
+
+### IValidate
+
+You can use it to return a validation result.
 
 ```csharp
 
@@ -104,9 +112,9 @@ public interface IValidate
 
 ```
 
-### Throw Exception
+### IThrower
 
-You can use it to throw exception with thrower's method.
+You can use it to throw exception.
 
 ```csharp
 public interface IThrower
