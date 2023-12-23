@@ -1,9 +1,10 @@
 namespace GHM.Validator;
 
-public struct Validation
+public readonly struct Validation
 {
-    public string Message;
-    public bool IsValid;
+    public string Message { get; init; }
+    public bool IsValid { get; init; }
+    public bool IsError => !IsValid;
 
     private Validation(bool isValid, string message)
     {
