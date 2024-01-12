@@ -11,18 +11,18 @@ GHM.Validator is a nuget package aims to validate data.
 .NET CLI
 
 ```sh
-dotnet add package GHM.Validator --version 2.0.0
+dotnet add package GHM.Validator
 ```
 
 Package Manager
 
 ```sh
-NuGet\Install-Package GHM.Validator -Version 2.0.0
+NuGet\Install-Package GHM.Validator
 ```
 
 ## IServiceCollectionExtensions
 
-To add scoped interface `IValidate` to implementate `Validate` or `IThrower` to implementate `Thrower` , call extension method to your serviceCollection.
+To add transient interface `IValidate` to implementate `Validate` or `IThrower` to implementate `Thrower` , call extension method to your serviceCollection.
 
 ```csharp
 using GHM.Validator.Extensions;
@@ -30,6 +30,16 @@ using GHM.Validator.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 service.AddGhmValidator();
+```
+
+If you want to set a default exception for `IThrower`, pass a Func<string, Exception> as a parameter to the `AddGhmValidator` method.
+
+```csharp
+using GHM.Validator.Extensions;
+
+var builder = WebApplication.CreateBuilder(args);
+var services = builder.Services;
+service.AddGhmValidator((message) => new TestException(message));
 ```
 
 ## Example
@@ -59,6 +69,22 @@ using GHM.Validator;
 public bool ValidateCreateUserRequest(CreateUserRequest request)
 {
     IThrower thrower;
+
+    thrower.IfNull(request.Name,"Name must not be null");
+    thrower.IfZero(request.Age,"Age must not be 0");
+
+    return true;
+}
+```
+
+Setting a Exception.
+
+```csharp
+using GHM.Validator;
+public bool ValidateCreateUserRequest(CreateUserRequest request)
+{
+    IThrower thrower;
+    thrower.SetException((message) => new TestException(message))
 
     thrower.IfNull(request.Name,"Name must not be null");
     thrower.IfZero(request.Age,"Age must not be 0");
