@@ -76,7 +76,7 @@ public Validation[] ValidateCreateUserRequest(CreateUserRequest request)
         validate.IfNotZero(request.Age,"Age must not be 0")
     };
 
-    list.ThrowErrorsWithMessage(" | ") //throw new ValidationException("Name must not be null | Age must not be 0")
+    list.ThrowErrorsWithMessage(" | ") //throw new ValidationException("Name must not be null | Age must not be 0").
     return list;
 }
 ```
@@ -90,8 +90,8 @@ public bool ValidateCreateUserRequest(CreateUserRequest request)
 {
     IThrower thrower;
 
-    thrower.IfNull(request.Name,"Name must not be null");
-    thrower.IfZero(request.Age,"Age must not be 0");
+    thrower.IfNull(request.Name,"Name must not be null");// if null, throw ArgumentException.
+    thrower.IfZero(request.Age,"Age must not be 0"); // if zero, throw ArgumentException.
 
     return true;
 }
