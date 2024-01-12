@@ -53,6 +53,8 @@ public class ValidationListTests
         //Assert
         var ex = Assert.Throws<ValidationException>(ThrowError);
         Assert.Equal(errorMessage, ex.Message);
+        Assert.Contains(ErrorValidation, ex.Validations);
+        Assert.Contains(ErrorValidation2, ex.Validations);
     }
 
     [Fact]
@@ -81,6 +83,8 @@ public class ValidationListTests
         //Assert
         var ex = Assert.Throws<ValidationException>(ThrowError);
         Assert.Equal(errorMessage, ex.Message);
+        Assert.Contains(ErrorValidation, ex.Validations);
+        Assert.Contains(ErrorValidation2, ex.Validations);
     }
 
     [Fact]
