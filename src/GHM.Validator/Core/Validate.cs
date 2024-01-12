@@ -4,6 +4,16 @@ namespace GHM.Validator;
 
 public class Validate : IValidate
 {
+    public Validation IfTrue<T>(bool condition, string message)
+    {
+        return Validation.Create(condition, message);
+    }
+
+    public Validation IfFalse<T>(bool condition, string message)
+    {
+        return Validation.Create(!condition, message);
+    }
+
     public Validation IfNotDefault<T>(T obj, string message)
     {
         var isDefault = EqualityComparer<T>.Default.Equals(obj, default);

@@ -2,6 +2,8 @@ namespace GHM.Validator.Interfaces;
 
 public interface IValidate
 {
+    Validation IfTrue<T>(bool condition, string message);
+    Validation IfFalse<T>(bool condition, string message);
     Validation IfNotDefault<T>(T obj, string message);
     Validation IfNotNull(object? obj, string message);
     Validation IfNull(object? obj, string message);

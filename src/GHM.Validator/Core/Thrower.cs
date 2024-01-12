@@ -15,6 +15,16 @@ public class Thrower : IThrower
 
     public void SetException(Func<string, Exception> exceptionThrower) => _exceptionThrower = exceptionThrower;
 
+    public bool IfTrue<T>(bool condition, string message)
+    {
+        return condition ? throw _exceptionThrower(message) : true;
+    }
+
+    public bool IfFalse<T>(bool condition, string message)
+    {
+        return condition ? true : throw _exceptionThrower(message);
+    }
+
     public bool IfDefault<T>(T obj, string message)
     {
         var isDefault = EqualityComparer<T>.Default.Equals(obj, default);
