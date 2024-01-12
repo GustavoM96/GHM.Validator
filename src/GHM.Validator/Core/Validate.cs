@@ -4,12 +4,12 @@ namespace GHM.Validator;
 
 public class Validate : IValidate
 {
-    public Validation IfTrue<T>(bool condition, string message)
+    public Validation IfTrue(bool condition, string message)
     {
         return Validation.Create(condition, message);
     }
 
-    public Validation IfFalse<T>(bool condition, string message)
+    public Validation IfFalse(bool condition, string message)
     {
         return Validation.Create(!condition, message);
     }
