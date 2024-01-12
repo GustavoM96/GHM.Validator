@@ -1,6 +1,6 @@
 using GHM.Validator.Interfaces;
 
-namespace GHM.Validator.Test.IValidationServiceTests;
+namespace GHM.Validator.Test.ValidateTests;
 
 public class ValidateSuccessTests
 {

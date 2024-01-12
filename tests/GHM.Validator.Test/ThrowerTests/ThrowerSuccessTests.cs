@@ -1,6 +1,6 @@
 using GHM.Validator.Interfaces;
 
-namespace GHM.Validator.Test.IThrowerServiceTests;
+namespace GHM.Validator.Test.ThrowerError;
 
 public class ThrowerSuccessTests
 {

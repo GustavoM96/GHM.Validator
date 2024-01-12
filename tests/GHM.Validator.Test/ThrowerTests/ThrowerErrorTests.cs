@@ -1,6 +1,6 @@
 using GHM.Validator.Interfaces;
 
-namespace GHM.Validator.Test.IThrowerServiceTests;
+namespace GHM.Validator.Test.ThrowerError;
 
 public class ThrowerErrorTests
 {
@@ -10,6 +10,20 @@ public class ThrowerErrorTests
     public ThrowerErrorTests()
     {
         _thrower = new Thrower();
+    }
+
+    [Fact]
+    public void Test_Create_ShouldReturn_Thower()
+    {
+        // Arrange
+        int obj = default;
+        var thrower = Thrower.Create((message) => new FileLoadException(message));
+
+        // Act
+        void GetResult() => thrower.IfDefault(obj, _message);
+
+        // Assert
+        Assert.Throws<FileLoadException>(GetResult);
     }
 
     [Fact]
