@@ -143,6 +143,8 @@ You can use it to return a validation result.
 
 public interface IValidate
 {
+    Validation IfTrue(bool condition, string message);
+    Validation IfFalse(bool condition, string message);
     Validation IfNotDefault<T>(T obj, string message);
     Validation IfNotNull(object? obj, string message);
     Validation IfNull(object? obj, string message);
@@ -159,7 +161,6 @@ public interface IValidate
     Validation IfOlder(DateTime date, DateTime dateToCompare, string message);
     Validation IfOlderOrEqual(DateTime date, DateTime dateToCompare, string message);
 }
-
 ```
 
 ### IThrower
@@ -169,6 +170,9 @@ You can use it to throw exception.
 ```csharp
 public interface IThrower
 {
+    void SetException(Func<string, Exception> exceptionThrower);
+    bool IfFalse(bool condition, string message);
+    bool IfTrue(bool condition, string message);
     bool IfDefault<T>(T obj, string message);
     bool IfNotNull(object? obj, string message);
     bool IfNull(object? obj, string message);
