@@ -25,7 +25,7 @@ public class ValidationList : List<Validation>
         throw new ValidationException(exeptionMessage, Errors);
     }
 
-    public void ThrowErrorsOnMessage(string? separator)
+    public void ThrowErrorsWithMessage(string? separator)
     {
         if (Errors.Count == 0)
         {

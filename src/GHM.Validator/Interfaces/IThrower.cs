@@ -2,6 +2,7 @@ namespace GHM.Validator.Interfaces;
 
 public interface IThrower
 {
+    void SetException(Func<string, Exception> exceptionThrower);
     bool IfDefault<T>(T obj, string message);
     bool IfNotNull(object? obj, string message);
     bool IfNull(object? obj, string message);
