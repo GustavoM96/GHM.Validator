@@ -7,8 +7,8 @@ public static class ServiceExtentions
 {
     public static IServiceCollection AddGhmValidator(this IServiceCollection services)
     {
-        services.AddScoped<IValidate, Validate>();
-        services.AddScoped<IThrower, Thrower>();
+        services.AddTransient<IValidate, Validate>();
+        services.AddTransient<IThrower, Thrower>();
         return services;
     }
 
@@ -17,8 +17,8 @@ public static class ServiceExtentions
         Func<string, Exception> exceptionThrower
     )
     {
-        services.AddScoped<IThrower>(sp => Thrower.Create(exceptionThrower));
-        services.AddScoped<IValidate, Validate>();
+        services.AddTransient<IThrower>(sp => Thrower.Create(exceptionThrower));
+        services.AddTransient<IValidate, Validate>();
         return services;
     }
 }
