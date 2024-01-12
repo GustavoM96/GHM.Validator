@@ -13,6 +13,32 @@ public class ThrowerSuccessTests
     }
 
     [Fact]
+    public void Test_ThrowIfTrue_Success()
+    {
+        // Arrange
+        bool condition = false;
+
+        // Act
+        var result = _thrower.IfTrue(condition, _message);
+
+        // Assert
+        Assert.True(result);
+    }
+
+    [Fact]
+    public void Test_ThrowIfFalse_Success()
+    {
+        // Arrange
+        bool condition = true;
+
+        // Act
+        var result = _thrower.IfFalse(condition, _message);
+
+        // Assert
+        Assert.True(result);
+    }
+
+    [Fact]
     public void Test_ThrowIfDefault_Success()
     {
         // Arrange

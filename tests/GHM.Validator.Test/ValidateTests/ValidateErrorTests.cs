@@ -13,6 +13,32 @@ public class IValidationServiceErrorTests
     }
 
     [Fact]
+    public void Test_ValidateIfTrue_Error()
+    {
+        // Arrange
+        bool condition = false;
+
+        // Act
+        var result = _validate.IfTrue(condition, _message);
+
+        // Assert
+        Assert.False(result.IsValid);
+    }
+
+    [Fact]
+    public void Test_ValidateIfFalse_Error()
+    {
+        // Arrange
+        bool condition = true;
+
+        // Act
+        var result = _validate.IfFalse(condition, _message);
+
+        // Assert
+        Assert.False(result.IsValid);
+    }
+
+    [Fact]
     public void Test_ValidateIfNotDefault_Error()
     {
         // Arrange

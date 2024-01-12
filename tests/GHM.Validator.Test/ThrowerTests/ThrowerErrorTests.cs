@@ -27,6 +27,32 @@ public class ThrowerErrorTests
     }
 
     [Fact]
+    public void Test_ThrowIfTrue_Error()
+    {
+        // Arrange
+        bool condition = true;
+
+        // Act
+        void GetResult() => _thrower.IfTrue(condition, _message);
+
+        // Assert
+        Assert.Throws<ArgumentException>(GetResult);
+    }
+
+    [Fact]
+    public void Test_ThrowIfFalse_Error()
+    {
+        // Arrange
+        bool condition = false;
+
+        // Act
+        void GetResult() => _thrower.IfFalse(condition, _message);
+
+        // Assert
+        Assert.Throws<ArgumentException>(GetResult);
+    }
+
+    [Fact]
     public void Test_ThrowIfDefault_Error()
     {
         // Arrange

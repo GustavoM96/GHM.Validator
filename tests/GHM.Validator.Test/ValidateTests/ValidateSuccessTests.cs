@@ -13,6 +13,32 @@ public class ValidateSuccessTests
     }
 
     [Fact]
+    public void Test_ValidateIfTrue_Success()
+    {
+        // Arrange
+        bool condition = true;
+
+        // Act
+        var result = _validate.IfTrue(condition, _message);
+
+        // Assert
+        Assert.True(result.IsValid);
+    }
+
+    [Fact]
+    public void Test_ValidateIfFalse_Success()
+    {
+        // Arrange
+        bool condition = false;
+
+        // Act
+        var result = _validate.IfFalse(condition, _message);
+
+        // Assert
+        Assert.True(result.IsValid);
+    }
+
+    [Fact]
     public void Test_ValidateIfNotDefault_Success()
     {
         // Arrange
