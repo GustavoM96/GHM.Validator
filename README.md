@@ -61,6 +61,26 @@ public Validation[] ValidateCreateUserRequest(CreateUserRequest request)
 }
 ```
 
+Throw Exception from validation if it's invalid.
+
+```csharp
+using GHM.Validator;
+
+public Validation[] ValidateCreateUserRequest(CreateUserRequest request)
+{
+    IValidate validate;
+
+    var list = new ValidationList
+    {
+        validate.IfNotNull(request.Name,"Name must not be null"),
+        validate.IfNotZero(request.Age,"Age must not be 0")
+    };
+
+    list.ThrowErrorsWithMessage(" | ") //throw new ValidationException("Name must not be null | Age must not be 0")
+    return list;
+}
+```
+
 ### To throw if request data is invalid
 
 ```csharp
