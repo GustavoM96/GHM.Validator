@@ -11,7 +11,7 @@ public class Thrower : IThrower
         return thrower;
     }
 
-    private Func<string, Exception> _exceptionThrower = (string message) => new Exception(message);
+    private Func<string, Exception> _exceptionThrower = (string message) => new ArgumentException(message);
 
     public void SetException(Func<string, Exception> exceptionThrower) => _exceptionThrower = exceptionThrower;
 
