@@ -61,6 +61,23 @@ public Validation[] ValidateCreateUserRequest(CreateUserRequest request)
 }
 ```
 
+If error message is null, it will be passed a default message.
+
+```csharp
+using GHM.Validator;
+
+public Validation[] ValidateCreateUserRequest(CreateUserRequest request)
+{
+    IValidate validate;
+
+    return new Validation[]
+    {
+        validate.IfNotNull(request.UserName), // Validated param: UserName. Value: Gustavo. ValidationName: IfNotNull
+        validate.IfNotZero(request.UserAge)   // Error to validate param: UserAge. Value: 0. ValidationName: IfNotZero
+    };
+}
+```
+
 Throw Exception from validation if it's invalid.
 
 ```csharp
@@ -143,23 +160,23 @@ You can use it to return a validation result.
 
 public interface IValidate
 {
-    Validation IfTrue(bool condition, string message);
-    Validation IfFalse(bool condition, string message);
-    Validation IfNotDefault<T>(T obj, string message);
-    Validation IfNotNull(object? obj, string message);
-    Validation IfNull(object? obj, string message);
-    Validation IfEqual(object obj, object objToComapere, string message);
-    Validation IfNotZero(int number, string message);
-    Validation IfNotZero(decimal number, string message);
-    Validation IfGreaterOrEqual(int number, int numberToCompare, string message);
-    Validation IfGreater(int number, int numberToCompare, string message);
-    Validation IfGreaterOrEqual(decimal number, decimal numberToCompare, string message);
-    Validation IfGreater(decimal number, decimal numberToCompare, string message);
-    Validation IfNotEmpty(string text, string message);
-    Validation IfParseToLong(string text, string message);
-    Validation IfNotEmpty<T>(IEnumerable<T> list, string message);
-    Validation IfOlder(DateTime date, DateTime dateToCompare, string message);
-    Validation IfOlderOrEqual(DateTime date, DateTime dateToCompare, string message);
+    Validation IfTrue(bool condition, string message = null);
+    Validation IfFalse(bool condition, string message = null);
+    Validation IfNotDefault<T>(T obj, string message = null);
+    Validation IfNotNull(object? obj, string message = null);
+    Validation IfNull(object? obj, string message = null);
+    Validation IfEqual(object obj, object toCompare, string message = null);
+    Validation IfNotZero(int number, string message = null);
+    Validation IfNotZero(decimal number, string message = null);
+    Validation IfGreaterOrEqual(int number, int toCompare, string message = null);
+    Validation IfGreater(int number, int toCompare, string message = null);
+    Validation IfGreaterOrEqual(decimal number, decimal toCompare, string message = null);
+    Validation IfGreater(decimal number, decimal toCompare, string message = null);
+    Validation IfNotEmpty(string text, string message = null);
+    Validation IfParseToLong(string text, string message = null);
+    Validation IfNotEmpty<T>(IEnumerable<T> list, string message = null);
+    Validation IfOlder(DateTime date, DateTime toCompare, string message = null);
+    Validation IfOlderOrEqual(DateTime date, DateTime toCompare, string message = null);
 }
 ```
 
@@ -171,23 +188,23 @@ You can use it to throw exception.
 public interface IThrower
 {
     void SetException(Func<string, Exception> exceptionThrower);
-    bool IfFalse(bool condition, string message);
-    bool IfTrue(bool condition, string message);
-    bool IfDefault<T>(T obj, string message);
-    bool IfNotNull(object? obj, string message);
-    bool IfNull(object? obj, string message);
-    bool IfNotEqual(object obj, object objToComapere, string message);
-    bool IfZero(int number, string message);
-    bool IfZero(decimal number, string message);
-    bool IfGreaterOrEqual(int number, int numberToCompare, string message);
-    bool IfGreater(int number, int numberToCompare, string message);
-    bool IfGreaterOrEqual(decimal number, decimal numberToCompare, string message);
-    bool IfGreater(decimal number, decimal numberToCompare, string message);
-    bool IfEmpty(string text, string message);
-    bool IfNotParseToLong(string text, string message);
-    bool IfEmpty<T>(IEnumerable<T> list, string message);
-    bool IfOlder(DateTime date, DateTime dateToCompare, string message);
-    bool IfOlderOrEqual(DateTime date, DateTime dateToCompare, string message);
+    bool IfFalse(bool condition, string message = null);
+    bool IfTrue(bool condition, string message = null);
+    bool IfDefault<T>(T obj, string message = null);
+    bool IfNotNull(object? obj, string message = null);
+    bool IfNull(object? obj, string message = null);
+    bool IfNotEqual(object obj, object toCompare, string message = null);
+    bool IfZero(int number, string message = null);
+    bool IfZero(decimal number, string message = null);
+    bool IfGreaterOrEqual(int number, int toCompare, string message = null);
+    bool IfGreater(int number, int toCompare, string message = null);
+    bool IfGreaterOrEqual(decimal number, decimal toCompare, string message = null);
+    bool IfGreater(decimal number, decimal toCompare, string message = null);
+    bool IfEmpty(string text, string message = null);
+    bool IfNotParseToLong(string text, string message = null);
+    bool IfEmpty<T>(IEnumerable<T> list, string message = null);
+    bool IfOlder(DateTime date, DateTime toCompare, string message = null);
+    bool IfOlderOrEqual(DateTime date, DateTime toCompare, string message = null);
 }
 ```
 
