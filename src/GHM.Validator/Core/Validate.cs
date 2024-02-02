@@ -1,92 +1,202 @@
-﻿using GHM.Validator.Interfaces;
+﻿using System.Runtime.CompilerServices;
+using GHM.Validator.Interfaces;
 
 namespace GHM.Validator;
 
-public class Validate : IValidate
+public class Validate : ValidationBase, IValidate
 {
-    public Validation IfTrue(bool condition, string message)
+    public Validation IfTrue(
+        bool condition,
+        string? message = null,
+        [CallerArgumentExpression(nameof(condition))] string? paramName = null
+    )
     {
-        return Validation.Create(condition, message);
+        return condition
+            ? Validation.Success(message ?? GetDefaultSuccessMessage(nameof(IfTrue), paramName, condition))
+            : Validation.Error(message ?? GetDefaultErrorMessage(nameof(IfTrue), paramName, condition));
     }
 
-    public Validation IfFalse(bool condition, string message)
+    public Validation IfFalse(
+        bool condition,
+        string? message = null,
+        [CallerArgumentExpression(nameof(condition))] string? paramName = null
+    )
     {
-        return Validation.Create(!condition, message);
+        return condition
+            ? Validation.Error(message ?? GetDefaultErrorMessage(nameof(IfFalse), paramName, condition))
+            : Validation.Success(message ?? GetDefaultSuccessMessage(nameof(IfFalse), paramName, condition));
     }
 
-    public Validation IfNotDefault<T>(T obj, string message)
+    public Validation IfNotDefault<T>(
+        T obj,
+        string? message = null,
+        [CallerArgumentExpression(nameof(obj))] string? paramName = null
+    )
     {
         var isDefault = EqualityComparer<T>.Default.Equals(obj, default);
-        return isDefault ? Validation.Error(message) : Validation.Success(message);
+        return isDefault
+            ? Validation.Error(message ?? GetDefaultErrorMessage(nameof(IfNotDefault), paramName, obj))
+            : Validation.Success(message ?? GetDefaultSuccessMessage(nameof(IfNotDefault), paramName, obj));
     }
 
-    public Validation IfNotNull(object? obj, string message)
+    public Validation IfNotNull(
+        object? obj,
+        string? message = null,
+        [CallerArgumentExpression(nameof(obj))] string? paramName = null
+    )
     {
-        return obj != null ? Validation.Success(message) : Validation.Error(message);
+        return obj != null
+            ? Validation.Success(message ?? GetDefaultSuccessMessage(nameof(IfNotNull), paramName, obj))
+            : Validation.Error(message ?? GetDefaultErrorMessage(nameof(IfNotNull), paramName, obj));
     }
 
-    public Validation IfNull(object? obj, string message)
+    public Validation IfNull(
+        object? obj,
+        string? message = null,
+        [CallerArgumentExpression(nameof(obj))] string? paramName = null
+    )
     {
-        return obj == null ? Validation.Success(message) : Validation.Error(message);
+        return obj == null
+            ? Validation.Success(message ?? GetDefaultSuccessMessage(nameof(IfNull), paramName, obj))
+            : Validation.Error(message ?? GetDefaultErrorMessage(nameof(IfNull), paramName, obj));
     }
 
-    public Validation IfEqual(object obj, object objToComapere, string message)
+    public Validation IfEqual(
+        object obj,
+        object toCompare,
+        string? message = null,
+        [CallerArgumentExpression(nameof(obj))] string? paramName = null
+    )
     {
-        return obj.Equals(objToComapere) ? Validation.Success(message) : Validation.Error(message);
+        return obj.Equals(toCompare)
+            ? Validation.Success(message ?? GetDefaultSuccessMessage(nameof(IfEqual), paramName, obj))
+            : Validation.Error(message ?? GetDefaultErrorMessage(nameof(IfEqual), paramName, obj));
     }
 
-    public Validation IfNotZero(int number, string message)
+    public Validation IfNotZero(
+        int number,
+        string? message = null,
+        [CallerArgumentExpression(nameof(number))] string? paramName = null
+    )
     {
-        return number != 0 ? Validation.Success(message) : Validation.Error(message);
+        return number != 0
+            ? Validation.Success(message ?? GetDefaultSuccessMessage(nameof(IfNotZero), paramName, number))
+            : Validation.Error(message ?? GetDefaultErrorMessage(nameof(IfNotZero), paramName, number));
     }
 
-    public Validation IfNotZero(decimal number, string message)
+    public Validation IfNotZero(
+        decimal number,
+        string? message = null,
+        [CallerArgumentExpression(nameof(number))] string? paramName = null
+    )
     {
-        return number != 0 ? Validation.Success(message) : Validation.Error(message);
+        return number != 0
+            ? Validation.Success(message ?? GetDefaultSuccessMessage(nameof(IfNotZero), paramName, number))
+            : Validation.Error(message ?? GetDefaultErrorMessage(nameof(IfNotZero), paramName, number));
     }
 
-    public Validation IfGreaterOrEqual(int number, int numberToCompare, string message)
+    public Validation IfGreaterOrEqual(
+        int number,
+        int toCompare,
+        string? message = null,
+        [CallerArgumentExpression(nameof(number))] string? paramName = null
+    )
     {
-        return number >= numberToCompare ? Validation.Success(message) : Validation.Error(message);
+        return number >= toCompare
+            ? Validation.Success(message ?? GetDefaultSuccessMessage(nameof(IfGreaterOrEqual), paramName, number, toCompare))
+            : Validation.Error(message ?? GetDefaultErrorMessage(nameof(IfGreaterOrEqual), paramName, number, toCompare));
     }
 
-    public Validation IfGreater(int number, int numberToCompare, string message)
+    public Validation IfGreater(
+        int number,
+        int toCompare,
+        string? message = null,
+        [CallerArgumentExpression(nameof(number))] string? paramName = null
+    )
     {
-        return number > numberToCompare ? Validation.Success(message) : Validation.Error(message);
+        return number > toCompare
+            ? Validation.Success(message ?? GetDefaultSuccessMessage(nameof(IfGreater), paramName, number, toCompare))
+            : Validation.Error(message ?? GetDefaultErrorMessage(nameof(IfGreater), paramName, number, toCompare));
     }
 
-    public Validation IfGreaterOrEqual(decimal number, decimal numberToCompare, string message)
+    public Validation IfGreaterOrEqual(
+        decimal number,
+        decimal toCompare,
+        string? message = null,
+        [CallerArgumentExpression(nameof(number))] string? paramName = null
+    )
     {
-        return number >= numberToCompare ? Validation.Success(message) : Validation.Error(message);
+        return number >= toCompare
+            ? Validation.Success(message ?? GetDefaultSuccessMessage(nameof(IfGreaterOrEqual), paramName, number, toCompare))
+            : Validation.Error(message ?? GetDefaultErrorMessage(nameof(IfGreaterOrEqual), paramName, number, toCompare));
     }
 
-    public Validation IfGreater(decimal number, decimal numberToCompare, string message)
+    public Validation IfGreater(
+        decimal number,
+        decimal toCompare,
+        string? message = null,
+        [CallerArgumentExpression(nameof(number))] string? paramName = null
+    )
     {
-        return number > numberToCompare ? Validation.Success(message) : Validation.Error(message);
+        return number > toCompare
+            ? Validation.Success(message ?? GetDefaultSuccessMessage(nameof(IfGreater), paramName, number, toCompare))
+            : Validation.Error(message ?? GetDefaultErrorMessage(nameof(IfGreater), paramName, number, toCompare));
     }
 
-    public Validation IfNotEmpty(string text, string message)
+    public Validation IfNotEmpty(
+        string text,
+        string? message = null,
+        [CallerArgumentExpression(nameof(text))] string? paramName = null
+    )
     {
-        return string.IsNullOrEmpty(text) ? Validation.Error(message) : Validation.Success(message);
+        return string.IsNullOrEmpty(text)
+            ? Validation.Error(message ?? GetDefaultErrorMessage(nameof(IfNotEmpty), paramName, text))
+            : Validation.Success(message ?? GetDefaultSuccessMessage(nameof(IfNotEmpty), paramName, text));
     }
 
-    public Validation IfParseToLong(string text, string message)
+    public Validation IfParseToLong(
+        string text,
+        string? message = null,
+        [CallerArgumentExpression(nameof(text))] string? paramName = null
+    )
     {
-        return long.TryParse(text, out var _) ? Validation.Success(message) : Validation.Error(message);
+        return long.TryParse(text, out var _)
+            ? Validation.Success(message ?? GetDefaultSuccessMessage(nameof(IfParseToLong), paramName, text))
+            : Validation.Error(message ?? GetDefaultErrorMessage(nameof(IfParseToLong), paramName, text));
     }
 
-    public Validation IfNotEmpty<T>(IEnumerable<T> list, string message)
+    public Validation IfNotEmpty<T>(
+        IEnumerable<T> list,
+        string? message = null,
+        [CallerArgumentExpression(nameof(list))] string? paramName = null
+    )
     {
-        return list.Any() ? Validation.Success(message) : Validation.Error(message);
+        return list.Any()
+            ? Validation.Success(message ?? GetDefaultSuccessMessage(nameof(IfNotEmpty), paramName, list))
+            : Validation.Error(message ?? GetDefaultErrorMessage(nameof(IfNotEmpty), paramName, list));
     }
 
-    public Validation IfOlder(DateTime date, DateTime dateToCompare, string message)
+    public Validation IfOlder(
+        DateTime date,
+        DateTime toCompare,
+        string? message = null,
+        [CallerArgumentExpression(nameof(date))] string? paramName = null
+    )
     {
-        return date < dateToCompare ? Validation.Success(message) : Validation.Error(message);
+        return date < toCompare
+            ? Validation.Success(message ?? GetDefaultSuccessMessage(nameof(IfOlder), paramName, date, toCompare))
+            : Validation.Error(message ?? GetDefaultErrorMessage(nameof(IfOlder), paramName, date, toCompare));
     }
 
-    public Validation IfOlderOrEqual(DateTime date, DateTime dateToCompare, string message)
+    public Validation IfOlderOrEqual(
+        DateTime date,
+        DateTime toCompare,
+        string? message = null,
+        [CallerArgumentExpression(nameof(date))] string? paramName = null
+    )
     {
-        return date <= dateToCompare ? Validation.Success(message) : Validation.Error(message);
+        return date <= toCompare
+            ? Validation.Success(message ?? GetDefaultSuccessMessage(nameof(IfOlderOrEqual), paramName, date, toCompare))
+            : Validation.Error(message ?? GetDefaultErrorMessage(nameof(IfOlderOrEqual), paramName, date, toCompare));
     }
 }
