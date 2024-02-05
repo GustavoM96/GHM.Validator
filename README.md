@@ -78,7 +78,7 @@ public Validation[] ValidateCreateUserRequest(CreateUserRequest request)
 }
 ```
 
-You can set a errorType
+You can set a errorType.
 
 ```csharp
 using GHM.Validator;
@@ -89,8 +89,8 @@ public Validation[] ValidateCreateUserRequest(CreateUserRequest request)
 
     return new Validation[]
     {
-        validate.IfNotNull(request.UserName).AsNotFound(), // Validated param: UserName. Value: Gustavo. ValidationName: IfNotNull
-        validate.IfNotZero(request.UserAge).AsFailure()   // Error to validate param: UserAge. Value: 0. ValidationName: IfNotZero
+        validate.IfNotNull(request.UserName).AsNotFound(), // validate.ErrorType = ErrorType.NotFound
+        validate.IfNotZero(request.UserAge).AsFailure()   // validate.ErrorType = ErrorType.Failure
     };
 }
 ```
