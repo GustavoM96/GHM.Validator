@@ -78,6 +78,23 @@ public Validation[] ValidateCreateUserRequest(CreateUserRequest request)
 }
 ```
 
+You can set a errorType
+
+```csharp
+using GHM.Validator;
+
+public Validation[] ValidateCreateUserRequest(CreateUserRequest request)
+{
+    IValidate validate;
+
+    return new Validation[]
+    {
+        validate.IfNotNull(request.UserName).AsNotFound(), // Validated param: UserName. Value: Gustavo. ValidationName: IfNotNull
+        validate.IfNotZero(request.UserAge).AsFailure()   // Error to validate param: UserAge. Value: 0. ValidationName: IfNotZero
+    };
+}
+```
+
 Throw Exception from validation if it's invalid.
 
 ```csharp
