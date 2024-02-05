@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace GHM.Validator;
 
 public class ValidationList : List<Validation>
@@ -5,6 +7,13 @@ public class ValidationList : List<Validation>
     public bool IsError => this.Any(validation => !validation.IsValid);
     public bool IsValid => !IsError;
     public List<Validation> Errors => this.Where(validation => !validation.IsValid).ToList();
+    public ErrorType? ErrorType =>
+        Errors.Count switch
+        {
+            0 => null,
+            1 => Errors[0].ErrorType,
+            _ => Validator.ErrorType.Failure
+        };
 
     public ValidationList()
         : base() { }
