@@ -27,6 +27,20 @@ public class ValidateErrorTypeTests
     }
 
     [Fact]
+    public void Test_ValidateIfTrue_ErrorDefault_ShouldHave_ErrorTypeValidation()
+    {
+        // Arrange
+        bool condition = false;
+
+        // Act
+        var result = _validate.IfTrue(condition, _message);
+
+        // Assert
+        Assert.False(result.IsValid);
+        Assert.Equal(ErrorType.Validation, result.ErrorType);
+    }
+
+    [Fact]
     public void Test_ValidateIfTrue_Error_AsNotFound_ShouldHave_ErrorTypeNotFound()
     {
         // Arrange
