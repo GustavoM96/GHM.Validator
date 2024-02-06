@@ -11,6 +11,7 @@ public struct Validation
     {
         IsValid = isValid;
         Message = message;
+        ErrorType = isValid ? null : Validator.ErrorType.Validation;
     }
 
     public static Validation Create(bool isValid, string message) => new(isValid, message);
