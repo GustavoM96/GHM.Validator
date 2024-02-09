@@ -27,7 +27,7 @@ public class ValidationBaseTests
     }
 
     [Fact]
-    public void Test_GetDefaultSuccessMessage_WithCompareValue()
+    public void Test_GetDefaultSuccessMessageWithCompareValue()
     {
         // Arrange
         int numberA = 12;
@@ -58,7 +58,7 @@ public class ValidationBaseTests
     }
 
     [Fact]
-    public void Test_GetDefaultErrorMessage_WithCompareValue()
+    public void Test_GetDefaultErrorMessageWithCompareValue()
     {
         // Arrange
         int numberA = 12;

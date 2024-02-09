@@ -99,4 +99,43 @@ public class ValidationListTests
         //Assert
         ThrowError();
     }
+
+    [Fact]
+    public void Test_ValidationListSuccess_AsNotFound_ShouldHave_ErrorTypeNull()
+    {
+        // Arrange
+
+        // Act
+        ValidationList result = SuccessValidationList;
+
+        // Assert
+        Assert.True(result.IsValid);
+        Assert.Null(result.ErrorType);
+    }
+
+    [Fact]
+    public void Test_ValidationListError_AsNotFound_ShouldHave_ErrorTypeNotFound()
+    {
+        // Arrange
+
+        // Act
+        ValidationList result = ErrorValidationList;
+
+        // Assert
+        Assert.False(result.IsValid);
+        Assert.Equal(ErrorType.NotFound, result.ErrorType);
+    }
+
+    [Fact]
+    public void Test_ValidationListMultiplesErrors_ShouldHave_ErrorTypeFailure()
+    {
+        // Arrange
+
+        // Act
+        ValidationList result = ErrorValidationList;
+
+        // Assert
+        Assert.False(result.IsValid);
+        Assert.Equal(ErrorType.Failure, result.ErrorType);
+    }
 }
