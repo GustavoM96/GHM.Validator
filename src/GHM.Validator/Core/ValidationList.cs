@@ -1,5 +1,3 @@
-using System.Diagnostics;
-
 namespace GHM.Validator;
 
 public class ValidationList : List<Validation>
@@ -14,6 +12,8 @@ public class ValidationList : List<Validation>
             1 => Errors[0].ErrorType,
             _ => Validator.ErrorType.Failure
         };
+
+    public Validation FirstError => this.FirstOrDefault(validation => !validation.IsValid);
 
     public ValidationList()
         : base() { }
