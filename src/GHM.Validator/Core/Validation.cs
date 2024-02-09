@@ -2,6 +2,7 @@ namespace GHM.Validator;
 
 public struct Validation
 {
+    public string? Title { get; private set; }
     public string Message { get; init; }
     public bool IsValid { get; init; }
     public readonly bool IsError => !IsValid;
@@ -20,7 +21,7 @@ public struct Validation
 
     public static Validation Error(string message) => new(false, message);
 
-    private Validation SetErrorType(ErrorType errorType)
+    private Validation WithErrorType(ErrorType errorType)
     {
         if (!IsValid)
         {
@@ -29,15 +30,21 @@ public struct Validation
         return this;
     }
 
-    public Validation AsFailure() => SetErrorType(Validator.ErrorType.Failure);
+    public Validation WithTitle(string title)
+    {
+        Title = title;
+        return this;
+    }
 
-    public Validation AsNotFound() => SetErrorType(Validator.ErrorType.NotFound);
+    public Validation AsFailure() => WithErrorType(Validator.ErrorType.Failure);
 
-    public Validation AsUnexpected() => SetErrorType(Validator.ErrorType.Unexpected);
+    public Validation AsNotFound() => WithErrorType(Validator.ErrorType.NotFound);
 
-    public Validation AsValidation() => SetErrorType(Validator.ErrorType.Validation);
+    public Validation AsUnexpected() => WithErrorType(Validator.ErrorType.Unexpected);
 
-    public Validation AsConflict() => SetErrorType(Validator.ErrorType.Conflict);
+    public Validation AsValidation() => WithErrorType(Validator.ErrorType.Validation);
 
-    public Validation AsUnauthorized() => SetErrorType(Validator.ErrorType.Unauthorized);
+    public Validation AsConflict() => WithErrorType(Validator.ErrorType.Conflict);
+
+    public Validation AsUnauthorized() => WithErrorType(Validator.ErrorType.Unauthorized);
 }
