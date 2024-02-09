@@ -1,6 +1,6 @@
 namespace GHM.Validator;
 
-public abstract class ValidationBase
+public abstract class ValidateBase
 {
     protected static string GetDefaultErrorMessage(string validationName, string? paramName, object? value) =>
         $"Error to validate param: {paramName}. Value: {value}. ValidationName: {validationName}";

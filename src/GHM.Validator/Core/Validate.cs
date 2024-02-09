@@ -3,7 +3,7 @@ using GHM.Validator.Interfaces;
 
 namespace GHM.Validator;
 
-public class Validate : ValidationBase, IValidate
+public class Validate : ValidateBase, IValidate
 {
     public Validation IfTrue(
         bool condition,
