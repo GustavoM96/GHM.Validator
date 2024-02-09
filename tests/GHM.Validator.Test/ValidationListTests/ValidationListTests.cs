@@ -2,7 +2,7 @@ namespace GHM.Validator.Test.ValidationListTests;
 
 public class ValidationListTests
 {
-    private static Validation ErrorValidation => Validation.Error("error test");
+    private static Validation ErrorValidation => Validation.Error("error test").AsNotFound();
     private static Validation ErrorValidation2 => Validation.Error("error test2");
     private static Validation SuccessValidation => Validation.Success("success test");
     private static ValidationList ErrorValidationList => new() { ErrorValidation, ErrorValidation2, SuccessValidation };
@@ -119,7 +119,7 @@ public class ValidationListTests
         // Arrange
 
         // Act
-        ValidationList result = ErrorValidationList;
+        ValidationList result = new() { ErrorValidation };
 
         // Assert
         Assert.False(result.IsValid);

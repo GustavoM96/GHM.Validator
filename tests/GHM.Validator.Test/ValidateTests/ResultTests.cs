@@ -105,7 +105,7 @@ public class ResultTests
         var errorMessage = "error exception teste";
 
         // Act
-        Result result = new(ErrorValidation);
+        Result result = new(ErrorValidationList);
         void ThrowError() => result.ThrowErrors(errorMessage);
 
         //Assert
