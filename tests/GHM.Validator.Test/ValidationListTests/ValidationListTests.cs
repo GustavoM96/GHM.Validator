@@ -106,11 +106,10 @@ public class ValidationListTests
         // Arrange
 
         // Act
-        ValidationList result = SuccessValidationList;
 
         // Assert
-        Assert.True(result.IsValid);
-        Assert.Null(result.ErrorType);
+        Assert.True(SuccessValidationList.IsValid);
+        Assert.Null(SuccessValidationList.ErrorType);
     }
 
     [Fact]
@@ -132,10 +131,9 @@ public class ValidationListTests
         // Arrange
 
         // Act
-        ValidationList result = ErrorValidationList;
 
         // Assert
-        Assert.False(result.IsValid);
-        Assert.Equal(ErrorType.Failure, result.ErrorType);
+        Assert.False(ErrorValidationList.IsValid);
+        Assert.Equal(ErrorType.Failure, ErrorValidationList.ErrorType);
     }
 }

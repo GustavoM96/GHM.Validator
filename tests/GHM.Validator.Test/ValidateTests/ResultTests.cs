@@ -91,11 +91,12 @@ public class ResultTests
         result.AddValidations(ErrorValidationList);
 
         // Act
+        var errors = result.Errors;
 
         // Assert
-        Assert.Contains(ErrorValidation, result.Errors);
-        Assert.Contains(ErrorValidation2, result.Errors);
-        Assert.Equal(2, result.Errors.Count);
+        Assert.Contains(ErrorValidation, errors);
+        Assert.Contains(ErrorValidation2, errors);
+        Assert.Equal(2, errors.Count);
     }
 
     [Fact]
