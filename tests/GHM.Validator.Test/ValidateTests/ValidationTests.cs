@@ -59,4 +59,26 @@ public class ValidationTests
         Assert.Equal(title, result.Title);
         Assert.Equal(title, result2.Title);
     }
+
+    [Fact]
+    public void Test_Validation_WithErrorType_ShouldHave_ErrorTypeCorrect()
+    {
+        // Arrange
+
+        // Act
+        var asFailure = Validation.Error(_message).AsFailure();
+        var asNotFound = Validation.Error(_message).AsNotFound();
+        var asUnexpected = Validation.Error(_message).AsUnexpected();
+        var asValidation = Validation.Error(_message).AsValidation();
+        var asConflict = Validation.Error(_message).AsConflict();
+        var asUnauthorized = Validation.Error(_message).AsUnauthorized();
+
+        // Assert
+        Assert.Equal(ErrorType.Failure, asFailure.ErrorType);
+        Assert.Equal(ErrorType.NotFound, asNotFound.ErrorType);
+        Assert.Equal(ErrorType.Unexpected, asUnexpected.ErrorType);
+        Assert.Equal(ErrorType.Validation, asValidation.ErrorType);
+        Assert.Equal(ErrorType.Conflict, asConflict.ErrorType);
+        Assert.Equal(ErrorType.Unauthorized, asUnauthorized.ErrorType);
+    }
 }
