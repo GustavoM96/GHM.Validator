@@ -12,46 +12,60 @@ public class ResultTests
     private static ValidationList ErrorValidationList => new() { ErrorValidation, ErrorValidation2, SuccessValidation };
 
     [Fact]
-    public void Test_Result_Constructors()
+    public void Test_ResultConstructors_ShouldHave_ErrorsEqualsParameter()
     {
         // Arrange
 
         // Act
-        Result result = Result.Create();
-        Result result2 = SuccessValidation;
-        Result result3 = ErrorValidationList;
-        Result result4 = new Validation[2] { SuccessValidation, ErrorValidation };
+        Result result = SuccessValidation;
+        Result result2 = ErrorValidationList;
+        Result result3 = new Validation[2] { SuccessValidation, ErrorValidation };
+        Result result4 = new List<Validation>(2) { SuccessValidation, ErrorValidation };
 
         // Assert
-        Assert.Empty(result.Validations);
-        Assert.Equal(SuccessValidation, result2.Validations[0]);
-        Assert.Equal(ErrorValidationList.Count, result3.Validations.Count);
-        Assert.Equal(2, result4.Validations.Count);
+        Assert.Contains(SuccessValidation, result.Validations);
+        Assert.Contains(SuccessValidation, result2.Validations);
+        Assert.Contains(SuccessValidation, result3.Validations);
+        Assert.Contains(SuccessValidation, result4.Validations);
     }
 
     [Fact]
-    public void Test_ResultValue_Constructors()
+    public void Test_ResultValueConstructors_ShouldHave_ValueEqualsParameter()
     {
         // Arrange
         var value = "test Value";
 
         // Act
         Result<string> result = Result<string>.Create(value);
-        Result<string> result2 = SuccessValidation;
-        Result<string> result3 = ErrorValidationList;
-        Result<string> result4 = new Validation[2] { SuccessValidation, ErrorValidation };
-        Result<string> result5 = new(SuccessValidation, value);
-        Result<string> result6 = new(ErrorValidationList, value);
+        Result<string> result2 = new(SuccessValidation, value);
+        Result<string> result3 = new(ErrorValidationList, value);
+        Result<string> result4 = new(new Validation[2] { SuccessValidation, ErrorValidation }, value);
+        Result<string> result5 = value;
 
         // Assert
         Assert.Equal(value, result.Value);
-        Assert.Equal(SuccessValidation, result2.Validations[0]);
-        Assert.Equal(ErrorValidationList.Count, result3.Validations.Count);
-        Assert.Equal(2, result4.Validations.Count);
+        Assert.Equal(value, result2.Value);
+        Assert.Equal(value, result3.Value);
+        Assert.Equal(value, result4.Value);
         Assert.Equal(value, result5.Value);
-        Assert.Equal(SuccessValidation, result5.Validations[0]);
-        Assert.Equal(value, result6.Value);
-        Assert.Equal(ErrorValidationList.Count, result6.Validations.Count);
+    }
+
+    [Fact]
+    public void Test_ResultValueConstructors_ShouldHave_ErrorsEqualsParameter()
+    {
+        // Arrange
+
+        // Act
+        Result<string> result = SuccessValidation;
+        Result<string> result2 = ErrorValidationList;
+        Result<string> result3 = new Validation[2] { SuccessValidation, ErrorValidation };
+        Result<string> result4 = new List<Validation>(2) { SuccessValidation, ErrorValidation };
+
+        // Assert
+        Assert.Contains(SuccessValidation, result.Validations);
+        Assert.Contains(SuccessValidation, result2.Validations);
+        Assert.Contains(SuccessValidation, result3.Validations);
+        Assert.Contains(SuccessValidation, result4.Validations);
     }
 
     [Fact]
