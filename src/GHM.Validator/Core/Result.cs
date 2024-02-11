@@ -10,6 +10,12 @@ public class Result<TValue> : Result
         Value = value;
     }
 
+    public Result(Validation validation, TValue value)
+        : base(validation)
+    {
+        Value = value;
+    }
+
     public Result(IEnumerable<Validation> validations)
         : base(validations) { }
 
@@ -51,7 +57,7 @@ public class Result
 
     public Result(Validation validation)
     {
-        Validations = new List<Validation>(1) { validation };
+        Validations = new List<Validation>() { validation };
     }
 
     public Result() { }
