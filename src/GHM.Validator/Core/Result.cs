@@ -4,23 +4,23 @@ public class Result<TValue> : Result
 {
     public TValue Value { get; init; } = default!;
 
-    public Result(IEnumerable<Validation> validations, TValue value)
+    public Result(IEnumerable<Validation> validations, TValue value = default!)
         : base(validations)
     {
         Value = value;
     }
 
-    public Result(Validation validation, TValue value)
+    public Result(Validation validation, TValue value = default!)
         : base(validation)
     {
         Value = value;
     }
 
-    public Result(IEnumerable<Validation> validations)
-        : base(validations) { }
-
-    public Result(Validation validation)
-        : base(validation) { }
+    public Result(ValidationList validations, TValue value = default!)
+        : base(validations)
+    {
+        Value = value;
+    }
 
     public Result(TValue value)
     {
@@ -36,6 +36,8 @@ public class Result<TValue> : Result
     public static implicit operator Result<TValue>(Validation validation) => new(validation);
 
     public static implicit operator Result<TValue>(List<Validation> validations) => new(validations);
+
+    public static implicit operator Result<TValue>(ValidationList validations) => new(validations);
 }
 
 public class Result
@@ -53,6 +55,11 @@ public class Result
     public Result(IEnumerable<Validation> validations)
     {
         Validations = validations.ToList();
+    }
+
+    public Result(ValidationList validationList)
+    {
+        Validations = validationList;
     }
 
     public Result(Validation validation)
