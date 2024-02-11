@@ -40,12 +40,18 @@ public class ResultTests
         Result<string> result2 = SuccessValidation;
         Result<string> result3 = ErrorValidationList;
         Result<string> result4 = new Validation[2] { SuccessValidation, ErrorValidation };
+        Result<string> result5 = new(SuccessValidation, value);
+        Result<string> result6 = new(ErrorValidationList, value);
 
         // Assert
         Assert.Equal(value, result.Value);
         Assert.Equal(SuccessValidation, result2.Validations[0]);
         Assert.Equal(ErrorValidationList.Count, result3.Validations.Count);
         Assert.Equal(2, result4.Validations.Count);
+        Assert.Equal(value, result5.Value);
+        Assert.Equal(SuccessValidation, result5.Validations[0]);
+        Assert.Equal(value, result6.Value);
+        Assert.Equal(ErrorValidationList.Count, result6.Validations.Count);
     }
 
     [Fact]
