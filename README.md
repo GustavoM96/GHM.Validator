@@ -167,6 +167,34 @@ validationError.Message; // "Error message"
 validationError.IsValid; // false
 ```
 
+### Result
+
+Result is a object to return a value and/or validations
+
+```csharp
+using GHM.Validator;
+public Result<User> CreateUser(CreateUserRequest request)
+{
+    IValidate validate;
+
+    ValidationList validations = new
+    {
+        validate.IfNotNull(request.Name,"Name must not be null"),
+        validate.IfNotZero(request.Age,"Age must not be 0")
+    };
+
+    if(validations.IsError)
+    {
+        return validations
+    }
+
+    User user = _userRepository.Create(request);
+
+    return new Result<User>(validations, user); // Return all validations and value
+    return user; // Return only value
+}
+```
+
 ## Interfaces
 
 ### IValidate
