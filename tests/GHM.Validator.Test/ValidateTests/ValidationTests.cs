@@ -81,4 +81,40 @@ public class ValidationTests
         Assert.Equal(ErrorType.Conflict, asConflict.ErrorType);
         Assert.Equal(ErrorType.Unauthorized, asUnauthorized.ErrorType);
     }
+
+    [Fact]
+    public void Test_Validation_BindError_WhenError_ShouldBind_Data()
+    {
+        // Arrange
+
+        // Act
+        var error = Error.Conflict("invalid data", "Movie.Title");
+        var result = Validation.Error(_message).BindError(error);
+
+        // Assert
+        Assert.NotEqual(_message, result.Message);
+        Assert.False(result.IsValid);
+
+        Assert.Equal(error.Title, result.Title);
+        Assert.Equal(error.Message, result.Message);
+        Assert.Equal(error.ErrorType, result.ErrorType);
+    }
+
+    [Fact]
+    public void Test_Validation_BindError_WhenSucces_ShouldNotBind_Data()
+    {
+        // Arrange
+
+        // Act
+        var error = Error.Conflict("invalid title", "Movie.Title");
+        var result = Validation.Success(_message).BindError(error);
+
+        // Assert
+        Assert.Equal(_message, result.Message);
+        Assert.True(result.IsValid);
+
+        Assert.NotEqual(error.Title, result.Title);
+        Assert.NotEqual(error.Message, result.Message);
+        Assert.NotEqual(error.ErrorType, result.ErrorType);
+    }
 }
