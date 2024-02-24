@@ -67,7 +67,7 @@ public class ResultTests
         Result<string> result4 = new List<Validation>(2) { SuccessValidation, ErrorValidation };
         Result<string> result5 = ErrorData;
         Result<string> result6 = new List<Error>(1) { ErrorData };
-        
+
         // Assert
         Assert.Contains(SuccessValidation, result.Validations);
         Assert.Contains(SuccessValidation, result2.Validations);
