@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Title>GHM Validator</Title>
-	<Version>3.4.0</Version>
+	<Version>3.4.1</Version>
 	<PackageId>GHM.Validator</PackageId>
 	<Authors>Gustavo Henrique Messias</Authors>
 	<Company>Gustavo Henrique Messias</Company>
