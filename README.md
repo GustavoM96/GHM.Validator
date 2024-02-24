@@ -95,6 +95,32 @@ public Validation[] ValidateCreateUserRequest(CreateUserRequest request)
 }
 ```
 
+You can set a ErrorData.
+
+```csharp
+using GHM.Validator;
+
+public static class UserError
+{
+    public static ValidationError NotFoundByName =>
+        ValidationError.NotFound("User not found","User.NotFoundByName");
+
+    public static ValidationError InvalidAge =>
+        ValidationError.AsFailure("Age must not be 0","User.InvalidAge");
+}
+
+public Validation[] ValidateCreateUserRequest(CreateUserRequest request)
+{
+    IValidate validate;
+
+    return new Validation[]
+    {
+        validate.IfNotNull(request.UserName).BindError(UserError.NotFoundByName),
+        validate.IfNotZero(request.UserAge).BindError(UserError.InvalidAge)
+    };
+}
+```
+
 Throw Exception from validation if it's invalid.
 
 ```csharp
