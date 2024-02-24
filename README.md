@@ -102,11 +102,8 @@ using GHM.Validator;
 
 public static class UserError
 {
-    public static ValidationError NotFoundByName =>
-        ValidationError.NotFound("User not found","User.NotFoundByName");
-
-    public static ValidationError InvalidAge =>
-        ValidationError.AsFailure("Age must not be 0","User.InvalidAge");
+    public static Error NotFoundByName => Error.NotFound("User not found","User.NotFoundByName");
+    public static Error InvalidAge => Error.AsFailure("Age must not be 0","User.InvalidAge");
 }
 
 public Validation[] ValidateCreateUserRequest(CreateUserRequest request)
