@@ -35,6 +35,12 @@ public class Result<TValue> : Result
 
     public static implicit operator Result<TValue>(Validation validation) => new(validation);
 
+    public static implicit operator Result<TValue>(Error error) =>
+        new(Validation.Create(false, error.Message, error.Title, error.ErrorType));
+
+    public static implicit operator Result<TValue>(List<Error> errors) =>
+        new(errors.Select(error => Validation.Create(false, error.Message, error.Title, error.ErrorType)));
+
     public static implicit operator Result<TValue>(List<Validation> validations) => new(validations);
 
     public static implicit operator Result<TValue>(ValidationList validations) => new(validations);
@@ -94,6 +100,12 @@ public class Result
     public static implicit operator Result(Validation[] validations) => new(validations);
 
     public static implicit operator Result(Validation validation) => new(validation);
+
+    public static implicit operator Result(Error error) =>
+        new(Validation.Create(false, error.Message, error.Title, error.ErrorType));
+
+    public static implicit operator Result(List<Error> errors) =>
+        new(errors.Select(error => Validation.Create(false, error.Message, error.Title, error.ErrorType)));
 
     public static implicit operator Result(List<Validation> validations) => new(validations);
 }

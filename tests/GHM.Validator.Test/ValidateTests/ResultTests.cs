@@ -9,6 +9,7 @@ public class ResultTests
     private static Validation ErrorValidation => Validation.Error("error test");
     private static Validation ErrorValidation2 => Validation.Error("error test2");
     private static Validation SuccessValidation => Validation.Success("success test");
+    private static Error ErrorData => Error.Conflict("test conflict");
     private static ValidationList ErrorValidationList => new() { ErrorValidation, ErrorValidation2, SuccessValidation };
 
     [Fact]
@@ -21,12 +22,16 @@ public class ResultTests
         Result result2 = ErrorValidationList;
         Result result3 = new Validation[2] { SuccessValidation, ErrorValidation };
         Result result4 = new List<Validation>(2) { SuccessValidation, ErrorValidation };
+        Result result5 = ErrorData;
+        Result result6 = new List<Error>(1) { ErrorData };
 
         // Assert
         Assert.Contains(SuccessValidation, result.Validations);
         Assert.Contains(SuccessValidation, result2.Validations);
         Assert.Contains(SuccessValidation, result3.Validations);
         Assert.Contains(SuccessValidation, result4.Validations);
+        Assert.Contains(ErrorData.Message, result5.Validations[0].Message);
+        Assert.Contains(ErrorData.Message, result6.Validations[0].Message);
     }
 
     [Fact]
@@ -60,12 +65,16 @@ public class ResultTests
         Result<string> result2 = ErrorValidationList;
         Result<string> result3 = new Validation[2] { SuccessValidation, ErrorValidation };
         Result<string> result4 = new List<Validation>(2) { SuccessValidation, ErrorValidation };
-
+        Result<string> result5 = ErrorData;
+        Result<string> result6 = new List<Error>(1) { ErrorData };
+        
         // Assert
         Assert.Contains(SuccessValidation, result.Validations);
         Assert.Contains(SuccessValidation, result2.Validations);
         Assert.Contains(SuccessValidation, result3.Validations);
         Assert.Contains(SuccessValidation, result4.Validations);
+        Assert.Contains(ErrorData.Message, result5.Validations[0].Message);
+        Assert.Contains(ErrorData.Message, result6.Validations[0].Message);
     }
 
     [Fact]

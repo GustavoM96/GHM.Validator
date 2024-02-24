@@ -8,14 +8,16 @@ public struct Validation
     public readonly bool IsError => !IsValid;
     public ErrorType? ErrorType { get; private set; }
 
-    private Validation(bool isValid, string message)
+    private Validation(bool isValid, string message, string? title = null, ErrorType? errorType = null)
     {
         IsValid = isValid;
         Message = message;
-        ErrorType = isValid ? null : Validator.ErrorType.Validation;
+        Title = title;
+        ErrorType = isValid ? null : errorType ?? Validator.ErrorType.Validation;
     }
 
-    public static Validation Create(bool isValid, string message) => new(isValid, message);
+    public static Validation Create(bool isValid, string message, string title, ErrorType errorType) =>
+        new(isValid, message, title, errorType);
 
     public static Validation Success(string message) => new(true, message);
 
@@ -23,7 +25,7 @@ public struct Validation
 
     private Validation WithErrorType(ErrorType errorType)
     {
-        if (!IsValid)
+        if (IsError)
         {
             ErrorType = errorType;
         }
@@ -34,6 +36,11 @@ public struct Validation
     {
         Title = title;
         return this;
+    }
+
+    public Validation BindError(Error error)
+    {
+        return IsValid ? this : new(false, error.Message, error.Title, error.ErrorType);
     }
 
     public Validation AsFailure() => WithErrorType(Validator.ErrorType.Failure);
@@ -47,4 +54,37 @@ public struct Validation
     public Validation AsConflict() => WithErrorType(Validator.ErrorType.Conflict);
 
     public Validation AsUnauthorized() => WithErrorType(Validator.ErrorType.Unauthorized);
+}
+
+public struct Error
+{
+    public string Title { get; private set; }
+    public string Message { get; init; }
+    public bool IsValid { get; } = false;
+    public ErrorType ErrorType { get; private set; }
+
+    private Error(string message, string title, ErrorType errorType)
+    {
+        Title = title;
+        Message = message;
+        ErrorType = errorType;
+    }
+
+    public static Error Failure(string message, string title = "Generic.Error") =>
+        new(message, title, ErrorType.Failure);
+
+    public static Error NotFound(string message, string title = "Generic.Error") =>
+        new(message, title, ErrorType.NotFound);
+
+    public static Error Unexpected(string message, string title = "Generic.Error") =>
+        new(message, title, ErrorType.Unexpected);
+
+    public static Error Validation(string message, string title = "Generic.Error") =>
+        new(message, title, ErrorType.Validation);
+
+    public static Error Conflict(string message, string title = "Generic.Error") =>
+        new(message, title, ErrorType.Conflict);
+
+    public static Error Unauthorized(string message, string title = "Generic.Error") =>
+        new(message, title, ErrorType.Unauthorized);
 }
