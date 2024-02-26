@@ -38,10 +38,7 @@ public struct Validation
         return this;
     }
 
-    public Validation BindError(Error error)
-    {
-        return IsValid ? this : new(false, error.Message, error.Title, error.ErrorType);
-    }
+    public Validation BindError(Error error) => IsValid ? this : error.ToValidation();
 
     public Validation AsFailure() => WithErrorType(Validator.ErrorType.Failure);
 
