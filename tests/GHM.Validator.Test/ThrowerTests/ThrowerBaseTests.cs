@@ -41,4 +41,34 @@ public class ThrowerBaseTests
         var ex = Assert.ThrowsAny<ArgumentException>(Result);
         Assert.Equal(errorMessage, ex.Message);
     }
+
+    [Fact]
+    public void Test_ThrowIfError_When_NotValidated_ShouldThrow_AndResetInnertThrower()
+    {
+        // Arrange
+        string? stringTest = null;
+
+        // Act
+        void Result() => _thrower.WithException(message => new FormatException(message)).IfEmpty(stringTest);
+        void ResultWithInitialException() => _thrower.IfEmpty(stringTest);
+
+        // Assert
+        Assert.ThrowsAny<FormatException>(Result);
+        Assert.ThrowsAny<ArgumentException>(ResultWithInitialException);
+    }
+
+    [Fact]
+    public void Test_ThrowIfError_When_Validated_ShouldReturn_True_AndResetInnertThrower()
+    {
+        // Arrange
+        string? stringTest = "test123";
+        string errorStringTest = "";
+
+        // Act
+        _thrower.WithException(message => new FormatException(message)).IfEmpty(stringTest);
+        void ResultWithInitialException() => _thrower.IfEmpty(errorStringTest);
+
+        // Assert
+        Assert.ThrowsAny<ArgumentException>(ResultWithInitialException);
+    }
 }
