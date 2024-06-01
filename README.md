@@ -161,10 +161,14 @@ using GHM.Validator;
 public bool ValidateCreateUserRequest(CreateUserRequest request)
 {
     IThrower thrower;
-    thrower.SetException((message) => new TestException(message))
 
-    thrower.IfNull(request.Name,"Name must not be null");
-    thrower.IfZero(request.Age,"Age must not be 0");
+    thrower
+        .WithException((message) => new NameTestException(message))
+        .IfNull(request.Name,"Name must not be null");
+
+    thrower
+        .WithException((message) => new AgeTestException(message))
+        .IfZero(request.Age,"Age must not be 0");
 
     return true;
 }
@@ -255,7 +259,7 @@ You can use it to throw exception.
 ```csharp
 public interface IThrower
 {
-    void SetException(Func<string, Exception> exceptionThrower);
+    Thrower WithException(Func<string, Exception> exceptionThrower);
     bool IfFalse(bool condition, string message = null);
     bool IfTrue(bool condition, string message = null);
     bool IfDefault<T>(T obj, string message = null);
