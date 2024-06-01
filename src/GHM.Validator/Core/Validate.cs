@@ -144,7 +144,7 @@ public class Validate : ValidateBase, IValidate
     }
 
     public Validation IfNotEmpty(
-        string text,
+        string? text,
         string? message = null,
         [CallerArgumentExpression(nameof(text))] string? paramName = null
     )
@@ -155,7 +155,7 @@ public class Validate : ValidateBase, IValidate
     }
 
     public Validation IfParseToLong(
-        string text,
+        string? text,
         string? message = null,
         [CallerArgumentExpression(nameof(text))] string? paramName = null
     )

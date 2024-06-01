@@ -50,9 +50,9 @@ public interface IThrower
         string? message = null,
         [CallerArgumentExpression(nameof(number))] string? paramName = null
     );
-    bool IfEmpty(string text, string? message = null, [CallerArgumentExpression(nameof(text))] string? paramName = null);
+    bool IfEmpty(string? text, string? message = null, [CallerArgumentExpression(nameof(text))] string? paramName = null);
     bool IfNotParseToLong(
-        string text,
+        string? text,
         string? message = null,
         [CallerArgumentExpression(nameof(text))] string? paramName = null
     );

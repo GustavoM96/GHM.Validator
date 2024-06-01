@@ -66,12 +66,12 @@ public interface IValidate
         [CallerArgumentExpression(nameof(number))] string? paramName = null
     );
     Validation IfNotEmpty(
-        string text,
+        string? text,
         string? message = null,
         [CallerArgumentExpression(nameof(text))] string? paramName = null
     );
     Validation IfParseToLong(
-        string text,
+        string? text,
         string? message = null,
         [CallerArgumentExpression(nameof(text))] string? paramName = null
     );

@@ -139,7 +139,7 @@ public class Thrower : ThowerBase, IThrower
     }
 
     public bool IfEmpty(
-        string text,
+        string? text,
         string? message = null,
         [CallerArgumentExpression(nameof(text))] string? paramName = null
     )
@@ -148,7 +148,7 @@ public class Thrower : ThowerBase, IThrower
     }
 
     public bool IfNotParseToLong(
-        string text,
+        string? text,
         string? message = null,
         [CallerArgumentExpression(nameof(text))] string? paramName = null
     )
