@@ -14,7 +14,7 @@ public struct Error
         ErrorType = errorType;
     }
 
-    public Validation ToValidation() => Validator.Validation.Create(false, Message, Title, ErrorType);
+    public readonly Validation ToValidation() => Validator.Validation.Create(false, Message, Title, ErrorType);
 
     public static Error Failure(string message, string title = "Generic.Error") => new(message, title, ErrorType.Failure);
 

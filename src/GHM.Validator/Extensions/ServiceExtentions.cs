@@ -7,8 +7,8 @@ public static class ServiceExtentions
 {
     public static IServiceCollection AddGhmValidator(this IServiceCollection services)
     {
+        services.AddTransient<IThrower>(sp => new Thrower());
         services.AddTransient<IValidate, Validate>();
-        services.AddTransient<IThrower, Thrower>();
         return services;
     }
 
@@ -17,7 +17,7 @@ public static class ServiceExtentions
         Func<string, Exception> exceptionThrower
     )
     {
-        services.AddTransient<IThrower>(sp => Thrower.Create(exceptionThrower));
+        services.AddTransient<IThrower>(sp => new Thrower(exceptionThrower));
         services.AddTransient<IValidate, Validate>();
         return services;
     }

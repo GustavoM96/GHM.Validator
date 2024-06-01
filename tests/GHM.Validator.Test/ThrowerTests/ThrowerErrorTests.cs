@@ -17,7 +17,7 @@ public class ThrowerErrorTests
     {
         // Arrange
         int obj = default;
-        var thrower = Thrower.Create((message) => new FileLoadException(message));
+        var thrower = new Thrower((message) => new FileLoadException(message));
 
         // Act
         void GetResult() => thrower.IfDefault(obj, _message);

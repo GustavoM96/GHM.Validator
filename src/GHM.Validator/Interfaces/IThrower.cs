@@ -4,7 +4,7 @@ namespace GHM.Validator.Interfaces;
 
 public interface IThrower
 {
-    void SetException(Func<string, Exception> exceptionThrower);
+    Thrower WithException(Func<string, Exception> exceptionThrower);
     bool IfFalse(
         bool condition,
         string? message = null,

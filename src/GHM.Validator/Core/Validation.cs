@@ -38,7 +38,7 @@ public struct Validation
         return this;
     }
 
-    public Validation BindError(Error error) => IsValid ? this : error.ToValidation();
+    public readonly Validation BindError(Error error) => IsValid ? this : error.ToValidation();
 
     public Validation AsFailure() => WithErrorType(Validator.ErrorType.Failure);
 
