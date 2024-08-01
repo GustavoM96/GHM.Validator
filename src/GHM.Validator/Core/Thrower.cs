@@ -207,7 +207,7 @@ public class Thrower : ThowerBase, IThrower
             MailAddress mailAddress = new(email);
             error = false;
         }
-        catch (FormatException)
+        catch (Exception)
         {
             error = true;
         }

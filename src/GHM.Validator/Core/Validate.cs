@@ -212,7 +212,7 @@ public class Validate : ValidateBase, IValidate
             MailAddress mailAddress = new(email);
             return Validation.Success(message ?? GetDefaultSuccessMessage(nameof(IfEmail), paramName, email));
         }
-        catch (FormatException)
+        catch (Exception)
         {
             return Validation.Error(message ?? GetDefaultErrorMessage(nameof(IfEmail), paramName, email));
         }
