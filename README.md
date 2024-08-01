@@ -222,6 +222,27 @@ public Result<User> CreateUser(CreateUserRequest request)
 }
 ```
 
+Using the Match Method to execute a action on success or error condition.
+
+```csharp
+using GHM.Validator;
+public IEnumerable<string> GetResultAsListOfString(CreateUserRequest request)
+{
+    IValidate validate;
+
+    ValidationList validations = new
+    {
+        validate.IfNotNull(request.Name,"Name must not be null"),
+        validate.IfNotZero(request.Age,"Age must not be 0")
+    };
+    var result = new Result<User>(validations, user);
+
+    return result.Match(
+        (vals) => vals.Select(val => val.Message),
+        (errors) => errors.Select(error => error.Message));
+}
+```
+
 ## Interfaces
 
 ### IValidate
@@ -249,6 +270,7 @@ public interface IValidate
     Validation IfNotEmpty<T>(IEnumerable<T> list, string message = null);
     Validation IfOlder(DateTime date, DateTime toCompare, string message = null);
     Validation IfOlderOrEqual(DateTime date, DateTime toCompare, string message = null);
+    Validation IfEmail(string email, string? message = null);
 }
 ```
 
@@ -277,6 +299,7 @@ public interface IThrower
     bool IfEmpty<T>(IEnumerable<T> list, string message = null);
     bool IfOlder(DateTime date, DateTime toCompare, string message = null);
     bool IfOlderOrEqual(DateTime date, DateTime toCompare, string message = null);
+     bool IfNotEmail(string email, string? message = null);
 }
 ```
 
