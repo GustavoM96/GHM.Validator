@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Net.Mail;
+using System.Runtime.CompilerServices;
 using GHM.Validator.Interfaces;
 
 namespace GHM.Validator;
@@ -37,7 +38,7 @@ public class Thrower : ThowerBase, IThrower
 
     public bool IfDefault<T>(T obj, string? message = null, [CallerArgumentExpression(nameof(obj))] string? paramName = null)
     {
-        var isDefault = EqualityComparer<T>.Default.Equals(obj, default);
+        bool isDefault = EqualityComparer<T>.Default.Equals(obj, default);
         return ThrowIfError(isDefault, message ?? GetDefaultErrorMessage(nameof(IfDefault), paramName, obj));
     }
 
@@ -154,7 +155,7 @@ public class Thrower : ThowerBase, IThrower
     )
     {
         return ThrowIfError(
-            !long.TryParse(text, out var _),
+            !long.TryParse(text, out long _),
             message ?? GetDefaultErrorMessage(nameof(IfNotParseToLong), paramName, text)
         );
     }
@@ -192,5 +193,25 @@ public class Thrower : ThowerBase, IThrower
             date <= toCompare,
             message ?? GetDefaultErrorMessage(nameof(IfOlderOrEqual), paramName, date, toCompare)
         );
+    }
+
+    public bool IfNotEmail(
+        string email,
+        string? message = null,
+        [CallerArgumentExpression(nameof(email))] string? paramName = null
+    )
+    {
+        bool error = default;
+        try
+        {
+            MailAddress mailAddress = new(email);
+            error = false;
+        }
+        catch (FormatException)
+        {
+            error = true;
+        }
+
+        return ThrowIfError(error, message ?? GetDefaultErrorMessage(nameof(IfNotEmail), paramName, email));
     }
 }

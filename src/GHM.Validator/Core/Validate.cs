@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Net.Mail;
+using System.Runtime.CompilerServices;
 using GHM.Validator.Interfaces;
 
 namespace GHM.Validator;
@@ -33,7 +34,7 @@ public class Validate : ValidateBase, IValidate
         [CallerArgumentExpression(nameof(obj))] string? paramName = null
     )
     {
-        var isDefault = EqualityComparer<T>.Default.Equals(obj, default);
+        bool isDefault = EqualityComparer<T>.Default.Equals(obj, default);
         return isDefault
             ? Validation.Error(message ?? GetDefaultErrorMessage(nameof(IfNotDefault), paramName, obj))
             : Validation.Success(message ?? GetDefaultSuccessMessage(nameof(IfNotDefault), paramName, obj));
@@ -160,7 +161,7 @@ public class Validate : ValidateBase, IValidate
         [CallerArgumentExpression(nameof(text))] string? paramName = null
     )
     {
-        return long.TryParse(text, out var _)
+        return long.TryParse(text, out long _)
             ? Validation.Success(message ?? GetDefaultSuccessMessage(nameof(IfParseToLong), paramName, text))
             : Validation.Error(message ?? GetDefaultErrorMessage(nameof(IfParseToLong), paramName, text));
     }
@@ -198,5 +199,22 @@ public class Validate : ValidateBase, IValidate
         return date <= toCompare
             ? Validation.Success(message ?? GetDefaultSuccessMessage(nameof(IfOlderOrEqual), paramName, date, toCompare))
             : Validation.Error(message ?? GetDefaultErrorMessage(nameof(IfOlderOrEqual), paramName, date, toCompare));
+    }
+
+    public Validation IfEmail(
+        string email,
+        string? message = null,
+        [CallerArgumentExpression(nameof(email))] string? paramName = null
+    )
+    {
+        try
+        {
+            MailAddress mailAddress = new(email);
+            return Validation.Success(message ?? GetDefaultSuccessMessage(nameof(IfEmail), paramName, email));
+        }
+        catch (FormatException)
+        {
+            return Validation.Error(message ?? GetDefaultErrorMessage(nameof(IfEmail), paramName, email));
+        }
     }
 }
