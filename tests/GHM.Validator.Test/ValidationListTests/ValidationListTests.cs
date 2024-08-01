@@ -29,19 +29,6 @@ public class ValidationListTests
     }
 
     [Fact]
-    public void Test_Errors_ShouldReturn_AllErrorValidation()
-    {
-        // Arrange
-
-        // Act
-        var errors = ErrorValidationList.Errors;
-
-        //Assert
-        Assert.True(errors.All(e => e.IsError));
-        Assert.Equal(2, errors.Count);
-    }
-
-    [Fact]
     public void Test_ThrowErrors_When_HasErrorItems_ShouldThrowValidationExcpetion()
     {
         // Arrange
@@ -53,8 +40,8 @@ public class ValidationListTests
         //Assert
         var ex = Assert.Throws<ValidationException>(ThrowError);
         Assert.Equal(errorMessage, ex.Message);
-        Assert.Contains(ErrorValidation, ex.Validations);
-        Assert.Contains(ErrorValidation2, ex.Validations);
+        Assert.Contains(ErrorValidation.Message, ex.Errors.Select(e => e.Message));
+        Assert.Contains(ErrorValidation2.Message, ex.Errors.Select(e => e.Message));
     }
 
     [Fact]
@@ -83,8 +70,8 @@ public class ValidationListTests
         //Assert
         var ex = Assert.Throws<ValidationException>(ThrowError);
         Assert.Equal(errorMessage, ex.Message);
-        Assert.Contains(ErrorValidation, ex.Validations);
-        Assert.Contains(ErrorValidation2, ex.Validations);
+        Assert.Contains(ErrorValidation.Message, ex.Errors.Select(e => e.Message));
+        Assert.Contains(ErrorValidation2.Message, ex.Errors.Select(e => e.Message));
     }
 
     [Fact]
@@ -135,5 +122,15 @@ public class ValidationListTests
         // Assert
         Assert.False(ErrorValidationList.IsValid);
         Assert.Equal(ErrorType.Failure, ErrorValidationList.ErrorType);
+    }
+
+    [Fact]
+    public void Test_FirstError()
+    {
+        // Act
+        var firstError = ErrorValidationList.FirstError;
+
+        //Assert
+        Assert.True(firstError.Message == ErrorValidation.Message || firstError.Message == ErrorValidation2.Message);
     }
 }

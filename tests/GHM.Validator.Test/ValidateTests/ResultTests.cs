@@ -4,8 +4,8 @@ namespace GHM.Validator.Test.ValidateTests;
 
 public class ResultTests
 {
-    private readonly Result _result = Result.Create();
-    private readonly Result<string> _resultValue = Result<string>.Create("test Value");
+    private readonly Result _result = new();
+    private readonly Result<string> _resultValue = new("test Value");
     private static Validation ErrorValidation => Validation.Error("error test");
     private static Validation ErrorValidation2 => Validation.Error("error test2");
     private static Validation SuccessValidation => Validation.Success("success test");
@@ -41,7 +41,7 @@ public class ResultTests
         var value = "test Value";
 
         // Act
-        Result<string> result = Result<string>.Create(value);
+        Result<string> result = new(value);
         Result<string> result2 = new(SuccessValidation, value);
         Result<string> result3 = new(ErrorValidationList, value);
         Result<string> result4 = new(new Validation[2] { SuccessValidation, ErrorValidation }, value);
@@ -96,8 +96,8 @@ public class ResultTests
     public void Test_IsError_When_FailureCase_ShouldReturnTrue()
     {
         // Arrange
-        Result<string> result = Result<string>.Create("test Value");
-        Result result2 = Result.Create();
+        Result<string> result = new("test Value");
+        Result result2 = new();
 
         result.AddValidation(ErrorValidation);
         result2.AddValidations(ErrorValidationList);
@@ -116,15 +116,15 @@ public class ResultTests
     public void Test_Errors_ShouldReturn_AllValidationsInvalid()
     {
         // Arrange
-        Result result = Result.Create();
+        Result result = new();
         result.AddValidations(ErrorValidationList);
 
         // Act
         var errors = result.Errors;
 
         // Assert
-        Assert.Contains(ErrorValidation, errors);
-        Assert.Contains(ErrorValidation2, errors);
+        Assert.Contains(ErrorValidation.Message, errors.Select(e => e.Message));
+        Assert.Contains(ErrorValidation2.Message, errors.Select(e => e.Message));
         Assert.Equal(2, errors.Count);
     }
 
@@ -141,8 +141,8 @@ public class ResultTests
         //Assert
         var ex = Assert.Throws<ValidationException>(ThrowError);
         Assert.Equal(errorMessage, ex.Message);
-        Assert.Contains(ErrorValidation, ex.Validations);
-        Assert.Contains(ErrorValidation2, ex.Validations);
+        Assert.Contains(ErrorValidation.Message, ex.Errors.Select(x => x.Message));
+        Assert.Contains(ErrorValidation2.Message, ex.Errors.Select(x => x.Message));
     }
 
     [Fact]
@@ -172,8 +172,8 @@ public class ResultTests
         //Assert
         var ex = Assert.Throws<ValidationException>(ThrowError);
         Assert.Equal(errorMessage, ex.Message);
-        Assert.Contains(ErrorValidation, ex.Validations);
-        Assert.Contains(ErrorValidation2, ex.Validations);
+        Assert.Contains(ErrorValidation.Message, ex.Errors.Select(x => x.Message));
+        Assert.Contains(ErrorValidation2.Message, ex.Errors.Select(x => x.Message));
     }
 
     [Fact]
@@ -187,5 +187,62 @@ public class ResultTests
 
         //Assert
         ThrowError();
+    }
+
+    [Fact]
+    public void Test_Match_Should_HasAsParamValidationsOrErrors()
+    {
+        // Arrange
+        Result<string> result = new(new Validation[3] { SuccessValidation, ErrorValidation, ErrorValidation2 });
+        Result<string> result2 = new(new Validation[1] { SuccessValidation });
+
+        // Act
+        var errorResult = result.Match((vals) => vals.Select(val => val.Message), (error) => error.Select(x => x.Message));
+        var successResult = result2.Match(
+            (vals) => vals.Select(val => val.Message),
+            (error) => error.Select(x => x.Message)
+        );
+
+        //Assert
+        Assert.Contains(ErrorValidation.Message, errorResult);
+        Assert.Contains(ErrorValidation2.Message, errorResult);
+        Assert.Contains(SuccessValidation.Message, successResult);
+    }
+
+    [Fact]
+    public void Test_MatchWithValue_Should_HasAsParamValidationsAndValueOrErrors()
+    {
+        // Arrange
+        var testValue = "testValue";
+        Result<string> result = new(new Validation[3] { SuccessValidation, ErrorValidation, ErrorValidation2 }, testValue);
+        Result<string> result2 = new(new Validation[1] { SuccessValidation }, testValue);
+
+        // Act
+        var errorResult = result.Match(
+            (value, vals) => vals.Select(val => val.Message + value),
+            (value, error) => error.Select(x => x.Message + value)
+        );
+        var successResult = result2.Match(
+            (value, vals) => vals.Select(val => val.Message + value),
+            (error) => error.Select(x => x.Message)
+        );
+
+        //Assert
+        Assert.Contains(ErrorValidation.Message + testValue, errorResult);
+        Assert.Contains(ErrorValidation2.Message + testValue, errorResult);
+        Assert.Contains(SuccessValidation.Message + testValue, successResult);
+    }
+
+    [Fact]
+    public void Test_FirstError()
+    {
+        // Arrange
+        Result result = new(new Validation[3] { SuccessValidation, ErrorValidation, ErrorValidation2 });
+
+        // Act
+        var firstError = result.FirstError;
+
+        //Assert
+        Assert.True(firstError.Message == ErrorValidation.Message || firstError.Message == ErrorValidation2.Message);
     }
 }
