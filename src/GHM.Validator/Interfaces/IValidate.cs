@@ -92,4 +92,10 @@ public interface IValidate
         string? message = null,
         [CallerArgumentExpression(nameof(date))] string? paramName = null
     );
+
+    Validation IfEmail(
+        string email,
+        string? message = null,
+        [CallerArgumentExpression(nameof(email))] string? paramName = null
+    );
 }

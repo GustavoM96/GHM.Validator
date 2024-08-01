@@ -73,4 +73,9 @@ public interface IThrower
         string? message = null,
         [CallerArgumentExpression(nameof(date))] string? paramName = null
     );
+    bool IfNotEmail(
+        string email,
+        string? message = null,
+        [CallerArgumentExpression(nameof(email))] string? paramName = null
+    );
 }
