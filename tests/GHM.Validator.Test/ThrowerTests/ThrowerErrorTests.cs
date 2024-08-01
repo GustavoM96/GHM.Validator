@@ -36,7 +36,8 @@ public class ThrowerErrorTests
         void GetResult() => _thrower.IfTrue(condition, _message);
 
         // Assert
-        Assert.Throws<ArgumentException>(GetResult);
+        var ex = Assert.Throws<ArgumentException>(GetResult);
+        Assert.Equal(_message, ex.Message);
     }
 
     [Fact]
@@ -49,7 +50,8 @@ public class ThrowerErrorTests
         void GetResult() => _thrower.IfFalse(condition, _message);
 
         // Assert
-        Assert.Throws<ArgumentException>(GetResult);
+        var ex = Assert.Throws<ArgumentException>(GetResult);
+        Assert.Equal(_message, ex.Message);
     }
 
     [Fact]
@@ -62,7 +64,8 @@ public class ThrowerErrorTests
         void GetResult() => _thrower.IfDefault(obj, _message);
 
         // Assert
-        Assert.Throws<ArgumentException>(GetResult);
+        var ex = Assert.Throws<ArgumentException>(GetResult);
+        Assert.Equal(_message, ex.Message);
     }
 
     [Fact]
@@ -75,7 +78,8 @@ public class ThrowerErrorTests
         void GetResult() => _thrower.IfNotNull(obj, _message);
 
         // Assert
-        Assert.Throws<ArgumentException>(GetResult);
+        var ex = Assert.Throws<ArgumentException>(GetResult);
+        Assert.Equal(_message, ex.Message);
     }
 
     [Fact]
@@ -88,7 +92,8 @@ public class ThrowerErrorTests
         void GetResult() => _thrower.IfNull(obj, _message);
 
         // Assert
-        Assert.Throws<ArgumentException>(GetResult);
+        var ex = Assert.Throws<ArgumentException>(GetResult);
+        Assert.Equal(_message, ex.Message);
     }
 
     [Fact]
@@ -102,7 +107,8 @@ public class ThrowerErrorTests
         void GetResult() => _thrower.IfNotEqual(obj, objToCompare, _message);
 
         // Assert
-        Assert.Throws<ArgumentException>(GetResult);
+        var ex = Assert.Throws<ArgumentException>(GetResult);
+        Assert.Equal(_message, ex.Message);
     }
 
     [Fact]
@@ -115,7 +121,8 @@ public class ThrowerErrorTests
         void GetResult() => _thrower.IfZero(obj, _message);
 
         // Assert
-        Assert.Throws<ArgumentException>(GetResult);
+        var ex = Assert.Throws<ArgumentException>(GetResult);
+        Assert.Equal(_message, ex.Message);
     }
 
     [Fact]
@@ -128,7 +135,8 @@ public class ThrowerErrorTests
         void GetResult() => _thrower.IfZero(obj, _message);
 
         // Assert
-        Assert.Throws<ArgumentException>(GetResult);
+        var ex = Assert.Throws<ArgumentException>(GetResult);
+        Assert.Equal(_message, ex.Message);
     }
 
     [Fact]
@@ -145,8 +153,10 @@ public class ThrowerErrorTests
         void GetResultEqual() => _thrower.IfGreaterOrEqual(obj, objToCompareEqual, _message);
 
         // Assert
-        Assert.Throws<ArgumentException>(GetResult);
-        Assert.Throws<ArgumentException>(GetResultEqual);
+        var ex = Assert.Throws<ArgumentException>(GetResult);
+        Assert.Equal(_message, ex.Message);
+        var equalEx = Assert.Throws<ArgumentException>(GetResultEqual);
+        Assert.Equal(_message, equalEx.Message);
     }
 
     [Fact]
@@ -160,7 +170,8 @@ public class ThrowerErrorTests
         void GetResult() => _thrower.IfGreater(obj, objToCompare, _message);
 
         // Assert
-        Assert.Throws<ArgumentException>(GetResult);
+        var ex = Assert.Throws<ArgumentException>(GetResult);
+        Assert.Equal(_message, ex.Message);
     }
 
     [Fact]
@@ -177,8 +188,10 @@ public class ThrowerErrorTests
         void GetResultEqual() => _thrower.IfGreaterOrEqual(obj, objToCompareEqual, _message);
 
         // Assert
-        Assert.Throws<ArgumentException>(GetResult);
-        Assert.Throws<ArgumentException>(GetResultEqual);
+        var ex = Assert.Throws<ArgumentException>(GetResult);
+        Assert.Equal(_message, ex.Message);
+        var equalEx = Assert.Throws<ArgumentException>(GetResultEqual);
+        Assert.Equal(_message, equalEx.Message);
     }
 
     [Fact]
@@ -192,7 +205,8 @@ public class ThrowerErrorTests
         void GetResult() => _thrower.IfGreater(obj, objToCompare, _message);
 
         // Assert
-        Assert.Throws<ArgumentException>(GetResult);
+        var ex = Assert.Throws<ArgumentException>(GetResult);
+        Assert.Equal(_message, ex.Message);
     }
 
     [Fact]
@@ -207,8 +221,10 @@ public class ThrowerErrorTests
         void GetResultNull() => _thrower.IfEmpty(objNull, _message);
 
         // Assert
-        Assert.Throws<ArgumentException>(GetResult);
-        Assert.Throws<ArgumentException>(GetResultNull);
+        var ex = Assert.Throws<ArgumentException>(GetResult);
+        Assert.Equal(_message, ex.Message);
+        var equalEx = Assert.Throws<ArgumentException>(GetResultNull);
+        Assert.Equal(_message, equalEx.Message);
     }
 
     [Fact]
@@ -221,7 +237,8 @@ public class ThrowerErrorTests
         void GetResult() => _thrower.IfNotParseToLong(obj, _message);
 
         // Assert
-        Assert.Throws<ArgumentException>(GetResult);
+        var ex = Assert.Throws<ArgumentException>(GetResult);
+        Assert.Equal(_message, ex.Message);
     }
 
     [Fact]
@@ -234,7 +251,8 @@ public class ThrowerErrorTests
         void GetResult() => _thrower.IfEmpty(obj, _message);
 
         // Assert
-        Assert.Throws<ArgumentException>(GetResult);
+        var ex = Assert.Throws<ArgumentException>(GetResult);
+        Assert.Equal(_message, ex.Message);
     }
 
     [Fact]
@@ -248,7 +266,8 @@ public class ThrowerErrorTests
         void GetResult() => _thrower.IfOlder(dateOlder, dateYonger, _message);
 
         // Assert
-        Assert.Throws<ArgumentException>(GetResult);
+        var ex = Assert.Throws<ArgumentException>(GetResult);
+        Assert.Equal(_message, ex.Message);
     }
 
     [Fact]
@@ -264,7 +283,27 @@ public class ThrowerErrorTests
         void GetResultEqual() => _thrower.IfOlderOrEqual(dateOlder, dateOlderEqual, _message);
 
         // Assert
-        Assert.Throws<ArgumentException>(GetResult);
-        Assert.Throws<ArgumentException>(GetResultEqual);
+        var ex = Assert.Throws<ArgumentException>(GetResult);
+        Assert.Equal(_message, ex.Message);
+        var equalEx = Assert.Throws<ArgumentException>(GetResultEqual);
+        Assert.Equal(_message, equalEx.Message);
+    }
+
+    [Theory]
+    [InlineData("gustavogmail.com")]
+    [InlineData("123a.lalallalala")]
+    [InlineData("123abc")]
+    [InlineData("")]
+    [InlineData(null)]
+    public void Test_ThrowIfNotEmail_Error(string mailAddress)
+    {
+        // Arrange
+
+        // Act
+        void GetResult() => _thrower.IfNotEmail(mailAddress, _message);
+
+        // Assert
+        var ex = Assert.Throws<ArgumentException>(GetResult);
+        Assert.Equal(_message, ex.Message);
     }
 }

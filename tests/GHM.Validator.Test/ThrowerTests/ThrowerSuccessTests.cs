@@ -248,4 +248,19 @@ public class ThrowerSuccessTests
         // Assert
         Assert.True(result);
     }
+
+    [Theory]
+    [InlineData("gustavo.hmessias96@gmail.com")]
+    [InlineData("gustavo.hmessias96@teste123.com.br")]
+    [InlineData("123@teste123.com")]
+    public void Test_ThrowIfNotEmail_Error(string mailAddress)
+    {
+        // Arrange
+
+        // Act
+        var result = _thrower.IfNotEmail(mailAddress, _message);
+
+        // Assert
+        Assert.True(result);
+    }
 }

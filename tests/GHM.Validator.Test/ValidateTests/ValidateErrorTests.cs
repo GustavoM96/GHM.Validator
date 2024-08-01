@@ -23,6 +23,7 @@ public class ValidateErrorTests
 
         // Assert
         Assert.False(result.IsValid);
+        Assert.Equal(_message, result.Message);
     }
 
     [Fact]
@@ -36,6 +37,7 @@ public class ValidateErrorTests
 
         // Assert
         Assert.False(result.IsValid);
+        Assert.Equal(_message, result.Message);
     }
 
     [Fact]
@@ -49,6 +51,7 @@ public class ValidateErrorTests
 
         // Assert
         Assert.False(result.IsValid);
+        Assert.Equal(_message, result.Message);
     }
 
     [Fact]
@@ -62,6 +65,7 @@ public class ValidateErrorTests
 
         // Assert
         Assert.False(result.IsValid);
+        Assert.Equal(_message, result.Message);
     }
 
     [Fact]
@@ -75,6 +79,7 @@ public class ValidateErrorTests
 
         // Assert
         Assert.False(result.IsValid);
+        Assert.Equal(_message, result.Message);
     }
 
     [Fact]
@@ -89,6 +94,7 @@ public class ValidateErrorTests
 
         // Assert
         Assert.False(result.IsValid);
+        Assert.Equal(_message, result.Message);
     }
 
     [Fact]
@@ -102,6 +108,7 @@ public class ValidateErrorTests
 
         // Assert
         Assert.False(result.IsValid);
+        Assert.Equal(_message, result.Message);
     }
 
     [Fact]
@@ -115,6 +122,7 @@ public class ValidateErrorTests
 
         // Assert
         Assert.False(result.IsValid);
+        Assert.Equal(_message, result.Message);
     }
 
     [Fact]
@@ -131,7 +139,10 @@ public class ValidateErrorTests
 
         // Assert
         Assert.False(result.IsValid);
+        Assert.Equal(_message, result.Message);
+
         Assert.False(resultEqual.IsValid);
+        Assert.Equal(_message, resultEqual.Message);
     }
 
     [Fact]
@@ -146,6 +157,7 @@ public class ValidateErrorTests
 
         // Assert
         Assert.False(result.IsValid);
+        Assert.Equal(_message, result.Message);
     }
 
     [Fact]
@@ -162,7 +174,10 @@ public class ValidateErrorTests
 
         // Assert
         Assert.False(result.IsValid);
+        Assert.Equal(_message, result.Message);
+
         Assert.False(resultEqual.IsValid);
+        Assert.Equal(_message, resultEqual.Message);
     }
 
     [Fact]
@@ -177,6 +192,7 @@ public class ValidateErrorTests
 
         // Assert
         Assert.False(result.IsValid);
+        Assert.Equal(_message, result.Message);
     }
 
     [Fact]
@@ -192,7 +208,10 @@ public class ValidateErrorTests
 
         // Assert
         Assert.False(result.IsValid);
+        Assert.Equal(_message, result.Message);
+
         Assert.False(resultNull.IsValid);
+        Assert.Equal(_message, resultNull.Message);
     }
 
     [Fact]
@@ -206,6 +225,7 @@ public class ValidateErrorTests
 
         // Assert
         Assert.False(result.IsValid);
+        Assert.Equal(_message, result.Message);
     }
 
     [Fact]
@@ -219,6 +239,7 @@ public class ValidateErrorTests
 
         // Assert
         Assert.False(result.IsValid);
+        Assert.Equal(_message, result.Message);
     }
 
     [Fact]
@@ -235,7 +256,9 @@ public class ValidateErrorTests
 
         // Assert
         Assert.False(resultEqual.IsValid);
+        Assert.False(resultEqual.IsValid);
         Assert.False(result.IsValid);
+        Assert.Equal(_message, result.Message);
     }
 
     [Fact]
@@ -249,5 +272,24 @@ public class ValidateErrorTests
         var result = _validate.IfOlderOrEqual(dateYonger, dateOlder, _message);
 
         Assert.False(result.IsValid);
+        Assert.Equal(_message, result.Message);
+    }
+
+    [Theory]
+    [InlineData("gustavogmail.com")]
+    [InlineData("123a.lalallalala")]
+    [InlineData("123abc")]
+    [InlineData("")]
+    [InlineData(null)]
+    public void Test_ValidateEmail_Error(string mailAddress)
+    {
+        // Arrange
+
+        // Act
+        var result = _validate.IfEmail(mailAddress, _message);
+
+        // Assert
+        Assert.False(result.IsValid);
+        Assert.Equal(_message, result.Message);
     }
 }
