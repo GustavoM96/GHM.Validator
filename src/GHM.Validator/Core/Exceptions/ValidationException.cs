@@ -2,31 +2,31 @@ namespace GHM.Validator;
 
 public class ValidationException : Exception
 {
-    public List<Validation> Validations { get; init; }
+    public List<Error> Errors { get; init; }
 
     public ErrorType? ErrorType =>
-        Validations.Count switch
+        Errors.Count switch
         {
             0 => null,
-            1 => Validations[0].ErrorType,
-            _ => Validator.ErrorType.Failure
+            1 => Errors[0].ErrorType,
+            _ => Validator.ErrorType.Default
         };
 
-    public ValidationException(string? messsage, List<Validation> validations)
+    public ValidationException(string? messsage, List<Error> errors)
         : base(messsage)
     {
-        Validations = validations;
+        Errors = errors;
     }
 
-    public ValidationException(string? messsage, Exception innerException, List<Validation> validations)
+    public ValidationException(string? messsage, Exception innerException, List<Error> errors)
         : base(messsage, innerException)
     {
-        Validations = validations;
+        Errors = errors;
     }
 
-    public ValidationException(List<Validation> validations)
+    public ValidationException(List<Error> errors)
         : base()
     {
-        Validations = validations;
+        Errors = errors;
     }
 }

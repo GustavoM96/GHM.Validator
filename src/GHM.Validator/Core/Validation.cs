@@ -8,16 +8,13 @@ public struct Validation
     public readonly bool IsError => !IsValid;
     public ErrorType? ErrorType { get; private set; }
 
-    private Validation(bool isValid, string message, string? title = null, ErrorType? errorType = null)
+    public Validation(bool isValid, string message, string? title = null, ErrorType? errorType = null)
     {
         IsValid = isValid;
         Message = message;
         Title = title;
         ErrorType = isValid ? null : errorType ?? Validator.ErrorType.Validation;
     }
-
-    public static Validation Create(bool isValid, string message, string title, ErrorType errorType) =>
-        new(isValid, message, title, errorType);
 
     public static Validation Success(string message) => new(true, message);
 

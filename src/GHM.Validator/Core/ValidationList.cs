@@ -4,7 +4,7 @@ public class ValidationList : List<Validation>
 {
     public bool IsError => this.Any(validation => !validation.IsValid);
     public bool IsValid => !IsError;
-    public List<Validation> Errors => this.Where(validation => !validation.IsValid).ToList();
+    public List<Error> Errors => this.Where(validation => !validation.IsValid).Select(Error.FromValidation).ToList();
     public ErrorType? ErrorType =>
         Errors.Count switch
         {
@@ -13,7 +13,7 @@ public class ValidationList : List<Validation>
             _ => Validator.ErrorType.Failure
         };
 
-    public Validation FirstError => this.FirstOrDefault(validation => !validation.IsValid);
+    public Error FirstError => Errors.First();
 
     public ValidationList()
         : base() { }

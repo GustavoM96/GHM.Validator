@@ -27,7 +27,13 @@ public class Result<TValue> : Result
         Value = value;
     }
 
-    public static Result<TValue> Create(TValue value) => new(value);
+    public TResult MatchValue<TResult>(
+        Func<TValue, List<Validation>, TResult> successAction,
+        Func<List<Error>, TResult> errorAction
+    )
+    {
+        return IsError ? errorAction(Errors) : successAction(Value, Validations);
+    }
 
     public static implicit operator Result<TValue>(TValue value) => new(value);
 
@@ -49,12 +55,17 @@ public class Result
     public List<Validation> Validations { get; init; } = new();
     public bool IsError => Validations.Any(validation => !validation.IsValid);
     public bool IsValid => !IsError;
-    public List<Validation> Errors => Validations.Where(validation => !validation.IsValid).ToList();
-    public Validation FirstError => Validations.FirstOrDefault(validation => !validation.IsValid);
+    public List<Error> Errors => Validations.Where(validation => !validation.IsValid).Select(Error.FromValidation).ToList();
+    public Error FirstError => Errors.First();
 
     public void AddValidations(IEnumerable<Validation> validations) => Validations.AddRange(validations);
 
     public void AddValidation(Validation validation) => Validations.Add(validation);
+
+    public TResult Match<TResult>(Func<List<Validation>, TResult> successAction, Func<List<Error>, TResult> errorAction)
+    {
+        return IsError ? errorAction(Errors) : successAction(Validations);
+    }
 
     public Result(IEnumerable<Validation> validations)
     {
@@ -92,8 +103,6 @@ public class Result
 
         throw new ValidationException(string.Join(separator, Errors.Select(error => error.Message)), Errors);
     }
-
-    public static Result Create() => new();
 
     public static implicit operator Result(Validation[] validations) => new(validations);
 
