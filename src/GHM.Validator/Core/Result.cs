@@ -27,12 +27,20 @@ public class Result<TValue> : Result
         Value = value;
     }
 
-    public TResult MatchValue<TResult>(
+    public TResult Match<TResult>(
         Func<TValue, List<Validation>, TResult> successAction,
         Func<List<Error>, TResult> errorAction
     )
     {
         return IsError ? errorAction(Errors) : successAction(Value, Validations);
+    }
+
+    public TResult Match<TResult>(
+        Func<TValue, List<Validation>, TResult> successAction,
+        Func<TValue, List<Error>, TResult> errorAction
+    )
+    {
+        return IsError ? errorAction(Value, Errors) : successAction(Value, Validations);
     }
 
     public static implicit operator Result<TValue>(TValue value) => new(value);
