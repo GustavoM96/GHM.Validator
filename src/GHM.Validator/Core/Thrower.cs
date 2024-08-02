@@ -4,12 +4,12 @@ using GHM.Validator.Interfaces;
 
 namespace GHM.Validator;
 
-public class Thrower : ThowerBase, IThrower
+internal class Thrower : ThowerBase, IThrower
 {
     public Thrower(Func<string, Exception> exceptionThrower)
         : base(exceptionThrower) { }
 
-    public Thrower WithException(Func<string, Exception> exceptionThrower)
+    public IThrower WithException(Func<string, Exception> exceptionThrower)
     {
         _thrower = exceptionThrower;
         return this;

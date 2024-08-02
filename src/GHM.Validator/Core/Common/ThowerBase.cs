@@ -1,6 +1,6 @@
 namespace GHM.Validator;
 
-public abstract class ThowerBase
+internal abstract class ThowerBase
 {
     public ThowerBase(Func<string, Exception> exceptionThrower)
     {

@@ -4,7 +4,7 @@ using GHM.Validator.Interfaces;
 
 namespace GHM.Validator;
 
-public class Validate : ValidateBase, IValidate
+internal class Validate : ValidateBase, IValidate
 {
     public Validation IfTrue(
         bool condition,
