@@ -34,6 +34,8 @@ services.AddGhmValidator(config =>
 {
     config.ExceptionThrower = (string message) => new Exception(message);
 });
+// or
+services.AddGhmValidator()
 ```
 
 ## Example
