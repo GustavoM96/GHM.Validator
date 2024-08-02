@@ -22,24 +22,18 @@ NuGet\Install-Package GHM.Validator
 
 ## IServiceCollectionExtensions
 
-To add transient interface `IValidate` to implementate `Validate` or `IThrower` to implementate `Thrower` , call extension method to your serviceCollection.
+To add transient interface `IValidate` to implementate `Validate` or `IThrower` to implementate `Thrower` , call extension method to your serviceCollection `AddGhmValidator()`.
+If you want to set a default exception for `IThrower`, pass a GhmValidatorConfigAction as a parameter.
 
 ```csharp
 using GHM.Validator.Extensions;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 IServiceCollection services = builder.Services;
-service.AddGhmValidator();
-```
-
-If you want to set a default exception for `IThrower`, pass a Func<string, Exception> as a parameter to the `AddGhmValidator` method.
-
-```csharp
-using GHM.Validator.Extensions;
-
-WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
-IServiceCollection services = builder.Services;
-service.AddGhmValidator((message) => new TestException(message));
+services.AddGhmValidator(config =>
+{
+    config.ExceptionThrower = (string message) => new Exception(message);
+});
 ```
 
 ## Example
@@ -71,7 +65,7 @@ public class UserValidator(IValidate validate)
     {
         return new Validation[]
         {
-            validate.IfNotNull(request.UserName), // Validated param: UserName. Value: Gustavo. ValidationName: IfNotNull
+            validate.IfNotNull(request.UserName), // Validated param: UserName. Value: null. ValidationName: IfNotNull
             validate.IfNotZero(request.UserAge)   // Error to validate param: UserAge. Value: 0. ValidationName: IfNotZero
         };
     }
@@ -301,7 +295,7 @@ public interface IThrower
     bool IfEmpty<T>(IEnumerable<T> list, string message = null);
     bool IfOlder(DateTime date, DateTime toCompare, string message = null);
     bool IfOlderOrEqual(DateTime date, DateTime toCompare, string message = null);
-     bool IfNotEmail(string email, string? message = null);
+    bool IfNotEmail(string email, string? message = null);
 }
 ```
 
