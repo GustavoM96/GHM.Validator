@@ -279,7 +279,7 @@ You can use it to throw exception.
 ```csharp
 public interface IThrower
 {
-    Thrower WithException(Func<string, Exception> exceptionThrower);
+    IThrower WithException(Func<string, Exception> exceptionThrower);
     bool IfFalse(bool condition, string message = null);
     bool IfTrue(bool condition, string message = null);
     bool IfDefault<T>(T obj, string message = null);
