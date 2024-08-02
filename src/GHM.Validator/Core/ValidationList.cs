@@ -13,7 +13,7 @@ public class ValidationList : List<Validation>
             _ => Validator.ErrorType.Failure
         };
 
-    public Error FirstError => Errors.First();
+    public Error FirstError => Error.FromValidation(this.First(validation => !validation.IsValid));
 
     public ValidationList()
         : base() { }

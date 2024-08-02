@@ -64,7 +64,7 @@ public class Result
     public bool IsError => Validations.Any(validation => !validation.IsValid);
     public bool IsValid => !IsError;
     public List<Error> Errors => Validations.Where(validation => !validation.IsValid).Select(Error.FromValidation).ToList();
-    public Error FirstError => Errors.First();
+    public Error FirstError => Error.FromValidation(Validations.First(validation => !validation.IsValid));
 
     public void AddValidations(IEnumerable<Validation> validations) => Validations.AddRange(validations);
 
