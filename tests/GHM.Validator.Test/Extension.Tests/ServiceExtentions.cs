@@ -1,28 +1,18 @@
-using GHM.Validator.Extensions;
 using GHM.Validator.Interfaces;
-using Microsoft.Extensions.DependencyInjection;
+using GHM.Validator.Test.Common;
 
 namespace GHM.Validator.Test.Extension.Tests;
 
 public class ServiceExtentions
 {
-    private readonly IServiceCollection _service;
-
-    public ServiceExtentions()
-    {
-        _service = new ServiceCollection();
-    }
-
     [Fact]
     public void Test_AddGhmValidator_ShouldInject_IThrowerAndIValidate()
     {
         // Arrange
-        _service.AddGhmValidator();
+        var validate = GhmValidatorProvider.GetValidateInstance();
+        var thrower = GhmValidatorProvider.GetThrowerInstance();
 
         // Act
-        var provider = _service.BuildServiceProvider();
-        var validate = provider.GetService<IValidate>();
-        var thrower = provider.GetService<IThrower>();
         void TestException() => thrower!.IfEmpty("");
 
         // Assert
@@ -35,11 +25,11 @@ public class ServiceExtentions
     public void Test_AddGhmValidator_When_WithConfig_ShouldInject_IThrowerAndIValidateWithConfig()
     {
         // Arrange
-        _service.AddGhmValidator(config => config.ExceptionThrower = (string message) => new OverflowException(message));
+        var thrower = GhmValidatorProvider.GetThrowerInstance(
+            config => config.ExceptionThrower = (string message) => new OverflowException(message)
+        );
 
         // Act
-        var provider = _service.BuildServiceProvider();
-        var thrower = provider.GetService<IThrower>();
         void TestException() => thrower!.IfEmpty("");
 
         // Assert

@@ -1,4 +1,5 @@
 using GHM.Validator.Interfaces;
+using GHM.Validator.Test.Common;
 
 namespace GHM.Validator.Test.ValidateTests;
 
@@ -8,7 +9,7 @@ public class ValidationBaseTests
 
     public ValidationBaseTests()
     {
-        _validate = new Validate();
+        _validate = GhmValidatorProvider.GetValidateInstance();
     }
 
     [Fact]

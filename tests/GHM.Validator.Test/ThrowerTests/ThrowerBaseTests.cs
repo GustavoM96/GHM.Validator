@@ -1,5 +1,5 @@
-using GHM.Validator.Extensions;
 using GHM.Validator.Interfaces;
+using GHM.Validator.Test.Common;
 
 namespace GHM.Validator.Test.ThrowerTests;
 
@@ -9,8 +9,7 @@ public class ThrowerBaseTests
 
     public ThrowerBaseTests()
     {
-        GhmValidatorConfig config = new();
-        _thrower = new Thrower(config.ExceptionThrower);
+        _thrower = GhmValidatorProvider.GetThrowerInstance();
     }
 
     [Fact]

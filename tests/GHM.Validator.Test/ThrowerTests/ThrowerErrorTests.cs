@@ -1,17 +1,20 @@
-using GHM.Validator.Extensions;
 using GHM.Validator.Interfaces;
+using GHM.Validator.Test.Common;
 
 namespace GHM.Validator.Test.ThrowerTests;
 
 public class ThrowerErrorTests
 {
     private readonly IThrower _thrower;
+    private readonly IThrower _throwerFileLoadException;
     private readonly string _message = "thrower message";
 
     public ThrowerErrorTests()
     {
-        GhmValidatorConfig config = new();
-        _thrower = new Thrower(config.ExceptionThrower);
+        _thrower = GhmValidatorProvider.GetThrowerInstance();
+        _throwerFileLoadException = GhmValidatorProvider.GetThrowerInstance(
+            config => config.ExceptionThrower = (message) => new FileLoadException(message)
+        );
     }
 
     [Fact]
@@ -19,10 +22,9 @@ public class ThrowerErrorTests
     {
         // Arrange
         int obj = default;
-        var thrower = new Thrower((message) => new FileLoadException(message));
 
         // Act
-        void GetResult() => thrower.IfDefault(obj, _message);
+        void GetResult() => _throwerFileLoadException.IfDefault(obj, _message);
 
         // Assert
         Assert.Throws<FileLoadException>(GetResult);
