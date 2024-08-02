@@ -27,8 +27,8 @@ To add transient interface `IValidate` to implementate `Validate` or `IThrower` 
 ```csharp
 using GHM.Validator.Extensions;
 
-var builder = WebApplication.CreateBuilder(args);
-var services = builder.Services;
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+IServiceCollection services = builder.Services;
 service.AddGhmValidator();
 ```
 
@@ -37,8 +37,8 @@ If you want to set a default exception for `IThrower`, pass a Func<string, Excep
 ```csharp
 using GHM.Validator.Extensions;
 
-var builder = WebApplication.CreateBuilder(args);
-var services = builder.Services;
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+IServiceCollection services = builder.Services;
 service.AddGhmValidator((message) => new TestException(message));
 ```
 
@@ -48,16 +48,16 @@ service.AddGhmValidator((message) => new TestException(message));
 
 ```csharp
 using GHM.Validator;
-
-public Validation[] ValidateCreateUserRequest(CreateUserRequest request)
+public class UserValidator(IValidate validate)
 {
-    IValidate validate;
-
-    return new Validation[]
+    public Validation[] ValidateUserRequest(UserRequest request)
     {
-        validate.IfNotNull(request.Name,"Name must not be null"),
-        validate.IfNotZero(request.Age,"Age must not be 0")
-    };
+        return new Validation[]
+        {
+            validate.IfNotNull(request.Name,"Name must not be null"),
+            validate.IfNotZero(request.Age,"Age must not be 0")
+        };
+    }
 }
 ```
 
@@ -65,16 +65,16 @@ If error message is null, it will be passed a default message.
 
 ```csharp
 using GHM.Validator;
-
-public Validation[] ValidateCreateUserRequest(CreateUserRequest request)
+public class UserValidator(IValidate validate)
 {
-    IValidate validate;
-
-    return new Validation[]
+    public Validation[] ValidateUserRequest(UserRequest request)
     {
-        validate.IfNotNull(request.UserName), // Validated param: UserName. Value: Gustavo. ValidationName: IfNotNull
-        validate.IfNotZero(request.UserAge)   // Error to validate param: UserAge. Value: 0. ValidationName: IfNotZero
-    };
+        return new Validation[]
+        {
+            validate.IfNotNull(request.UserName), // Validated param: UserName. Value: Gustavo. ValidationName: IfNotNull
+            validate.IfNotZero(request.UserAge)   // Error to validate param: UserAge. Value: 0. ValidationName: IfNotZero
+        };
+    }
 }
 ```
 
@@ -82,16 +82,16 @@ You can set a errorType.
 
 ```csharp
 using GHM.Validator;
-
-public Validation[] ValidateCreateUserRequest(CreateUserRequest request)
+public class UserValidator(IValidate validate)
 {
-    IValidate validate;
-
-    return new Validation[]
+    public Validation[] ValidateUserRequest(UserRequest request)
     {
-        validate.IfNotNull(request.UserName).AsNotFound(), // validate.ErrorType = ErrorType.NotFound
-        validate.IfNotZero(request.UserAge).AsFailure()   // validate.ErrorType = ErrorType.Failure
-    };
+        return new Validation[]
+        {
+            validate.IfNotNull(request.UserName).AsNotFound(), // validate.ErrorType = ErrorType.NotFound
+            validate.IfNotZero(request.UserAge).AsFailure()   // validate.ErrorType = ErrorType.Failure
+        };
+    }
 }
 ```
 
@@ -105,16 +105,16 @@ public static class UserError
     public static Error NotFoundByName => Error.NotFound("User not found","User.NotFoundByName");
     public static Error InvalidAge => Error.AsFailure("Age must not be 0","User.InvalidAge");
 }
-
-public Validation[] ValidateCreateUserRequest(CreateUserRequest request)
+public class UserValidator(IValidate validate)
 {
-    IValidate validate;
-
-    return new Validation[]
+    public Validation[] ValidateUserRequest(UserRequest request)
     {
-        validate.IfNotNull(request.UserName).BindError(UserError.NotFoundByName),
-        validate.IfNotZero(request.UserAge).BindError(UserError.InvalidAge)
-    };
+        return new Validation[]
+        {
+            validate.IfNotNull(request.UserName).BindError(UserError.NotFoundByName),
+            validate.IfNotZero(request.UserAge).BindError(UserError.InvalidAge)
+        };
+    }
 }
 ```
 
@@ -122,19 +122,19 @@ Throw Exception from validation if it's invalid.
 
 ```csharp
 using GHM.Validator;
-
-public Validation[] ValidateCreateUserRequest(CreateUserRequest request)
+public class UserValidator(IValidate validate)
 {
-    IValidate validate;
-
-    var list = new ValidationList
+    public Validation[] ValidateUserRequest(UserRequest request)
     {
-        validate.IfNotNull(request.Name,"Name must not be null"),
-        validate.IfNotZero(request.Age,"Age must not be 0")
-    };
+        ValidationList list = new
+        {
+            validate.IfNotNull(request.Name,"Name must not be null"),
+            validate.IfNotZero(request.Age,"Age must not be 0")
+        };
 
-    list.ThrowErrorsWithMessage(" | ") //throw new ValidationException("Name must not be null | Age must not be 0").
-    return list;
+        list.ThrowErrorsWithMessage(" | ") //throw new ValidationException("Name must not be null | Age must not be 0").
+        return list;
+    }
 }
 ```
 
@@ -142,15 +142,15 @@ public Validation[] ValidateCreateUserRequest(CreateUserRequest request)
 
 ```csharp
 using GHM.Validator;
-
-public bool ValidateCreateUserRequest(CreateUserRequest request)
+public class UserValidator(IThrower thrower)
 {
-    IThrower thrower;
+    public bool ValidateUserRequest(UserRequest request)
+    {
+        thrower.IfNull(request.Name,"Name must not be null");// if null, throw ArgumentException.
+        thrower.IfZero(request.Age,"Age must not be 0"); // if zero, throw ArgumentException.
 
-    thrower.IfNull(request.Name,"Name must not be null");// if null, throw ArgumentException.
-    thrower.IfZero(request.Age,"Age must not be 0"); // if zero, throw ArgumentException.
-
-    return true;
+        return true;
+    }
 }
 ```
 
@@ -158,19 +158,20 @@ Setting a Exception.
 
 ```csharp
 using GHM.Validator;
-public bool ValidateCreateUserRequest(CreateUserRequest request)
+public class UserValidator(IThrower thrower)
 {
-    IThrower thrower;
+    public bool ValidateUserRequest(UserRequest request)
+    {
+        thrower
+            .WithException((message) => new NameTestException(message))
+            .IfNull(request.Name,"Name must not be null");
 
-    thrower
-        .WithException((message) => new NameTestException(message))
-        .IfNull(request.Name,"Name must not be null");
+        thrower
+            .WithException((message) => new AgeTestException(message))
+            .IfZero(request.Age,"Age must not be 0");
 
-    thrower
-        .WithException((message) => new AgeTestException(message))
-        .IfZero(request.Age,"Age must not be 0");
-
-    return true;
+        return true;
+    }
 }
 ```
 
@@ -183,12 +184,12 @@ Validation is a object with properties(Message, IsValid).
 ```csharp
 using GHM.Validator;
 
-var validationSuccess = Validation.Success("Successful message");
+Validation validationSuccess = Validation.Success("Successful message");
 
 validationSuccess.Message; // "Successful message"
 validationSuccess.IsValid; // true
 
-var validationError = Validation.Error("Error message");
+Validation validationError = Validation.Error("Error message");
 
 validationError.Message; // "Error message"
 validationError.IsValid; // false
@@ -200,25 +201,25 @@ Result is a object to return a value and/or validations
 
 ```csharp
 using GHM.Validator;
-public Result<User> CreateUser(CreateUserRequest request)
+public class UserService(IValidate validate)
 {
-    IValidate validate;
-
-    ValidationList validations = new
+    public Result<User> CreateUser(UserRequest request)
     {
-        validate.IfNotNull(request.Name,"Name must not be null"),
-        validate.IfNotZero(request.Age,"Age must not be 0")
-    };
+        ValidationList validations = new
+        {
+            validate.IfNotNull(request.Name,"Name must not be null"),
+            validate.IfNotZero(request.Age,"Age must not be 0")
+        };
 
-    if(validations.IsError)
-    {
-        return validations
+        if(validations.IsError)
+        {
+            return validations
+        }
+
+        User user = _userRepository.Create(request);
+
+        return new(validations, user); // Return all validations and value
     }
-
-    User user = _userRepository.Create(request);
-
-    return new Result<User>(validations, user); // Return all validations and value
-    return user; // Return only value
 }
 ```
 
@@ -226,20 +227,21 @@ Using the Match Method to execute a action on success or error condition.
 
 ```csharp
 using GHM.Validator;
-public IEnumerable<string> GetResultAsListOfString(CreateUserRequest request)
+public class UserService(IValidate validate)
 {
-    IValidate validate;
-
-    ValidationList validations = new
+    public IEnumerable<string> GetResultAsListOfString(UserRequest request)
     {
-        validate.IfNotNull(request.Name,"Name must not be null"),
-        validate.IfNotZero(request.Age,"Age must not be 0")
-    };
-    var result = new Result<User>(validations, user);
+        ValidationList validations = new
+        {
+            validate.IfNotNull(request.Name,"Name must not be null"),
+            validate.IfNotZero(request.Age,"Age must not be 0")
+        };
 
-    return result.Match(
-        (vals) => vals.Select(val => val.Message),
-        (errors) => errors.Select(error => error.Message));
+        Result<User> result = new(validations, user);
+        return result.Match(
+            (vals) => vals.Select(val => val.Message),
+            (errors) => errors.Select(error => error.Message));
+    }
 }
 ```
 
