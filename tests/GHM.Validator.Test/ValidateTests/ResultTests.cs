@@ -1,5 +1,3 @@
-using GHM.Validator.Interfaces;
-
 namespace GHM.Validator.Test.ValidateTests;
 
 public class ResultTests
