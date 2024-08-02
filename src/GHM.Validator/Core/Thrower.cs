@@ -6,9 +6,6 @@ namespace GHM.Validator;
 
 public class Thrower : ThowerBase, IThrower
 {
-    public Thrower()
-        : base() { }
-
     public Thrower(Func<string, Exception> exceptionThrower)
         : base(exceptionThrower) { }
 

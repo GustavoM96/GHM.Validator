@@ -2,12 +2,6 @@ namespace GHM.Validator;
 
 public abstract class ThowerBase
 {
-    public ThowerBase()
-    {
-        _thrower = (string message) => new ArgumentException(message);
-        _initialThrower = (string message) => new ArgumentException(message);
-    }
-
     public ThowerBase(Func<string, Exception> exceptionThrower)
     {
         _thrower = exceptionThrower;
