@@ -16,7 +16,6 @@ public class ServiceExtentions
         _throwerOverflowException = GhmValidatorProvider.GetThrowerInstance(
             config => config.ExceptionThrower = (string message) => new OverflowException(message)
         );
-
     }
 
     [Fact]

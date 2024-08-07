@@ -195,7 +195,10 @@ public class ResultTests
         Result<string> result2 = new(new Validation[1] { SuccessValidation });
 
         // Act
-        IEnumerable<string> errorResult = result.Match((vals) => vals.Select(val => val.Message), (error) => error.Select(x => x.Message));
+        IEnumerable<string> errorResult = result.Match(
+            (vals) => vals.Select(val => val.Message),
+            (error) => error.Select(x => x.Message)
+        );
         IEnumerable<string> successResult = result2.Match(
             (vals) => vals.Select(val => val.Message),
             (error) => error.Select(x => x.Message)
