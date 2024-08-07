@@ -118,7 +118,7 @@ public class ResultTests
         result.AddValidations(ErrorValidationList);
 
         // Act
-        var errors = result.Errors;
+        List<Error> errors = result.Errors;
 
         // Assert
         Assert.Contains(ErrorValidation.Message, errors.Select(e => e.Message));
@@ -130,14 +130,14 @@ public class ResultTests
     public void Test_ThrowErrors_When_HasErrorItems_ShouldThrowValidationExcpetion()
     {
         // Arrange
-        var errorMessage = "error exception teste";
+        string errorMessage = "error exception teste";
 
         // Act
         Result result = new(ErrorValidationList);
         void ThrowError() => result.ThrowErrors(errorMessage);
 
         //Assert
-        var ex = Assert.Throws<ValidationException>(ThrowError);
+        ValidationException ex = Assert.Throws<ValidationException>(ThrowError);
         Assert.Equal(errorMessage, ex.Message);
         Assert.Contains(ErrorValidation.Message, ex.Errors.Select(x => x.Message));
         Assert.Contains(ErrorValidation2.Message, ex.Errors.Select(x => x.Message));
@@ -147,7 +147,7 @@ public class ResultTests
     public void Test_ThrowErrors_When_HasNoErrorItems_ShouldNotThrowExcpetion()
     {
         // Arrange
-        var errorMessage = "error exception teste";
+        string errorMessage = "error exception teste";
 
         // Act
         void ThrowError() => _result.ThrowErrors(errorMessage);
@@ -160,15 +160,15 @@ public class ResultTests
     public void Test_ThrowErrorsWithMessage_When_HasErrorItems_ShouldThrowValidationException()
     {
         // Arrange
-        var separator = "|";
-        var errorMessage = ErrorValidation.Message + separator + ErrorValidation2.Message;
+        string separator = "|";
+        string errorMessage = ErrorValidation.Message + separator + ErrorValidation2.Message;
 
         // Act
         Result result = new(ErrorValidationList);
         void ThrowError() => result.ThrowErrorsWithMessage(separator);
 
         //Assert
-        var ex = Assert.Throws<ValidationException>(ThrowError);
+        ValidationException ex = Assert.Throws<ValidationException>(ThrowError);
         Assert.Equal(errorMessage, ex.Message);
         Assert.Contains(ErrorValidation.Message, ex.Errors.Select(x => x.Message));
         Assert.Contains(ErrorValidation2.Message, ex.Errors.Select(x => x.Message));
@@ -178,7 +178,7 @@ public class ResultTests
     public void Test_ThrowErrorsWithMessage_When_HasNoErrorItems_ShouldNotThrowExcpetion()
     {
         // Arrange
-        var errorMessage = "error exception teste";
+        string errorMessage = "error exception teste";
 
         // Act
         void ThrowError() => _result.ThrowErrorsWithMessage(errorMessage);
@@ -195,8 +195,8 @@ public class ResultTests
         Result<string> result2 = new(new Validation[1] { SuccessValidation });
 
         // Act
-        var errorResult = result.Match((vals) => vals.Select(val => val.Message), (error) => error.Select(x => x.Message));
-        var successResult = result2.Match(
+        IEnumerable<string> errorResult = result.Match((vals) => vals.Select(val => val.Message), (error) => error.Select(x => x.Message));
+        IEnumerable<string> successResult = result2.Match(
             (vals) => vals.Select(val => val.Message),
             (error) => error.Select(x => x.Message)
         );
@@ -216,11 +216,11 @@ public class ResultTests
         Result<string> result2 = new(new Validation[1] { SuccessValidation }, testValue);
 
         // Act
-        var errorResult = result.Match(
+        IEnumerable<string> errorResult = result.Match(
             (value, vals) => vals.Select(val => val.Message + value),
             (value, error) => error.Select(x => x.Message + value)
         );
-        var successResult = result2.Match(
+        IEnumerable<string> successResult = result2.Match(
             (value, vals) => vals.Select(val => val.Message + value),
             (error) => error.Select(x => x.Message)
         );
@@ -238,7 +238,7 @@ public class ResultTests
         Result result = new(new Validation[3] { SuccessValidation, ErrorValidation, ErrorValidation2 });
 
         // Act
-        var firstError = result.FirstError;
+        Error firstError = result.FirstError;
 
         //Assert
         Assert.True(firstError.Message == ErrorValidation.Message || firstError.Message == ErrorValidation2.Message);

@@ -32,7 +32,7 @@ public class ValidationListTests
     public void Test_ThrowErrors_When_HasErrorItems_ShouldThrowValidationExcpetion()
     {
         // Arrange
-        var errorMessage = "error exception teste";
+        string errorMessage = "error exception teste";
 
         // Act
         void ThrowError() => ErrorValidationList.ThrowErrors(errorMessage);
@@ -48,7 +48,7 @@ public class ValidationListTests
     public void Test_ThrowErrors_When_HasNoErrorItems_ShouldNotThrowExcpetion()
     {
         // Arrange
-        var errorMessage = "error exception teste";
+        string errorMessage = "error exception teste";
 
         // Act
         void ThrowError() => SuccessValidationList.ThrowErrors(errorMessage);
@@ -61,8 +61,8 @@ public class ValidationListTests
     public void Test_ThrowErrorsWithMessage_When_HasErrorItems_ShouldThrowValidationException()
     {
         // Arrange
-        var separator = "|";
-        var errorMessage = ErrorValidation.Message + separator + ErrorValidation2.Message;
+        string separator = "|";
+        string errorMessage = ErrorValidation.Message + separator + ErrorValidation2.Message;
 
         // Act
         void ThrowError() => ErrorValidationList.ThrowErrorsWithMessage(separator);
@@ -78,7 +78,7 @@ public class ValidationListTests
     public void Test_ThrowErrorsWithMessage_When_HasNoErrorItems_ShouldNotThrowExcpetion()
     {
         // Arrange
-        var errorMessage = "error exception teste";
+        string errorMessage = "error exception teste";
 
         // Act
         void ThrowError() => SuccessValidationList.ThrowErrorsWithMessage(errorMessage);
@@ -128,7 +128,7 @@ public class ValidationListTests
     public void Test_FirstError()
     {
         // Act
-        var firstError = ErrorValidationList.FirstError;
+        Error firstError = ErrorValidationList.FirstError;
 
         //Assert
         Assert.True(firstError.Message == ErrorValidation.Message || firstError.Message == ErrorValidation2.Message);

@@ -20,7 +20,7 @@ public class ThrowerSuccessTests
         bool condition = false;
 
         // Act
-        var result = _thrower.IfTrue(condition, _message);
+        bool result = _thrower.IfTrue(condition, _message);
 
         // Assert
         Assert.True(result);
@@ -33,7 +33,7 @@ public class ThrowerSuccessTests
         bool condition = true;
 
         // Act
-        var result = _thrower.IfFalse(condition, _message);
+        bool result = _thrower.IfFalse(condition, _message);
 
         // Assert
         Assert.True(result);
@@ -46,7 +46,7 @@ public class ThrowerSuccessTests
         int obj = 12;
 
         // Act
-        var result = _thrower.IfDefault(obj, _message);
+        bool result = _thrower.IfDefault(obj, _message);
 
         // Assert
         Assert.True(result);
@@ -59,7 +59,7 @@ public class ThrowerSuccessTests
         int? obj = null;
 
         // Act
-        var result = _thrower.IfNotNull(obj, _message);
+        bool result = _thrower.IfNotNull(obj, _message);
 
         // Assert
         Assert.True(result);
@@ -72,7 +72,7 @@ public class ThrowerSuccessTests
         int? obj = 12;
 
         // Act
-        var result = _thrower.IfNull(obj, _message);
+        bool result = _thrower.IfNull(obj, _message);
 
         // Assert
         Assert.True(result);
@@ -86,7 +86,7 @@ public class ThrowerSuccessTests
         int objToCompare = 12;
 
         // Act
-        var result = _thrower.IfNotEqual(obj, objToCompare, _message);
+        bool result = _thrower.IfNotEqual(obj, objToCompare, _message);
 
         // Assert
         Assert.True(result);
@@ -99,7 +99,7 @@ public class ThrowerSuccessTests
         int obj = 12;
 
         // Act
-        var result = _thrower.IfZero(obj, _message);
+        bool result = _thrower.IfZero(obj, _message);
 
         // Assert
         Assert.True(result);
@@ -112,7 +112,7 @@ public class ThrowerSuccessTests
         decimal obj = 12;
 
         // Act
-        var result = _thrower.IfZero(obj, _message);
+        bool result = _thrower.IfZero(obj, _message);
 
         // Assert
         Assert.True(result);
@@ -126,7 +126,7 @@ public class ThrowerSuccessTests
         int objToCompare = 13;
 
         // Act
-        var result = _thrower.IfGreaterOrEqual(obj, objToCompare, _message);
+        bool result = _thrower.IfGreaterOrEqual(obj, objToCompare, _message);
 
         // Assert
         Assert.True(result);
@@ -141,8 +141,8 @@ public class ThrowerSuccessTests
         int objEqual = 12;
 
         // Act
-        var result = _thrower.IfGreater(obj, objToCompare, _message);
-        var resultEqual = _thrower.IfGreater(obj, objEqual, _message);
+        bool result = _thrower.IfGreater(obj, objToCompare, _message);
+        bool resultEqual = _thrower.IfGreater(obj, objEqual, _message);
 
         // Assert
         Assert.True(result);
@@ -157,7 +157,7 @@ public class ThrowerSuccessTests
         decimal objToCompare = 12.1M;
 
         // Act
-        var result = _thrower.IfGreaterOrEqual(obj, objToCompare, _message);
+        bool result = _thrower.IfGreaterOrEqual(obj, objToCompare, _message);
 
         // Assert
         Assert.True(result);
@@ -172,8 +172,8 @@ public class ThrowerSuccessTests
         decimal objEqual = 12;
 
         // Act
-        var result = _thrower.IfGreater(obj, objToCompare, _message);
-        var resultEqual = _thrower.IfGreater(obj, objEqual, _message);
+        bool result = _thrower.IfGreater(obj, objToCompare, _message);
+        bool resultEqual = _thrower.IfGreater(obj, objEqual, _message);
 
         // Assert
         Assert.True(result);
@@ -187,7 +187,7 @@ public class ThrowerSuccessTests
         string obj = "test";
 
         // Act
-        var result = _thrower.IfEmpty(obj, _message);
+        bool result = _thrower.IfEmpty(obj, _message);
 
         // Assert
         Assert.True(result);
@@ -200,7 +200,7 @@ public class ThrowerSuccessTests
         string obj = "123456";
 
         // Act
-        var result = _thrower.IfNotParseToLong(obj, _message);
+        bool result = _thrower.IfNotParseToLong(obj, _message);
 
         // Assert
         Assert.True(result);
@@ -213,7 +213,7 @@ public class ThrowerSuccessTests
         string[] obj = new[] { "test" };
 
         // Act
-        var result = _thrower.IfEmpty(obj, _message);
+        bool result = _thrower.IfEmpty(obj, _message);
 
         // Assert
         Assert.True(result);
@@ -228,8 +228,8 @@ public class ThrowerSuccessTests
         DateTime dateYongerEqual = DateTime.MaxValue;
 
         // Act
-        var result = _thrower.IfOlder(dateYonger, dateOlder, _message);
-        var resultEqual = _thrower.IfOlder(dateYonger, dateYongerEqual, _message);
+        bool result = _thrower.IfOlder(dateYonger, dateOlder, _message);
+        bool resultEqual = _thrower.IfOlder(dateYonger, dateYongerEqual, _message);
 
         // Assert
         Assert.True(result);
@@ -244,7 +244,7 @@ public class ThrowerSuccessTests
         DateTime dateYonger = DateTime.MaxValue;
 
         // Act
-        var result = _thrower.IfOlderOrEqual(dateYonger, dateOlder, _message);
+        bool result = _thrower.IfOlderOrEqual(dateYonger, dateOlder, _message);
 
         // Assert
         Assert.True(result);
@@ -259,7 +259,7 @@ public class ThrowerSuccessTests
         // Arrange
 
         // Act
-        var result = _thrower.IfNotEmail(mailAddress, _message);
+        bool result = _thrower.IfNotEmail(mailAddress, _message);
 
         // Assert
         Assert.True(result);

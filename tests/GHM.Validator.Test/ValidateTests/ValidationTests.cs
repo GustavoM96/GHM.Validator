@@ -10,7 +10,7 @@ public class ValidationTests
         // Arrange
 
         // Act
-        var result = Validation.Success(_message).AsNotFound();
+        Validation result = Validation.Success(_message).AsNotFound();
 
         // Assert
         Assert.True(result.IsValid);
@@ -23,7 +23,7 @@ public class ValidationTests
         // Arrange
 
         // Act
-        var result = Validation.Error(_message);
+        Validation result = Validation.Error(_message);
 
         // Assert
         Assert.False(result.IsValid);
@@ -36,7 +36,7 @@ public class ValidationTests
         // Arrange
 
         // Act
-        var result = Validation.Error(_message).AsNotFound();
+        Validation result = Validation.Error(_message).AsNotFound();
 
         // Assert
         Assert.False(result.IsValid);
@@ -47,11 +47,11 @@ public class ValidationTests
     public void Test_Validation_WithTitle_ShouldSet_TitleProperty()
     {
         // Arrange
-        var title = "test title";
+        string title = "test title";
 
         // Act
-        var result = Validation.Success(_message).WithTitle(title);
-        var result2 = Validation.Error(_message).WithTitle(title);
+        Validation result = Validation.Success(_message).WithTitle(title);
+        Validation result2 = Validation.Error(_message).WithTitle(title);
 
         // Assert
         Assert.Equal(title, result.Title);
@@ -64,12 +64,12 @@ public class ValidationTests
         // Arrange
 
         // Act
-        var asFailure = Validation.Error(_message).AsFailure();
-        var asNotFound = Validation.Error(_message).AsNotFound();
-        var asUnexpected = Validation.Error(_message).AsUnexpected();
-        var asValidation = Validation.Error(_message).AsValidation();
-        var asConflict = Validation.Error(_message).AsConflict();
-        var asUnauthorized = Validation.Error(_message).AsUnauthorized();
+        Validation asFailure = Validation.Error(_message).AsFailure();
+        Validation asNotFound = Validation.Error(_message).AsNotFound();
+        Validation asUnexpected = Validation.Error(_message).AsUnexpected();
+        Validation asValidation = Validation.Error(_message).AsValidation();
+        Validation asConflict = Validation.Error(_message).AsConflict();
+        Validation asUnauthorized = Validation.Error(_message).AsUnauthorized();
 
         // Assert
         Assert.Equal(ErrorType.Failure, asFailure.ErrorType);
@@ -86,8 +86,8 @@ public class ValidationTests
         // Arrange
 
         // Act
-        var error = Error.Conflict("invalid data", "Movie.Title");
-        var result = Validation.Error(_message).BindError(error);
+        Error error = Error.Conflict("invalid data", "Movie.Title");
+        Validation result = Validation.Error(_message).BindError(error);
 
         // Assert
         Assert.NotEqual(_message, result.Message);
@@ -104,8 +104,8 @@ public class ValidationTests
         // Arrange
 
         // Act
-        var error = Error.Conflict("invalid title", "Movie.Title");
-        var result = Validation.Success(_message).BindError(error);
+        Error error = Error.Conflict("invalid title", "Movie.Title");
+        Validation result = Validation.Success(_message).BindError(error);
 
         // Assert
         Assert.Equal(_message, result.Message);

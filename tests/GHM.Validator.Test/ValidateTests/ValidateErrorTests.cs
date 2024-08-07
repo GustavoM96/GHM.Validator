@@ -20,7 +20,7 @@ public class ValidateErrorTests
         bool condition = false;
 
         // Act
-        var result = _validate.IfTrue(condition, _message);
+        Validation result = _validate.IfTrue(condition, _message);
 
         // Assert
         Assert.False(result.IsValid);
@@ -34,7 +34,7 @@ public class ValidateErrorTests
         bool condition = true;
 
         // Act
-        var result = _validate.IfFalse(condition, _message);
+        Validation result = _validate.IfFalse(condition, _message);
 
         // Assert
         Assert.False(result.IsValid);
@@ -48,7 +48,7 @@ public class ValidateErrorTests
         int obj = default;
 
         // Act
-        var result = _validate.IfNotDefault(obj, _message);
+        Validation result = _validate.IfNotDefault(obj, _message);
 
         // Assert
         Assert.False(result.IsValid);
@@ -62,7 +62,7 @@ public class ValidateErrorTests
         int? obj = null;
 
         // Act
-        var result = _validate.IfNotNull(obj, _message);
+        Validation result = _validate.IfNotNull(obj, _message);
 
         // Assert
         Assert.False(result.IsValid);
@@ -76,7 +76,7 @@ public class ValidateErrorTests
         int? obj = 12;
 
         // Act
-        var result = _validate.IfNull(obj, _message);
+        Validation result = _validate.IfNull(obj, _message);
 
         // Assert
         Assert.False(result.IsValid);
@@ -91,7 +91,7 @@ public class ValidateErrorTests
         int objToCompare = 13;
 
         // Act
-        var result = _validate.IfEqual(obj, objToCompare, _message);
+        Validation result = _validate.IfEqual(obj, objToCompare, _message);
 
         // Assert
         Assert.False(result.IsValid);
@@ -105,7 +105,7 @@ public class ValidateErrorTests
         int obj = 0;
 
         // Act
-        var result = _validate.IfNotZero(obj, _message);
+        Validation result = _validate.IfNotZero(obj, _message);
 
         // Assert
         Assert.False(result.IsValid);
@@ -119,7 +119,7 @@ public class ValidateErrorTests
         decimal obj = 0;
 
         // Act
-        var result = _validate.IfNotZero(obj, _message);
+        Validation result = _validate.IfNotZero(obj, _message);
 
         // Assert
         Assert.False(result.IsValid);
@@ -135,8 +135,8 @@ public class ValidateErrorTests
         int objToCompare = 13;
 
         // Act
-        var result = _validate.IfGreater(obj, objToCompare, _message);
-        var resultEqual = _validate.IfGreater(obj, objEqual, _message);
+        Validation result = _validate.IfGreater(obj, objToCompare, _message);
+        Validation resultEqual = _validate.IfGreater(obj, objEqual, _message);
 
         // Assert
         Assert.False(result.IsValid);
@@ -154,7 +154,7 @@ public class ValidateErrorTests
         int objToCompare = 13;
 
         // Act
-        var result = _validate.IfGreaterOrEqual(obj, objToCompare, _message);
+        Validation result = _validate.IfGreaterOrEqual(obj, objToCompare, _message);
 
         // Assert
         Assert.False(result.IsValid);
@@ -170,8 +170,8 @@ public class ValidateErrorTests
         decimal objToCompare = 12.1M;
 
         // Act
-        var result = _validate.IfGreater(obj, objToCompare, _message);
-        var resultEqual = _validate.IfGreater(obj, objEqual, _message);
+        Validation result = _validate.IfGreater(obj, objToCompare, _message);
+        Validation resultEqual = _validate.IfGreater(obj, objEqual, _message);
 
         // Assert
         Assert.False(result.IsValid);
@@ -189,7 +189,7 @@ public class ValidateErrorTests
         decimal objToCompare = 12.1M;
 
         // Act
-        var result = _validate.IfGreaterOrEqual(obj, objToCompare, _message);
+        Validation result = _validate.IfGreaterOrEqual(obj, objToCompare, _message);
 
         // Assert
         Assert.False(result.IsValid);
@@ -204,8 +204,8 @@ public class ValidateErrorTests
         string objNull = null!;
 
         // Act
-        var result = _validate.IfNotEmpty(obj, _message);
-        var resultNull = _validate.IfNotEmpty(objNull, _message);
+        Validation result = _validate.IfNotEmpty(obj, _message);
+        Validation resultNull = _validate.IfNotEmpty(objNull, _message);
 
         // Assert
         Assert.False(result.IsValid);
@@ -222,7 +222,7 @@ public class ValidateErrorTests
         string obj = "12345-6";
 
         // Act
-        var result = _validate.IfParseToLong(obj, _message);
+        Validation result = _validate.IfParseToLong(obj, _message);
 
         // Assert
         Assert.False(result.IsValid);
@@ -236,7 +236,7 @@ public class ValidateErrorTests
         string[] obj = Array.Empty<string>();
 
         // Act
-        var result = _validate.IfNotEmpty(obj, _message);
+        Validation result = _validate.IfNotEmpty(obj, _message);
 
         // Assert
         Assert.False(result.IsValid);
@@ -252,8 +252,8 @@ public class ValidateErrorTests
         DateTime dateYongerEqual = DateTime.MaxValue;
 
         // Act
-        var result = _validate.IfOlder(dateYonger, dateOlder, _message);
-        var resultEqual = _validate.IfOlder(dateYongerEqual, dateYonger, _message);
+        Validation result = _validate.IfOlder(dateYonger, dateOlder, _message);
+        Validation resultEqual = _validate.IfOlder(dateYongerEqual, dateYonger, _message);
 
         // Assert
         Assert.False(resultEqual.IsValid);
@@ -270,7 +270,7 @@ public class ValidateErrorTests
         DateTime dateOlder = DateTime.MinValue;
 
         // Act
-        var result = _validate.IfOlderOrEqual(dateYonger, dateOlder, _message);
+        Validation result = _validate.IfOlderOrEqual(dateYonger, dateOlder, _message);
 
         Assert.False(result.IsValid);
         Assert.Equal(_message, result.Message);
@@ -287,7 +287,7 @@ public class ValidateErrorTests
         // Arrange
 
         // Act
-        var result = _validate.IfEmail(mailAddress, _message);
+        Validation result = _validate.IfEmail(mailAddress, _message);
 
         // Assert
         Assert.False(result.IsValid);
