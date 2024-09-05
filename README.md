@@ -4,6 +4,8 @@
 
 <h1 align="center"> GHM.Validator </h1>
 
+[![Build & Test](https://github.com/GustavoM96/GHM.Validator/actions/workflows/build.yml/badge.svg)](https://github.com/GustavoM96/GHM.Validator/actions/workflows/build.yml)
+
 GHM.Validator is a nuget package aims to validate data.
 
 ## Install Package
