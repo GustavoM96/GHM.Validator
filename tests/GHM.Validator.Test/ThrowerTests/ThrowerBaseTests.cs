@@ -51,10 +51,12 @@ public class ThrowerBaseTests
 
         // Act
         void Result() => _thrower.WithException(message => new FormatException(message)).IfEmpty(stringTest);
+        void Result2() => _thrower.WithException(message => new ArithmeticException(message)).IfEmpty(stringTest);
         void ResultWithInitialException() => _thrower.IfEmpty(stringTest);
 
         // Assert
         Assert.ThrowsAny<FormatException>(Result);
+        Assert.ThrowsAny<ArithmeticException>(Result2);
         Assert.ThrowsAny<ArgumentException>(ResultWithInitialException);
     }
 

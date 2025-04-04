@@ -168,6 +168,14 @@ public class UserValidator(IThrower thrower)
             .WithException((message) => new AgeTestException(message))
             .IfZero(request.Age,"Age must not be 0");
 
+        // or set by generic
+
+        thrower
+            .IfNull<NameTestException>(request.Name,"Name must not be null");
+
+        thrower
+            .IfZero<NameTestException>(request.Age,"Age must not be 0");
+
         return true;
     }
 }
