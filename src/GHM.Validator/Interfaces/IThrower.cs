@@ -2,7 +2,7 @@ using System.Runtime.CompilerServices;
 
 namespace GHM.Validator.Interfaces;
 
-public interface IThrower
+public interface IThrower : IThrowerGeneric
 {
     IThrower WithException(Func<string, Exception> exceptionThrower);
     bool IfFalse(
