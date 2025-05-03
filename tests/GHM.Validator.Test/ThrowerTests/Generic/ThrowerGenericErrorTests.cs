@@ -299,7 +299,7 @@ public class ThrowerGenericErrorTests
     [InlineData("123abc")]
     [InlineData("")]
     [InlineData(null)]
-    public void Test_ThrowIfNotEmail_Error(string mailAddress)
+    public void Test_ThrowIfNotEmail_Error(string? mailAddress)
     {
         // Arrange
 

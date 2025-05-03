@@ -12,8 +12,8 @@ public class ThrowerErrorTests
     public ThrowerErrorTests()
     {
         _thrower = GhmValidatorProvider.GetThrowerInstance();
-        _throwerFileLoadException = GhmValidatorProvider.GetThrowerInstance(
-            config => config.ExceptionThrower = (message) => new FileLoadException(message)
+        _throwerFileLoadException = GhmValidatorProvider.GetThrowerInstance(config =>
+            config.ExceptionThrower = (message) => new FileLoadException(message)
         );
     }
 
@@ -299,7 +299,7 @@ public class ThrowerErrorTests
     [InlineData("123abc")]
     [InlineData("")]
     [InlineData(null)]
-    public void Test_ThrowIfNotEmail_Error(string mailAddress)
+    public void Test_ThrowIfNotEmail_Error(string? mailAddress)
     {
         // Arrange
 

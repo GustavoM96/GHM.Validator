@@ -282,7 +282,7 @@ public class ValidateErrorTests
     [InlineData("123abc")]
     [InlineData("")]
     [InlineData(null)]
-    public void Test_ValidateEmail_Error(string mailAddress)
+    public void Test_ValidateEmail_Error(string? mailAddress)
     {
         // Arrange
 
