@@ -16,13 +16,27 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+  
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 8.0.x
+        dotnet-version: 9.0.x
+
     - name: Restore dependencies
       run: dotnet restore
+
     - name: Build
       run: dotnet build --no-restore
+
     - name: Test
       run: dotnet test --no-build --verbosity normal
+
+    - name: Create the package
+      if: github.ref == 'refs/heads/main'
+      run: dotnet pack --configuration Release ./src/GHM.Validator/GHM.Validator.csproj
+        
+    - name: Publish the package to nuget.org
+      if: github.ref == 'refs/heads/main'
+      run: dotnet nuget push ./src/GHM.Validator/bin/Release/*.nupkg -k $NUGET_AUTH_TOKEN -s https://api.nuget.org/v3/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{ secrets.NUGET_KEY }}
