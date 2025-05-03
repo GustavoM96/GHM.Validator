@@ -287,7 +287,7 @@ public interface IThrowerGeneric
     /// <param name="paramName">The name of the parameter.</param>
     /// <returns>True if an exception is not thrown</returns>
     bool IfNotEmail<TException>(
-        string email,
+        string? email,
         string? message = null,
         [CallerArgumentExpression(nameof(email))] string? paramName = null
     )

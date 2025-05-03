@@ -248,7 +248,7 @@ public interface IValidate
     /// <param name="paramName">The name of the parameter being validated.</param>
     /// <returns>A Validation object.</returns>
     Validation IfEmail(
-        string email,
+        string? email,
         string? message = null,
         [CallerArgumentExpression(nameof(email))] string? paramName = null
     );

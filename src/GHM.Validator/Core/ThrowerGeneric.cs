@@ -232,24 +232,28 @@ internal partial class Thrower : IThrowerGeneric
     }
 
     public bool IfNotEmail<TException>(
-        string email,
+        string? email,
         string? message = null,
         [CallerArgumentExpression(nameof(email))] string? paramName = null
     )
         where TException : Exception
     {
-        bool error = default;
+        _thrower = CreateThrower<TException>();
+
+        if (string.IsNullOrEmpty(email))
+        {
+            return ThrowIfError(true, message ?? GetDefaultErrorMessage(nameof(IfNotEmail), paramName, email));
+        }
+
+        bool error = false;
         try
         {
             MailAddress mailAddress = new(email);
-            error = false;
         }
         catch (Exception)
         {
             error = true;
         }
-
-        _thrower = CreateThrower<TException>();
         return ThrowIfError(error, message ?? GetDefaultErrorMessage(nameof(IfNotEmail), paramName, email));
     }
 }

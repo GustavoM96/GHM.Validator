@@ -193,22 +193,25 @@ internal partial class Thrower : ThowerBase, IThrower
     }
 
     public bool IfNotEmail(
-        string email,
+        string? email,
         string? message = null,
         [CallerArgumentExpression(nameof(email))] string? paramName = null
     )
     {
-        bool error = default;
+        if (string.IsNullOrEmpty(email))
+        {
+            return ThrowIfError(true, message ?? GetDefaultErrorMessage(nameof(IfNotEmail), paramName, email));
+        }
+
+        bool error = false;
         try
         {
             MailAddress mailAddress = new(email);
-            error = false;
         }
         catch (Exception)
         {
             error = true;
         }
-
         return ThrowIfError(error, message ?? GetDefaultErrorMessage(nameof(IfNotEmail), paramName, email));
     }
 }

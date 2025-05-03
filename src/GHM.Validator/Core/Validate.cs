@@ -202,13 +202,17 @@ internal class Validate : ValidateBase, IValidate
     }
 
     public Validation IfEmail(
-        string email,
+        string? email,
         string? message = null,
         [CallerArgumentExpression(nameof(email))] string? paramName = null
     )
     {
         try
         {
+            if (string.IsNullOrEmpty(email))
+            {
+                return Validation.Error(message ?? GetDefaultErrorMessage(nameof(IfEmail), paramName, email));
+            }
             MailAddress mailAddress = new(email);
             return Validation.Success(message ?? GetDefaultSuccessMessage(nameof(IfEmail), paramName, email));
         }
