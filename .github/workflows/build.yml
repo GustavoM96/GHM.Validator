@@ -12,6 +12,7 @@ on:
 env:
   CSPROJ_FILE_PATH: "./src/GHM.Validator/GHM.Validator.csproj"
   NUPKG_FILE_PATH: "./src/GHM.Validator/bin/Release/*.nupkg"
+  PROJECT_NAME: "GHM.Validator"
 
 jobs:
   build-test:
@@ -53,6 +54,12 @@ jobs:
       env:
         NUGET_AUTH_TOKEN: ${{ secrets.NUGET_KEY }}
 
+    - name: Upload .nupkg Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: nupkg-artifact
+        path: ${{ env.NUPKG_FILE_PATH }}  # Upload the .nupkg file as an artifact
+
   release:
     runs-on: ubuntu-latest
     needs: publish
@@ -85,6 +92,7 @@ jobs:
       shell: bash
 
     - name: Create GitHub Release
+      id: create_release
       uses: actions/create-release@v1
       if: env.EXISTS_RELEASE == 'false'
       with:
@@ -92,21 +100,28 @@ jobs:
         release_name: Release v${{ env.PACKAGE_VERSION }}
         body: |
           This release includes the latest changes and updates for version v${{ env.PACKAGE_VERSION }}.
-
-          Last Commit
+          Url to the package => https://www.nuget.org/packages/GHM.Pipeline/${{ env.PACKAGE_VERSION }}
+          
+          ------Description------
           ${{ env.LAST_COMMIT }}
         draft: false
         prerelease: false
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+    - name: Download .nupkg Artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: nupkg-artifact
+        path: ./nupkg-artifact  # Ensure the artifact is downloaded to this path
+
     - name: Upload Release Asset
       uses: actions/upload-release-asset@v1
       if: env.EXISTS_RELEASE == 'false'
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}  # Use the upload URL from the create-release step
-        asset_path: ${{ env.NUPKG_FILE_PATH }}  # Path to the asset to upload
-        asset_name: GHM.Validator-v${{ env.PACKAGE_VERSION }}.nupkg  # Name of the uploaded asset
+        asset_path: ./nupkg-artifact/${{ env.PROJECT_NAME }}.${{ env.PACKAGE_VERSION }}.nupkg  # Path to the asset to upload
+        asset_name: ${{ env.PROJECT_NAME }}-v${{ env.PACKAGE_VERSION }}.nupkg  # Name of the uploaded asset
         asset_content_type: application/octet-stream
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
