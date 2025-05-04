@@ -106,7 +106,7 @@ jobs:
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}  # Use the upload URL from the create-release step
         asset_path: ${{ env.NUPKG_FILE_PATH }}  # Path to the asset to upload
-        asset_name: GHM.Pipeline-v${{ env.PACKAGE_VERSION }}.nupkg  # Name of the uploaded asset
+        asset_name: GHM.Validator-v${{ env.PACKAGE_VERSION }}.nupkg  # Name of the uploaded asset
         asset_content_type: application/octet-stream
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
