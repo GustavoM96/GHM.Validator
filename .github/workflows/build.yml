@@ -75,8 +75,8 @@ jobs:
 
     - name: Get Last Commit Message
       run: |
-        LAST_COMMIT=$(git log -1 --pretty=%B)
-        echo "LAST_COMMIT=$LAST_COMMIT" >> $GITHUB_ENV
+        LAST_COMMIT_MESSAGE=$(git log -1 --pretty=%B | jq -Rs .)
+        echo "LAST_COMMIT=$LAST_COMMIT_MESSAGE" >> $GITHUB_ENV
       shell: bash
     
     - name: Check if Release Tag Exists
