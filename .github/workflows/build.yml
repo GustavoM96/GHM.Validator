@@ -100,7 +100,7 @@ jobs:
         release_name: Release v${{ env.PACKAGE_VERSION }}
         body: |
           This release includes the latest changes and updates for version v${{ env.PACKAGE_VERSION }}.
-          Url to the package => https://www.nuget.org/packages/GHM.Pipeline/${{ env.PACKAGE_VERSION }}
+          Url to the package => https://www.nuget.org/packages/GHM.Validator/${{ env.PACKAGE_VERSION }}
           
           ------Description------
           ${{ env.LAST_COMMIT }}
