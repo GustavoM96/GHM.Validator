@@ -21,7 +21,7 @@ internal partial class Thrower : ThowerBase, IThrower
         [CallerArgumentExpression(nameof(condition))] string? paramName = null
     )
     {
-        return ThrowIfError(condition, message ?? GetDefaultErrorMessage(nameof(IfTrue), paramName, condition));
+        return ThrowIfError(condition, GetErrorMessage(message, nameof(IfTrue), paramName, condition));
     }
 
     public bool IfFalse(
@@ -30,13 +30,13 @@ internal partial class Thrower : ThowerBase, IThrower
         [CallerArgumentExpression(nameof(condition))] string? paramName = null
     )
     {
-        return ThrowIfError(!condition, message ?? GetDefaultErrorMessage(nameof(IfFalse), paramName, condition));
+        return ThrowIfError(!condition, GetErrorMessage(message, nameof(IfFalse), paramName, condition));
     }
 
     public bool IfDefault<T>(T obj, string? message = null, [CallerArgumentExpression(nameof(obj))] string? paramName = null)
     {
         bool isDefault = EqualityComparer<T>.Default.Equals(obj, default);
-        return ThrowIfError(isDefault, message ?? GetDefaultErrorMessage(nameof(IfDefault), paramName, obj));
+        return ThrowIfError(isDefault, GetErrorMessage(message, nameof(IfDefault), paramName, obj));
     }
 
     public bool IfNotNull(
@@ -45,12 +45,12 @@ internal partial class Thrower : ThowerBase, IThrower
         [CallerArgumentExpression(nameof(obj))] string? paramName = null
     )
     {
-        return ThrowIfError(obj != null, message ?? GetDefaultErrorMessage(nameof(IfNotNull), paramName, obj));
+        return ThrowIfError(obj != null, GetErrorMessage(message, nameof(IfNotNull), paramName, obj));
     }
 
     public bool IfNull(object? obj, string? message = null, [CallerArgumentExpression(nameof(obj))] string? paramName = null)
     {
-        return ThrowIfError(obj == null, message ?? GetDefaultErrorMessage(nameof(IfNull), paramName, obj));
+        return ThrowIfError(obj == null, GetErrorMessage(message, nameof(IfNull), paramName, obj));
     }
 
     public bool IfNotEqual(
@@ -60,10 +60,7 @@ internal partial class Thrower : ThowerBase, IThrower
         [CallerArgumentExpression(nameof(obj))] string? paramName = null
     )
     {
-        return ThrowIfError(
-            !obj.Equals(toCompare),
-            message ?? GetDefaultErrorMessage(nameof(IfNotEqual), paramName, obj, toCompare)
-        );
+        return ThrowIfError(!obj.Equals(toCompare), GetErrorMessage(message, nameof(IfNotEqual), paramName, obj, toCompare));
     }
 
     public bool IfZero(
@@ -72,7 +69,7 @@ internal partial class Thrower : ThowerBase, IThrower
         [CallerArgumentExpression(nameof(number))] string? paramName = null
     )
     {
-        return ThrowIfError(number == 0, message ?? GetDefaultErrorMessage(nameof(IfZero), paramName, number));
+        return ThrowIfError(number == 0, GetErrorMessage(message, nameof(IfZero), paramName, number));
     }
 
     public bool IfZero(
@@ -81,7 +78,7 @@ internal partial class Thrower : ThowerBase, IThrower
         [CallerArgumentExpression(nameof(number))] string? paramName = null
     )
     {
-        return ThrowIfError(number == 0, message ?? GetDefaultErrorMessage(nameof(IfZero), paramName, number));
+        return ThrowIfError(number == 0, GetErrorMessage(message, nameof(IfZero), paramName, number));
     }
 
     public bool IfGreaterOrEqual(
@@ -93,7 +90,7 @@ internal partial class Thrower : ThowerBase, IThrower
     {
         return ThrowIfError(
             number >= toCompare,
-            message ?? GetDefaultErrorMessage(nameof(IfGreaterOrEqual), paramName, number, toCompare)
+            GetErrorMessage(message, nameof(IfGreaterOrEqual), paramName, number, toCompare)
         );
     }
 
@@ -104,10 +101,7 @@ internal partial class Thrower : ThowerBase, IThrower
         [CallerArgumentExpression(nameof(number))] string? paramName = null
     )
     {
-        return ThrowIfError(
-            number > toCompare,
-            message ?? GetDefaultErrorMessage(nameof(IfGreater), paramName, number, toCompare)
-        );
+        return ThrowIfError(number > toCompare, GetErrorMessage(message, nameof(IfGreater), paramName, number, toCompare));
     }
 
     public bool IfGreaterOrEqual(
@@ -119,7 +113,7 @@ internal partial class Thrower : ThowerBase, IThrower
     {
         return ThrowIfError(
             number >= toCompare,
-            message ?? GetDefaultErrorMessage(nameof(IfGreaterOrEqual), paramName, number, toCompare)
+            GetErrorMessage(message, nameof(IfGreaterOrEqual), paramName, number, toCompare)
         );
     }
 
@@ -130,10 +124,7 @@ internal partial class Thrower : ThowerBase, IThrower
         [CallerArgumentExpression(nameof(number))] string? paramName = null
     )
     {
-        return ThrowIfError(
-            number > toCompare,
-            message ?? GetDefaultErrorMessage(nameof(IfGreater), paramName, number, toCompare)
-        );
+        return ThrowIfError(number > toCompare, GetErrorMessage(message, nameof(IfGreater), paramName, number, toCompare));
     }
 
     public bool IfEmpty(
@@ -142,7 +133,7 @@ internal partial class Thrower : ThowerBase, IThrower
         [CallerArgumentExpression(nameof(text))] string? paramName = null
     )
     {
-        return ThrowIfError(string.IsNullOrEmpty(text), message ?? GetDefaultErrorMessage(nameof(IfEmpty), paramName, text));
+        return ThrowIfError(string.IsNullOrEmpty(text), GetErrorMessage(message, nameof(IfEmpty), paramName, text));
     }
 
     public bool IfNotParseToLong(
@@ -153,7 +144,7 @@ internal partial class Thrower : ThowerBase, IThrower
     {
         return ThrowIfError(
             !long.TryParse(text, out long _),
-            message ?? GetDefaultErrorMessage(nameof(IfNotParseToLong), paramName, text)
+            GetErrorMessage(message, nameof(IfNotParseToLong), paramName, text)
         );
     }
 
@@ -163,7 +154,7 @@ internal partial class Thrower : ThowerBase, IThrower
         [CallerArgumentExpression(nameof(list))] string? paramName = null
     )
     {
-        return ThrowIfError(!list.Any(), message ?? GetDefaultErrorMessage(nameof(IfEmpty), paramName, list));
+        return ThrowIfError(!list.Any(), GetErrorMessage(message, nameof(IfEmpty), paramName, list));
     }
 
     public bool IfOlder(
@@ -173,10 +164,7 @@ internal partial class Thrower : ThowerBase, IThrower
         [CallerArgumentExpression(nameof(date))] string? paramName = null
     )
     {
-        return ThrowIfError(
-            date < toCompare,
-            message ?? GetDefaultErrorMessage(nameof(IfOlder), paramName, date, toCompare)
-        );
+        return ThrowIfError(date < toCompare, GetErrorMessage(message, nameof(IfOlder), paramName, date, toCompare));
     }
 
     public bool IfOlderOrEqual(
@@ -186,10 +174,7 @@ internal partial class Thrower : ThowerBase, IThrower
         [CallerArgumentExpression(nameof(date))] string? paramName = null
     )
     {
-        return ThrowIfError(
-            date <= toCompare,
-            message ?? GetDefaultErrorMessage(nameof(IfOlderOrEqual), paramName, date, toCompare)
-        );
+        return ThrowIfError(date <= toCompare, GetErrorMessage(message, nameof(IfOlderOrEqual), paramName, date, toCompare));
     }
 
     public bool IfNotEmail(
@@ -200,7 +185,7 @@ internal partial class Thrower : ThowerBase, IThrower
     {
         if (string.IsNullOrEmpty(email))
         {
-            return ThrowIfError(true, message ?? GetDefaultErrorMessage(nameof(IfNotEmail), paramName, email));
+            return ThrowIfError(true, GetErrorMessage(message, nameof(IfNotEmail), paramName, email));
         }
 
         bool error = false;
@@ -212,6 +197,6 @@ internal partial class Thrower : ThowerBase, IThrower
         {
             error = true;
         }
-        return ThrowIfError(error, message ?? GetDefaultErrorMessage(nameof(IfNotEmail), paramName, email));
+        return ThrowIfError(error, GetErrorMessage(message, nameof(IfNotEmail), paramName, email));
     }
 }
