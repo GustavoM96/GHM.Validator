@@ -18,7 +18,7 @@ public class ThrowerBaseTests
         // Arrange
         int numberA = 12;
         int objToCompare = 3;
-        var errorMessage = "Error to validate param: numberA. Value: 12. Compare: 3. ThrowerName: IfGreater";
+        var errorMessage = "Error: param: numberA. Value: 12. Compare: 3. ThrowerName: IfGreater";
 
         // Act
         void Result() => _thrower.IfGreater(numberA, objToCompare);
@@ -33,7 +33,7 @@ public class ThrowerBaseTests
     {
         // Arrange
         string textTest = "1234Asdfedf";
-        var errorMessage = "Error to validate param: textTest. Value: 1234Asdfedf. ThrowerName: IfNotParseToLong";
+        var errorMessage = "Error: param: textTest. Value: 1234Asdfedf. ThrowerName: IfNotParseToLong";
 
         // Act
         void Result() => _thrower.IfNotParseToLong(textTest);

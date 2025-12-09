@@ -17,7 +17,7 @@ public class ValidationBaseTests
     {
         // Arrange
         string textTest = "123456";
-        string successMessage = "Validated param: textTest. Value: 123456. ValidationName: IfParseToLong";
+        string successMessage = "Validated: param: textTest. Value: 123456. ValidationName: IfParseToLong";
 
         // Act
         Validation result = _validate.IfParseToLong(textTest);
@@ -33,7 +33,7 @@ public class ValidationBaseTests
         // Arrange
         int numberA = 12;
         int objToCompare = 2;
-        string successMessage = "Validated param: numberA. Value: 12. Compare: 2. ValidationName: IfGreaterOrEqual";
+        string successMessage = "Validated: param: numberA. Value: 12. Compare: 2. ValidationName: IfGreaterOrEqual";
 
         // Act
         Validation result = _validate.IfGreaterOrEqual(numberA, objToCompare);
@@ -48,7 +48,7 @@ public class ValidationBaseTests
     {
         // Arrange
         string textTest = "1234Asdfedf";
-        string errorMessage = "Error to validate param: textTest. Value: 1234Asdfedf. ValidationName: IfParseToLong";
+        string errorMessage = "Error: param: textTest. Value: 1234Asdfedf. ValidationName: IfParseToLong";
 
         // Act
         Validation result = _validate.IfParseToLong(textTest);
@@ -64,7 +64,7 @@ public class ValidationBaseTests
         // Arrange
         int numberA = 12;
         int objToCompare = 3456;
-        string errorMessage = "Error to validate param: numberA. Value: 12. Compare: 3456. ValidationName: IfGreaterOrEqual";
+        string errorMessage = "Error: param: numberA. Value: 12. Compare: 3456. ValidationName: IfGreaterOrEqual";
 
         // Act
         Validation result = _validate.IfGreaterOrEqual(numberA, objToCompare);

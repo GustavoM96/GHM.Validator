@@ -1,3 +1,4 @@
+using GHM.Validator.Core.Enum;
 using GHM.Validator.Interfaces;
 using GHM.Validator.Test.Common;
 
@@ -23,6 +24,7 @@ public class ValidateErrorTests
         Validation result = _validate.IfTrue(condition, _message);
 
         // Assert
+        Assert.Equal(ValidationType.IfTrue, result.ValidationType);
         Assert.False(result.IsValid);
         Assert.Equal(_message, result.Message);
     }
@@ -37,6 +39,7 @@ public class ValidateErrorTests
         Validation result = _validate.IfFalse(condition, _message);
 
         // Assert
+        Assert.Equal(ValidationType.IfFalse, result.ValidationType);
         Assert.False(result.IsValid);
         Assert.Equal(_message, result.Message);
     }
@@ -51,6 +54,7 @@ public class ValidateErrorTests
         Validation result = _validate.IfNotDefault(obj, _message);
 
         // Assert
+        Assert.Equal(ValidationType.IfNotDefault, result.ValidationType);
         Assert.False(result.IsValid);
         Assert.Equal(_message, result.Message);
     }
@@ -65,6 +69,7 @@ public class ValidateErrorTests
         Validation result = _validate.IfNotNull(obj, _message);
 
         // Assert
+        Assert.Equal(ValidationType.IfNotNull, result.ValidationType);
         Assert.False(result.IsValid);
         Assert.Equal(_message, result.Message);
     }
@@ -79,6 +84,7 @@ public class ValidateErrorTests
         Validation result = _validate.IfNull(obj, _message);
 
         // Assert
+        Assert.Equal(ValidationType.IfNull, result.ValidationType);
         Assert.False(result.IsValid);
         Assert.Equal(_message, result.Message);
     }
@@ -94,6 +100,7 @@ public class ValidateErrorTests
         Validation result = _validate.IfEqual(obj, objToCompare, _message);
 
         // Assert
+        Assert.Equal(ValidationType.IfEqual, result.ValidationType);
         Assert.False(result.IsValid);
         Assert.Equal(_message, result.Message);
     }
@@ -108,6 +115,7 @@ public class ValidateErrorTests
         Validation result = _validate.IfNotZero(obj, _message);
 
         // Assert
+        Assert.Equal(ValidationType.IfNotZero, result.ValidationType);
         Assert.False(result.IsValid);
         Assert.Equal(_message, result.Message);
     }
@@ -122,6 +130,7 @@ public class ValidateErrorTests
         Validation result = _validate.IfNotZero(obj, _message);
 
         // Assert
+        Assert.Equal(ValidationType.IfNotZero, result.ValidationType);
         Assert.False(result.IsValid);
         Assert.Equal(_message, result.Message);
     }
@@ -139,6 +148,7 @@ public class ValidateErrorTests
         Validation resultEqual = _validate.IfGreater(obj, objEqual, _message);
 
         // Assert
+        Assert.Equal(ValidationType.IfGreater, result.ValidationType);
         Assert.False(result.IsValid);
         Assert.Equal(_message, result.Message);
 
@@ -157,6 +167,7 @@ public class ValidateErrorTests
         Validation result = _validate.IfGreaterOrEqual(obj, objToCompare, _message);
 
         // Assert
+        Assert.Equal(ValidationType.IfGreaterOrEqual, result.ValidationType);
         Assert.False(result.IsValid);
         Assert.Equal(_message, result.Message);
     }
@@ -174,6 +185,7 @@ public class ValidateErrorTests
         Validation resultEqual = _validate.IfGreater(obj, objEqual, _message);
 
         // Assert
+        Assert.Equal(ValidationType.IfGreater, result.ValidationType);
         Assert.False(result.IsValid);
         Assert.Equal(_message, result.Message);
 
@@ -192,6 +204,7 @@ public class ValidateErrorTests
         Validation result = _validate.IfGreaterOrEqual(obj, objToCompare, _message);
 
         // Assert
+        Assert.Equal(ValidationType.IfGreaterOrEqual, result.ValidationType);
         Assert.False(result.IsValid);
         Assert.Equal(_message, result.Message);
     }
@@ -208,6 +221,7 @@ public class ValidateErrorTests
         Validation resultNull = _validate.IfNotEmpty(objNull, _message);
 
         // Assert
+        Assert.Equal(ValidationType.IfNotEmpty, result.ValidationType);
         Assert.False(result.IsValid);
         Assert.Equal(_message, result.Message);
 
@@ -225,6 +239,7 @@ public class ValidateErrorTests
         Validation result = _validate.IfParseToLong(obj, _message);
 
         // Assert
+        Assert.Equal(ValidationType.IfParseToLong, result.ValidationType);
         Assert.False(result.IsValid);
         Assert.Equal(_message, result.Message);
     }
@@ -239,6 +254,7 @@ public class ValidateErrorTests
         Validation result = _validate.IfNotEmpty(obj, _message);
 
         // Assert
+        Assert.Equal(ValidationType.IfNotEmpty, result.ValidationType);
         Assert.False(result.IsValid);
         Assert.Equal(_message, result.Message);
     }
@@ -256,6 +272,7 @@ public class ValidateErrorTests
         Validation resultEqual = _validate.IfOlder(dateYongerEqual, dateYonger, _message);
 
         // Assert
+        Assert.Equal(ValidationType.IfOlder, result.ValidationType);
         Assert.False(resultEqual.IsValid);
         Assert.False(resultEqual.IsValid);
         Assert.False(result.IsValid);
@@ -273,6 +290,7 @@ public class ValidateErrorTests
         Validation result = _validate.IfOlderOrEqual(dateYonger, dateOlder, _message);
 
         Assert.False(result.IsValid);
+        Assert.Equal(ValidationType.IfOlderOrEqual, result.ValidationType);
         Assert.Equal(_message, result.Message);
     }
 
@@ -290,6 +308,7 @@ public class ValidateErrorTests
         Validation result = _validate.IfEmail(mailAddress, _message);
 
         // Assert
+        Assert.Equal(ValidationType.IfEmail, result.ValidationType);
         Assert.False(result.IsValid);
         Assert.Equal(_message, result.Message);
     }
