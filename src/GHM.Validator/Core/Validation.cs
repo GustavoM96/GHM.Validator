@@ -81,6 +81,11 @@ public struct Validation
     /// <returns>An error validation.</returns>
     public static Validation Error(string message) => new(false, message);
 
+    /// <summary>
+    /// Creates an error validation with the specified message and validationType.
+    /// </summary>
+    /// <param name="message">The message of the validation.</param>
+    /// <returns>An error validation.</returns>
     public static Validation Error(ValidationType validationType, string message) =>
         new(false, message, validationType: validationType);
 
