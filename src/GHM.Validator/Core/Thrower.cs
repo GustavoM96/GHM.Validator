@@ -4,7 +4,7 @@ using GHM.Validator.Interfaces;
 
 namespace GHM.Validator;
 
-internal partial class Thrower : ThowerBase, IThrower
+internal partial class Thrower : ThrowerBase, IThrower
 {
     public Thrower(Func<string, Exception> exceptionThrower)
         : base(exceptionThrower) { }

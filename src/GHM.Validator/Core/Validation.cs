@@ -32,9 +32,9 @@ public struct Validation
     /// </summary>
     public ErrorType? ErrorType { get; private set; }
 
-    /// <sumamary>
+    /// <summary>
     /// Gets or sets the validation type of the validation.
-    /// </sumamary>
+    /// </summary>
     public ValidationType? ValidationType { get; private set; }
 
     /// <summary>

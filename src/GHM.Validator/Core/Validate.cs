@@ -1,8 +1,9 @@
 ﻿using System.Net.Mail;
 using System.Runtime.CompilerServices;
-using GHM.Validator;
 using GHM.Validator.Core.Enum;
 using GHM.Validator.Interfaces;
+
+namespace GHM.Validator;
 
 internal class Validate : ValidateBase, IValidate
 {

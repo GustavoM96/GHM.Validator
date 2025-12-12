@@ -1,8 +1,8 @@
 namespace GHM.Validator;
 
-internal abstract class ThowerBase
+internal abstract class ThrowerBase
 {
-    public ThowerBase(Func<string, Exception> exceptionThrower)
+    public ThrowerBase(Func<string, Exception> exceptionThrower)
     {
         _thrower = exceptionThrower;
         _initialThrower = exceptionThrower;
