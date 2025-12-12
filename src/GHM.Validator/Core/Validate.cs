@@ -1,5 +1,6 @@
 ﻿using System.Net.Mail;
 using System.Runtime.CompilerServices;
+using GHM.Validator.Core.Enum;
 using GHM.Validator.Interfaces;
 
 namespace GHM.Validator;
@@ -12,9 +13,10 @@ internal class Validate : ValidateBase, IValidate
         [CallerArgumentExpression(nameof(condition))] string? paramName = null
     )
     {
+        var type = ValidationType.IfTrue;
         return condition
-            ? Validation.Success(message ?? GetDefaultSuccessMessage(nameof(IfTrue), paramName, condition))
-            : Validation.Error(message ?? GetDefaultErrorMessage(nameof(IfTrue), paramName, condition));
+            ? Validation.Success(type, GetSuccessMessage(message, type.ToString(), paramName, condition))
+            : Validation.Error(type, GetErrorMessage(message, type.ToString(), paramName, condition));
     }
 
     public Validation IfFalse(
@@ -23,9 +25,10 @@ internal class Validate : ValidateBase, IValidate
         [CallerArgumentExpression(nameof(condition))] string? paramName = null
     )
     {
+        var type = ValidationType.IfFalse;
         return condition
-            ? Validation.Error(message ?? GetDefaultErrorMessage(nameof(IfFalse), paramName, condition))
-            : Validation.Success(message ?? GetDefaultSuccessMessage(nameof(IfFalse), paramName, condition));
+            ? Validation.Error(type, GetErrorMessage(message, type.ToString(), paramName, condition))
+            : Validation.Success(type, GetSuccessMessage(message, type.ToString(), paramName, condition));
     }
 
     public Validation IfNotDefault<T>(
@@ -34,10 +37,11 @@ internal class Validate : ValidateBase, IValidate
         [CallerArgumentExpression(nameof(obj))] string? paramName = null
     )
     {
+        var type = ValidationType.IfNotDefault;
         bool isDefault = EqualityComparer<T>.Default.Equals(obj, default);
         return isDefault
-            ? Validation.Error(message ?? GetDefaultErrorMessage(nameof(IfNotDefault), paramName, obj))
-            : Validation.Success(message ?? GetDefaultSuccessMessage(nameof(IfNotDefault), paramName, obj));
+            ? Validation.Error(type, GetErrorMessage(message, type.ToString(), paramName, obj))
+            : Validation.Success(type, GetSuccessMessage(message, type.ToString(), paramName, obj));
     }
 
     public Validation IfNotNull(
@@ -46,9 +50,10 @@ internal class Validate : ValidateBase, IValidate
         [CallerArgumentExpression(nameof(obj))] string? paramName = null
     )
     {
+        var type = ValidationType.IfNotNull;
         return obj != null
-            ? Validation.Success(message ?? GetDefaultSuccessMessage(nameof(IfNotNull), paramName, obj))
-            : Validation.Error(message ?? GetDefaultErrorMessage(nameof(IfNotNull), paramName, obj));
+            ? Validation.Success(type, GetSuccessMessage(message, type.ToString(), paramName, obj))
+            : Validation.Error(type, GetErrorMessage(message, type.ToString(), paramName, obj));
     }
 
     public Validation IfNull(
@@ -57,9 +62,10 @@ internal class Validate : ValidateBase, IValidate
         [CallerArgumentExpression(nameof(obj))] string? paramName = null
     )
     {
+        var type = ValidationType.IfNull;
         return obj == null
-            ? Validation.Success(message ?? GetDefaultSuccessMessage(nameof(IfNull), paramName, obj))
-            : Validation.Error(message ?? GetDefaultErrorMessage(nameof(IfNull), paramName, obj));
+            ? Validation.Success(type, GetSuccessMessage(message, type.ToString(), paramName, obj))
+            : Validation.Error(type, GetErrorMessage(message, type.ToString(), paramName, obj));
     }
 
     public Validation IfEqual(
@@ -69,9 +75,10 @@ internal class Validate : ValidateBase, IValidate
         [CallerArgumentExpression(nameof(obj))] string? paramName = null
     )
     {
+        var type = ValidationType.IfEqual;
         return obj.Equals(toCompare)
-            ? Validation.Success(message ?? GetDefaultSuccessMessage(nameof(IfEqual), paramName, obj))
-            : Validation.Error(message ?? GetDefaultErrorMessage(nameof(IfEqual), paramName, obj));
+            ? Validation.Success(type, GetSuccessMessage(message, type.ToString(), paramName, obj))
+            : Validation.Error(type, GetErrorMessage(message, type.ToString(), paramName, obj));
     }
 
     public Validation IfNotZero(
@@ -80,9 +87,10 @@ internal class Validate : ValidateBase, IValidate
         [CallerArgumentExpression(nameof(number))] string? paramName = null
     )
     {
+        var type = ValidationType.IfNotZero;
         return number != 0
-            ? Validation.Success(message ?? GetDefaultSuccessMessage(nameof(IfNotZero), paramName, number))
-            : Validation.Error(message ?? GetDefaultErrorMessage(nameof(IfNotZero), paramName, number));
+            ? Validation.Success(type, GetSuccessMessage(message, type.ToString(), paramName, number))
+            : Validation.Error(type, GetErrorMessage(message, type.ToString(), paramName, number));
     }
 
     public Validation IfNotZero(
@@ -91,9 +99,10 @@ internal class Validate : ValidateBase, IValidate
         [CallerArgumentExpression(nameof(number))] string? paramName = null
     )
     {
+        var type = ValidationType.IfNotZero;
         return number != 0
-            ? Validation.Success(message ?? GetDefaultSuccessMessage(nameof(IfNotZero), paramName, number))
-            : Validation.Error(message ?? GetDefaultErrorMessage(nameof(IfNotZero), paramName, number));
+            ? Validation.Success(type, GetSuccessMessage(message, type.ToString(), paramName, number))
+            : Validation.Error(type, GetErrorMessage(message, type.ToString(), paramName, number));
     }
 
     public Validation IfGreaterOrEqual(
@@ -103,9 +112,10 @@ internal class Validate : ValidateBase, IValidate
         [CallerArgumentExpression(nameof(number))] string? paramName = null
     )
     {
+        var type = ValidationType.IfGreaterOrEqual;
         return number >= toCompare
-            ? Validation.Success(message ?? GetDefaultSuccessMessage(nameof(IfGreaterOrEqual), paramName, number, toCompare))
-            : Validation.Error(message ?? GetDefaultErrorMessage(nameof(IfGreaterOrEqual), paramName, number, toCompare));
+            ? Validation.Success(type, GetSuccessMessage(message, type.ToString(), paramName, number, toCompare))
+            : Validation.Error(type, GetErrorMessage(message, type.ToString(), paramName, number, toCompare));
     }
 
     public Validation IfGreater(
@@ -115,9 +125,10 @@ internal class Validate : ValidateBase, IValidate
         [CallerArgumentExpression(nameof(number))] string? paramName = null
     )
     {
+        var type = ValidationType.IfGreater;
         return number > toCompare
-            ? Validation.Success(message ?? GetDefaultSuccessMessage(nameof(IfGreater), paramName, number, toCompare))
-            : Validation.Error(message ?? GetDefaultErrorMessage(nameof(IfGreater), paramName, number, toCompare));
+            ? Validation.Success(type, GetSuccessMessage(message, type.ToString(), paramName, number, toCompare))
+            : Validation.Error(type, GetErrorMessage(message, type.ToString(), paramName, number, toCompare));
     }
 
     public Validation IfGreaterOrEqual(
@@ -127,9 +138,10 @@ internal class Validate : ValidateBase, IValidate
         [CallerArgumentExpression(nameof(number))] string? paramName = null
     )
     {
+        var type = ValidationType.IfGreaterOrEqual;
         return number >= toCompare
-            ? Validation.Success(message ?? GetDefaultSuccessMessage(nameof(IfGreaterOrEqual), paramName, number, toCompare))
-            : Validation.Error(message ?? GetDefaultErrorMessage(nameof(IfGreaterOrEqual), paramName, number, toCompare));
+            ? Validation.Success(type, GetSuccessMessage(message, type.ToString(), paramName, number, toCompare))
+            : Validation.Error(type, GetErrorMessage(message, type.ToString(), paramName, number, toCompare));
     }
 
     public Validation IfGreater(
@@ -139,9 +151,10 @@ internal class Validate : ValidateBase, IValidate
         [CallerArgumentExpression(nameof(number))] string? paramName = null
     )
     {
+        var type = ValidationType.IfGreater;
         return number > toCompare
-            ? Validation.Success(message ?? GetDefaultSuccessMessage(nameof(IfGreater), paramName, number, toCompare))
-            : Validation.Error(message ?? GetDefaultErrorMessage(nameof(IfGreater), paramName, number, toCompare));
+            ? Validation.Success(type, GetSuccessMessage(message, type.ToString(), paramName, number, toCompare))
+            : Validation.Error(type, GetErrorMessage(message, type.ToString(), paramName, number, toCompare));
     }
 
     public Validation IfNotEmpty(
@@ -150,9 +163,10 @@ internal class Validate : ValidateBase, IValidate
         [CallerArgumentExpression(nameof(text))] string? paramName = null
     )
     {
+        var type = ValidationType.IfNotEmpty;
         return string.IsNullOrEmpty(text)
-            ? Validation.Error(message ?? GetDefaultErrorMessage(nameof(IfNotEmpty), paramName, text))
-            : Validation.Success(message ?? GetDefaultSuccessMessage(nameof(IfNotEmpty), paramName, text));
+            ? Validation.Error(type, GetErrorMessage(message, type.ToString(), paramName, text))
+            : Validation.Success(type, GetSuccessMessage(message, type.ToString(), paramName, text));
     }
 
     public Validation IfParseToLong(
@@ -161,9 +175,10 @@ internal class Validate : ValidateBase, IValidate
         [CallerArgumentExpression(nameof(text))] string? paramName = null
     )
     {
+        var type = ValidationType.IfParseToLong;
         return long.TryParse(text, out long _)
-            ? Validation.Success(message ?? GetDefaultSuccessMessage(nameof(IfParseToLong), paramName, text))
-            : Validation.Error(message ?? GetDefaultErrorMessage(nameof(IfParseToLong), paramName, text));
+            ? Validation.Success(type, GetSuccessMessage(message, type.ToString(), paramName, text))
+            : Validation.Error(type, GetErrorMessage(message, type.ToString(), paramName, text));
     }
 
     public Validation IfNotEmpty<T>(
@@ -172,9 +187,10 @@ internal class Validate : ValidateBase, IValidate
         [CallerArgumentExpression(nameof(list))] string? paramName = null
     )
     {
+        var type = ValidationType.IfNotEmpty;
         return list.Any()
-            ? Validation.Success(message ?? GetDefaultSuccessMessage(nameof(IfNotEmpty), paramName, list))
-            : Validation.Error(message ?? GetDefaultErrorMessage(nameof(IfNotEmpty), paramName, list));
+            ? Validation.Success(type, GetSuccessMessage(message, type.ToString(), paramName, list))
+            : Validation.Error(type, GetErrorMessage(message, type.ToString(), paramName, list));
     }
 
     public Validation IfOlder(
@@ -184,9 +200,10 @@ internal class Validate : ValidateBase, IValidate
         [CallerArgumentExpression(nameof(date))] string? paramName = null
     )
     {
+        var type = ValidationType.IfOlder;
         return date < toCompare
-            ? Validation.Success(message ?? GetDefaultSuccessMessage(nameof(IfOlder), paramName, date, toCompare))
-            : Validation.Error(message ?? GetDefaultErrorMessage(nameof(IfOlder), paramName, date, toCompare));
+            ? Validation.Success(type, GetSuccessMessage(message, type.ToString(), paramName, date, toCompare))
+            : Validation.Error(type, GetErrorMessage(message, type.ToString(), paramName, date, toCompare));
     }
 
     public Validation IfOlderOrEqual(
@@ -196,9 +213,10 @@ internal class Validate : ValidateBase, IValidate
         [CallerArgumentExpression(nameof(date))] string? paramName = null
     )
     {
+        var type = ValidationType.IfOlderOrEqual;
         return date <= toCompare
-            ? Validation.Success(message ?? GetDefaultSuccessMessage(nameof(IfOlderOrEqual), paramName, date, toCompare))
-            : Validation.Error(message ?? GetDefaultErrorMessage(nameof(IfOlderOrEqual), paramName, date, toCompare));
+            ? Validation.Success(type, GetSuccessMessage(message, type.ToString(), paramName, date, toCompare))
+            : Validation.Error(type, GetErrorMessage(message, type.ToString(), paramName, date, toCompare));
     }
 
     public Validation IfEmail(
@@ -207,18 +225,19 @@ internal class Validate : ValidateBase, IValidate
         [CallerArgumentExpression(nameof(email))] string? paramName = null
     )
     {
+        var type = ValidationType.IfEmail;
         try
         {
             if (string.IsNullOrEmpty(email))
             {
-                return Validation.Error(message ?? GetDefaultErrorMessage(nameof(IfEmail), paramName, email));
+                return Validation.Error(type, GetErrorMessage(message, type.ToString(), paramName, email));
             }
             MailAddress mailAddress = new(email);
-            return Validation.Success(message ?? GetDefaultSuccessMessage(nameof(IfEmail), paramName, email));
+            return Validation.Success(type, GetSuccessMessage(message, type.ToString(), paramName, email));
         }
         catch (Exception)
         {
-            return Validation.Error(message ?? GetDefaultErrorMessage(nameof(IfEmail), paramName, email));
+            return Validation.Error(type, GetErrorMessage(message, type.ToString(), paramName, email));
         }
     }
 }

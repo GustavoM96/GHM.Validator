@@ -20,7 +20,7 @@ internal partial class Thrower : IThrowerGeneric
         where TException : Exception
     {
         _thrower = CreateThrower<TException>();
-        return ThrowIfError(condition, message ?? GetDefaultErrorMessage(nameof(IfTrue), paramName, condition));
+        return ThrowIfError(condition, GetErrorMessage(message, nameof(IfTrue), paramName, condition));
     }
 
     public bool IfFalse<TException>(
@@ -31,7 +31,7 @@ internal partial class Thrower : IThrowerGeneric
         where TException : Exception
     {
         _thrower = CreateThrower<TException>();
-        return ThrowIfError(!condition, message ?? GetDefaultErrorMessage(nameof(IfFalse), paramName, condition));
+        return ThrowIfError(!condition, GetErrorMessage(message, nameof(IfFalse), paramName, condition));
     }
 
     public bool IfDefault<TException, TObj>(
@@ -43,7 +43,7 @@ internal partial class Thrower : IThrowerGeneric
     {
         bool isDefault = EqualityComparer<TObj>.Default.Equals(obj, default);
         _thrower = CreateThrower<TException>();
-        return ThrowIfError(isDefault, message ?? GetDefaultErrorMessage(nameof(IfDefault), paramName, obj));
+        return ThrowIfError(isDefault, GetErrorMessage(message, nameof(IfDefault), paramName, obj));
     }
 
     public bool IfNotNull<TException>(
@@ -54,7 +54,7 @@ internal partial class Thrower : IThrowerGeneric
         where TException : Exception
     {
         _thrower = CreateThrower<TException>();
-        return ThrowIfError(obj != null, message ?? GetDefaultErrorMessage(nameof(IfNotNull), paramName, obj));
+        return ThrowIfError(obj != null, GetErrorMessage(message, nameof(IfNotNull), paramName, obj));
     }
 
     public bool IfNull<TException>(
@@ -65,7 +65,7 @@ internal partial class Thrower : IThrowerGeneric
         where TException : Exception
     {
         _thrower = CreateThrower<TException>();
-        return ThrowIfError(obj == null, message ?? GetDefaultErrorMessage(nameof(IfNull), paramName, obj));
+        return ThrowIfError(obj == null, GetErrorMessage(message, nameof(IfNull), paramName, obj));
     }
 
     public bool IfNotEqual<TException>(
@@ -77,10 +77,7 @@ internal partial class Thrower : IThrowerGeneric
         where TException : Exception
     {
         _thrower = CreateThrower<TException>();
-        return ThrowIfError(
-            !obj.Equals(toCompare),
-            message ?? GetDefaultErrorMessage(nameof(IfNotEqual), paramName, obj, toCompare)
-        );
+        return ThrowIfError(!obj.Equals(toCompare), GetErrorMessage(message, nameof(IfNotEqual), paramName, obj, toCompare));
     }
 
     public bool IfZero<TException>(
@@ -91,7 +88,7 @@ internal partial class Thrower : IThrowerGeneric
         where TException : Exception
     {
         _thrower = CreateThrower<TException>();
-        return ThrowIfError(number == 0, message ?? GetDefaultErrorMessage(nameof(IfZero), paramName, number));
+        return ThrowIfError(number == 0, GetErrorMessage(message, nameof(IfZero), paramName, number));
     }
 
     public bool IfZero<TException>(
@@ -102,7 +99,7 @@ internal partial class Thrower : IThrowerGeneric
         where TException : Exception
     {
         _thrower = CreateThrower<TException>();
-        return ThrowIfError(number == 0, message ?? GetDefaultErrorMessage(nameof(IfZero), paramName, number));
+        return ThrowIfError(number == 0, GetErrorMessage(message, nameof(IfZero), paramName, number));
     }
 
     public bool IfGreaterOrEqual<TException>(
@@ -116,7 +113,7 @@ internal partial class Thrower : IThrowerGeneric
         _thrower = CreateThrower<TException>();
         return ThrowIfError(
             number >= toCompare,
-            message ?? GetDefaultErrorMessage(nameof(IfGreaterOrEqual), paramName, number, toCompare)
+            GetErrorMessage(message, nameof(IfGreaterOrEqual), paramName, number, toCompare)
         );
     }
 
@@ -129,10 +126,7 @@ internal partial class Thrower : IThrowerGeneric
         where TException : Exception
     {
         _thrower = CreateThrower<TException>();
-        return ThrowIfError(
-            number > toCompare,
-            message ?? GetDefaultErrorMessage(nameof(IfGreater), paramName, number, toCompare)
-        );
+        return ThrowIfError(number > toCompare, GetErrorMessage(message, nameof(IfGreater), paramName, number, toCompare));
     }
 
     public bool IfGreaterOrEqual<TException>(
@@ -146,7 +140,7 @@ internal partial class Thrower : IThrowerGeneric
         _thrower = CreateThrower<TException>();
         return ThrowIfError(
             number >= toCompare,
-            message ?? GetDefaultErrorMessage(nameof(IfGreaterOrEqual), paramName, number, toCompare)
+            GetErrorMessage(message, nameof(IfGreaterOrEqual), paramName, number, toCompare)
         );
     }
 
@@ -159,10 +153,7 @@ internal partial class Thrower : IThrowerGeneric
         where TException : Exception
     {
         _thrower = CreateThrower<TException>();
-        return ThrowIfError(
-            number > toCompare,
-            message ?? GetDefaultErrorMessage(nameof(IfGreater), paramName, number, toCompare)
-        );
+        return ThrowIfError(number > toCompare, GetErrorMessage(message, nameof(IfGreater), paramName, number, toCompare));
     }
 
     public bool IfEmpty<TException>(
@@ -173,7 +164,7 @@ internal partial class Thrower : IThrowerGeneric
         where TException : Exception
     {
         _thrower = CreateThrower<TException>();
-        return ThrowIfError(string.IsNullOrEmpty(text), message ?? GetDefaultErrorMessage(nameof(IfEmpty), paramName, text));
+        return ThrowIfError(string.IsNullOrEmpty(text), GetErrorMessage(message, nameof(IfEmpty), paramName, text));
     }
 
     public bool IfNotParseToLong<TException>(
@@ -186,7 +177,7 @@ internal partial class Thrower : IThrowerGeneric
         _thrower = CreateThrower<TException>();
         return ThrowIfError(
             !long.TryParse(text, out long _),
-            message ?? GetDefaultErrorMessage(nameof(IfNotParseToLong), paramName, text)
+            GetErrorMessage(message, nameof(IfNotParseToLong), paramName, text)
         );
     }
 
@@ -198,7 +189,7 @@ internal partial class Thrower : IThrowerGeneric
         where TException : Exception
     {
         _thrower = CreateThrower<TException>();
-        return ThrowIfError(!list.Any(), message ?? GetDefaultErrorMessage(nameof(IfEmpty), paramName, list));
+        return ThrowIfError(!list.Any(), GetErrorMessage(message, nameof(IfEmpty), paramName, list));
     }
 
     public bool IfOlder<TException>(
@@ -210,10 +201,7 @@ internal partial class Thrower : IThrowerGeneric
         where TException : Exception
     {
         _thrower = CreateThrower<TException>();
-        return ThrowIfError(
-            date < toCompare,
-            message ?? GetDefaultErrorMessage(nameof(IfOlder), paramName, date, toCompare)
-        );
+        return ThrowIfError(date < toCompare, GetErrorMessage(message, nameof(IfOlder), paramName, date, toCompare));
     }
 
     public bool IfOlderOrEqual<TException>(
@@ -225,10 +213,7 @@ internal partial class Thrower : IThrowerGeneric
         where TException : Exception
     {
         _thrower = CreateThrower<TException>();
-        return ThrowIfError(
-            date <= toCompare,
-            message ?? GetDefaultErrorMessage(nameof(IfOlderOrEqual), paramName, date, toCompare)
-        );
+        return ThrowIfError(date <= toCompare, GetErrorMessage(message, nameof(IfOlderOrEqual), paramName, date, toCompare));
     }
 
     public bool IfNotEmail<TException>(
@@ -242,7 +227,7 @@ internal partial class Thrower : IThrowerGeneric
 
         if (string.IsNullOrEmpty(email))
         {
-            return ThrowIfError(true, message ?? GetDefaultErrorMessage(nameof(IfNotEmail), paramName, email));
+            return ThrowIfError(true, GetErrorMessage(message, nameof(IfNotEmail), paramName, email));
         }
 
         bool error = false;
@@ -254,6 +239,6 @@ internal partial class Thrower : IThrowerGeneric
         {
             error = true;
         }
-        return ThrowIfError(error, message ?? GetDefaultErrorMessage(nameof(IfNotEmail), paramName, email));
+        return ThrowIfError(error, GetErrorMessage(message, nameof(IfNotEmail), paramName, email));
     }
 }

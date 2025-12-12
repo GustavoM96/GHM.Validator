@@ -1,3 +1,5 @@
+using GHM.Validator.Core.Enum;
+
 namespace GHM.Validator;
 
 /// <summary>
@@ -31,18 +33,30 @@ public struct Validation
     public ErrorType? ErrorType { get; private set; }
 
     /// <summary>
+    /// Gets or sets the validation type of the validation.
+    /// </summary>
+    public ValidationType? ValidationType { get; private set; }
+
+    /// <summary>
     /// Initializes a new instance of the <see cref="Validation"/> struct.
     /// </summary>
     /// <param name="isValid">A value indicating whether the validation is valid.</param>
     /// <param name="message">The message of the validation.</param>
     /// <param name="title">The title of the validation.</param>
     /// <param name="errorType">The error type of the validation.</param>
-    public Validation(bool isValid, string message, string? title = null, ErrorType? errorType = null)
+    public Validation(
+        bool isValid,
+        string message,
+        string? title = null,
+        ErrorType? errorType = null,
+        ValidationType? validationType = null
+    )
     {
         IsValid = isValid;
         Message = message;
         Title = title;
         ErrorType = isValid ? null : errorType ?? Validator.ErrorType.Validation;
+        ValidationType = validationType;
     }
 
     /// <summary>
@@ -53,11 +67,27 @@ public struct Validation
     public static Validation Success(string message) => new(true, message);
 
     /// <summary>
+    /// Creates a success validation with the specified message and validationType.
+    /// </summary>
+    /// <param name="message">The message of the validation.</param>
+    /// <returns>A success validation.</returns>
+    public static Validation Success(ValidationType validationType, string message) =>
+        new(true, message, validationType: validationType);
+
+    /// <summary>
     /// Creates an error validation with the specified message.
     /// </summary>
     /// <param name="message">The message of the validation.</param>
     /// <returns>An error validation.</returns>
     public static Validation Error(string message) => new(false, message);
+
+    /// <summary>
+    /// Creates an error validation with the specified message and validationType.
+    /// </summary>
+    /// <param name="message">The message of the validation.</param>
+    /// <returns>An error validation.</returns>
+    public static Validation Error(ValidationType validationType, string message) =>
+        new(false, message, validationType: validationType);
 
     /// <summary>
     /// Sets the error type of the validation if it is an error.
