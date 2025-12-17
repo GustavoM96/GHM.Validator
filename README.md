@@ -5,6 +5,8 @@
 <h1 align="center"> GHM.Validator </h1>
 
 [![Build & Test](https://github.com/GustavoM96/GHM.Validator/actions/workflows/build.yml/badge.svg)](https://github.com/GustavoM96/GHM.Validator/actions/workflows/build.yml)
+[![SonarQube](https://img.shields.io/badge/SonarQube-black?style=for-the-badge&logo=sonarqube&logoColor=4E9BCD)](https://sonarcloud.io/summary/new_code?id=GustavoM96_GHM.Validator&branch=main)
+
 
 GHM.Validator is a nuget package aims to validate data.
 
