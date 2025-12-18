@@ -18,16 +18,16 @@ public class ValidationList : List<Validation>
     /// <summary>
     /// Gets the list of errors in the validation list.
     /// </summary>
-    public List<Error> Errors => this.Where(validation => !validation.IsValid).Select(Error.FromValidation).ToList();
+    public List<Error> GetErrors() => this.Where(validation => !validation.IsValid).Select(Error.FromValidation).ToList();
 
     /// <summary>
     /// Gets the error type of the validation list.
     /// </summary>
     public ErrorType? ErrorType =>
-        Errors.Count switch
+        GetErrors().Count switch
         {
             0 => null,
-            1 => Errors[0].ErrorType,
+            1 => GetErrors()[0].ErrorType,
             _ => Validator.ErrorType.Failure,
         };
 
@@ -62,12 +62,12 @@ public class ValidationList : List<Validation>
     /// <param name="exceptionMessage">The exception message to include in the <see cref="ValidationException"/>.</param>
     public void ThrowErrors(string? exceptionMessage = null)
     {
-        if (Errors.Count == 0)
+        if (GetErrors().Count == 0)
         {
             return;
         }
 
-        throw new ValidationException(exceptionMessage, Errors);
+        throw new ValidationException(exceptionMessage, GetErrors());
     }
 
     /// <summary>
@@ -76,11 +76,11 @@ public class ValidationList : List<Validation>
     /// <param name="separator">The separator to use between error messages.</param>
     public void ThrowErrorsWithMessage(string? separator)
     {
-        if (Errors.Count == 0)
+        if (GetErrors().Count == 0)
         {
             return;
         }
 
-        throw new ValidationException(string.Join(separator, Errors.Select(error => error.Message)), Errors);
+        throw new ValidationException(string.Join(separator, GetErrors().Select(error => error.Message)), GetErrors());
     }
 }
