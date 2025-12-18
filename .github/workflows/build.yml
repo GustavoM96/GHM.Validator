@@ -28,8 +28,8 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
 
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+    - name: Install . NET coverage
+      run: dotnet tool install --global dotnet-coverage
 
     - name: Test with Coverage
       run: dotnet-coverage collect "dotnet test --no-build" -f xml -o "${{ env.COVERAGE_FILE_PATH }}" 
