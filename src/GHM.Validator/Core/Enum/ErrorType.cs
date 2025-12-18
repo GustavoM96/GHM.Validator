@@ -9,4 +9,5 @@ public enum ErrorType
     NotFound,
     Unauthorized,
     Default,
+    ManyErrors,
 }
