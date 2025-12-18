@@ -118,7 +118,7 @@ public class ResultTests
         result.AddValidations(ErrorValidationList);
 
         // Act
-        List<Error> errors = result.Errors;
+        List<Error> errors = result.GetErrors();
 
         // Assert
         Assert.Contains(ErrorValidation.Message, errors.Select(e => e.Message));
@@ -150,10 +150,10 @@ public class ResultTests
         string errorMessage = "error exception teste";
 
         // Act
-        void ThrowError() => _result.ThrowErrors(errorMessage);
+        var exception = Record.Exception(() => _result.ThrowErrors(errorMessage));
 
         //Assert
-        ThrowError();
+        Assert.Null(exception);
     }
 
     [Fact]
@@ -181,10 +181,10 @@ public class ResultTests
         string errorMessage = "error exception teste";
 
         // Act
-        void ThrowError() => _result.ThrowErrorsWithMessage(errorMessage);
+        var exception = Record.Exception(() => _result.ThrowErrorsWithMessage(errorMessage));
 
         //Assert
-        ThrowError();
+        Assert.Null(exception);
     }
 
     [Fact]

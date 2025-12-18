@@ -51,10 +51,10 @@ public class ValidationListTests
         string errorMessage = "error exception teste";
 
         // Act
-        void ThrowError() => SuccessValidationList.ThrowErrors(errorMessage);
+        var exception = Record.Exception(() => SuccessValidationList.ThrowErrors(errorMessage));
 
         //Assert
-        ThrowError();
+        Assert.Null(exception);
     }
 
     [Fact]
@@ -81,10 +81,10 @@ public class ValidationListTests
         string errorMessage = "error exception teste";
 
         // Act
-        void ThrowError() => SuccessValidationList.ThrowErrorsWithMessage(errorMessage);
+        var exception = Record.Exception(() => SuccessValidationList.ThrowErrorsWithMessage(errorMessage));
 
         //Assert
-        ThrowError();
+        Assert.Null(exception);
     }
 
     [Fact]
