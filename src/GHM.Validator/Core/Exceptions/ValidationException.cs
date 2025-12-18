@@ -9,7 +9,7 @@ public class ValidationException : Exception
         {
             0 => null,
             1 => Errors[0].ErrorType,
-            _ => Validator.ErrorType.Default
+            _ => Validator.ErrorType.ManyErrors,
         };
 
     public ValidationException(string? messsage, List<Error> errors)

@@ -28,7 +28,7 @@ public class ValidationList : List<Validation>
         {
             0 => null,
             1 => GetErrors()[0].ErrorType,
-            _ => Validator.ErrorType.Failure,
+            _ => Validator.ErrorType.ManyErrors,
         };
 
     /// <summary>
