@@ -31,36 +31,15 @@ jobs:
 
     - name: Test
       run: dotnet test --no-build --verbosity normal
-
-    - name: Extract Package Version
-      id: extract_version
-      run: |
-        PACKAGE_VERSION=$(cat ${{ env.CSPROJ_FILE_PATH }} | grep '<Version>' | sed -E 's/.*<Version>(.*)<\/Version>.*/\1/')
-        echo "PACKAGE_VERSION=$PACKAGE_VERSION" >> $GITHUB_ENV
-      shell: bash
-
-    - name: Check if Release Tag Exists
-      id: check_release
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        if gh release view "v${{ env.PACKAGE_VERSION }}" > /dev/null 2>&1; then
-          echo "Version v${{ env.PACKAGE_VERSION }} already exists. ByPass The Publish job."
-          echo "RELEASE_ALREADY_EXISTS=true" >> "$GITHUB_OUTPUT"
-        else
-          echo "Versão v${{ env.PACKAGE_VERSION }} é nova."
-          echo "RELEASE_ALREADY_EXISTS=false" >> "$GITHUB_OUTPUT"
-        fi
-      shell: bash
       
   sonar:
-    runs-on:  ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
       with:
-        fetch-depth:  0
+        fetch-depth: 0
         
-    - name: Setup . NET
+    - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 9.0.x
@@ -80,10 +59,40 @@ jobs:
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         
-  publish-nuget:    
+  check-release-version:
     runs-on: ubuntu-latest
-    needs: [build-test, sonar]
-    if: github.ref == 'refs/heads/main' && needs.build-test.outputs.release_already_exists == 'false'
+    outputs:
+      release_already_exists: ${{ steps.check_release.outputs.RELEASE_ALREADY_EXISTS }}
+      package_version: ${{ steps.extract_version.outputs.PACKAGE_VERSION }}
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Extract Package Version
+      id: extract_version
+      run: |
+        PACKAGE_VERSION=$(cat ${{ env.CSPROJ_FILE_PATH }} | grep '<Version>' | sed -E 's/.*<Version>(.*)<\/Version>.*/\1/')
+        echo "PACKAGE_VERSION=$PACKAGE_VERSION" >> $GITHUB_ENV
+        echo "PACKAGE_VERSION=$PACKAGE_VERSION" >> $GITHUB_OUTPUT
+      shell: bash
+
+    - name: Check if Release Tag Exists
+      id: check_release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        if gh release view "v${{ env.PACKAGE_VERSION }}" > /dev/null 2>&1; then
+          echo "Version v${{ env.PACKAGE_VERSION }} already exists. ByPass The Publish job."
+          echo "RELEASE_ALREADY_EXISTS=true" >> "$GITHUB_OUTPUT"
+        else
+          echo "Versão v${{ env.PACKAGE_VERSION }} é nova."
+          echo "RELEASE_ALREADY_EXISTS=false" >> "$GITHUB_OUTPUT"
+        fi
+      shell: bash
+      
+  publish-nuget: 
+    runs-on: ubuntu-latest
+    needs: [build-test, sonar, check-release-version]
+    if: github.ref == 'refs/heads/main' && needs.check-release-version.outputs.release_already_exists == 'false'
     steps:
     - uses: actions/checkout@v4
   
@@ -102,7 +111,7 @@ jobs:
 
   release:
     runs-on: ubuntu-latest
-    needs: publish-nuget
+    needs: [publish-nuget, check-release-version]
     if: github.ref == 'refs/heads/main'
     steps:
     - uses: actions/checkout@v4
@@ -111,13 +120,6 @@ jobs:
       run: |
         LAST_COMMIT_MESSAGE=$(git log -1 --pretty=%B | jq -Rs .)
         echo "LAST_COMMIT=$LAST_COMMIT_MESSAGE" >> $GITHUB_ENV
-      shell: bash
-
-    - name: Extract Package Version
-      id: extract_version
-      run: |
-        PACKAGE_VERSION=$(cat ${{ env.CSPROJ_FILE_PATH }} | grep '<Version>' | sed -E 's/.*<Version>(.*)<\/Version>.*/\1/')
-        echo "PACKAGE_VERSION=$PACKAGE_VERSION" >> $GITHUB_ENV
       shell: bash
 
     - name: Create GitHub Release
@@ -136,3 +138,4 @@ jobs:
         prerelease: false
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        PACKAGE_VERSION: ${{ needs.check-release-version.outputs.package_version }}
