@@ -113,7 +113,7 @@ public class ValidationListTests
     }
 
     [Fact]
-    public void Test_ValidationListMultiplesErrors_ShouldHave_ErrorTypeFailure()
+    public void Test_ValidationListMultiplesErrors_ShouldHave_ErrorTypeManyErrors()
     {
         // Arrange
 
@@ -121,7 +121,7 @@ public class ValidationListTests
 
         // Assert
         Assert.False(ErrorValidationList.IsValid);
-        Assert.Equal(ErrorType.Failure, ErrorValidationList.ErrorType);
+        Assert.Equal(ErrorType.ManyErrors, ErrorValidationList.ErrorType);
     }
 
     [Fact]
