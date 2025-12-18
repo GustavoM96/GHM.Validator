@@ -118,7 +118,7 @@ public class ResultTests
         result.AddValidations(ErrorValidationList);
 
         // Act
-        List<Error> errors = result.Errors;
+        List<Error> errors = result.GetErrors();
 
         // Assert
         Assert.Contains(ErrorValidation.Message, errors.Select(e => e.Message));
