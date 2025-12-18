@@ -150,10 +150,10 @@ public class ResultTests
         string errorMessage = "error exception teste";
 
         // Act
-        void ThrowError() => _result.ThrowErrors(errorMessage);
+        var exception = Record.Exception(() => _result.ThrowErrors(errorMessage));
 
         //Assert
-        ThrowError();
+        Assert.Null(exception);
     }
 
     [Fact]
@@ -181,10 +181,10 @@ public class ResultTests
         string errorMessage = "error exception teste";
 
         // Act
-        void ThrowError() => _result.ThrowErrorsWithMessage(errorMessage);
+        var exception = Record.Exception(() => _result.ThrowErrorsWithMessage(errorMessage));
 
         //Assert
-        ThrowError();
+        Assert.Null(exception);
     }
 
     [Fact]
