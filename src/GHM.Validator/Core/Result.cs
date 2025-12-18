@@ -64,7 +64,7 @@ public class Result<TValue> : Result
         Func<List<Error>, TResult> errorAction
     )
     {
-        return IsError ? errorAction(Errors) : successAction(Value, Validations);
+        return IsError ? errorAction(GetErrors()) : successAction(Value, Validations);
     }
 
     /// <summary>
@@ -79,7 +79,7 @@ public class Result<TValue> : Result
         Func<TValue, List<Error>, TResult> errorAction
     )
     {
-        return IsError ? errorAction(Value, Errors) : successAction(Value, Validations);
+        return IsError ? errorAction(Value, GetErrors()) : successAction(Value, Validations);
     }
 
     /// <summary>
@@ -148,7 +148,8 @@ public class Result
     /// <summary>
     /// Gets the list of errors associated with the result.
     /// </summary>
-    public List<Error> Errors => Validations.Where(validation => !validation.IsValid).Select(Error.FromValidation).ToList();
+    public List<Error> GetErrors() =>
+        Validations.Where(validation => !validation.IsValid).Select(Error.FromValidation).ToList();
 
     /// <summary>
     /// Gets the first error associated with the result.
@@ -176,7 +177,7 @@ public class Result
     /// <returns>The result returned by the executed action.</returns>
     public TResult Match<TResult>(Func<List<Validation>, TResult> successAction, Func<List<Error>, TResult> errorAction)
     {
-        return IsError ? errorAction(Errors) : successAction(Validations);
+        return IsError ? errorAction(GetErrors()) : successAction(Validations);
     }
 
     /// <summary>
@@ -217,12 +218,12 @@ public class Result
     /// <param name="exceptionMessage">The exception message to be used.</param>
     public void ThrowErrors(string? exceptionMessage = null)
     {
-        if (Errors.Count == 0)
+        if (GetErrors().Count == 0)
         {
             return;
         }
 
-        throw new ValidationException(exceptionMessage, Errors);
+        throw new ValidationException(exceptionMessage, GetErrors());
     }
 
     /// <summary>
@@ -231,12 +232,12 @@ public class Result
     /// <param name="separator">The separator to be used between error messages.</param>
     public void ThrowErrorsWithMessage(string? separator)
     {
-        if (Errors.Count == 0)
+        if (GetErrors().Count == 0)
         {
             return;
         }
 
-        throw new ValidationException(string.Join(separator, Errors.Select(error => error.Message)), Errors);
+        throw new ValidationException(string.Join(separator, GetErrors().Select(error => error.Message)), GetErrors());
     }
 
     /// <summary>
