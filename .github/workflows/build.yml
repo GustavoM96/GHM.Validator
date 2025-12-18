@@ -9,14 +9,13 @@ on:
 env:
   CSPROJ_FILE_PATH: "./src/GHM.Validator/GHM.Validator.csproj"
   NUPKG_FILE_PATH: "./src/GHM.Validator/bin/Release/*.nupkg"
-  COVERAGE_FILE_PATH : "./coverage/coverage.xml"
 
 jobs:
   build-test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-  
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
@@ -28,18 +27,8 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
 
-    - name: Install . NET coverage
-      run: dotnet tool install --global dotnet-coverage
-
-    - name: Test with Coverage
-      run: dotnet-coverage collect "dotnet test --no-build" -f xml -o "${{ env.COVERAGE_FILE_PATH }}" 
-
-    - name: Upload Coverage Artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: coverage-report
-        path: ${{ env.COVERAGE_FILE_PATH }}
-        retention-day: 1
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
       
   sonar:
     runs-on:  ubuntu-latest
@@ -48,24 +37,23 @@ jobs:
     - uses: actions/checkout@v4
       with:
         fetch-depth:  0
-
+        
     - name: Setup . NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 9.0.x
 
-    - name: Download Coverage Report
-      uses: actions/download-artifact@v4
-      with: 
-        name: coverage-report
-        path: ./coverage
-
     - name: Install SonarScanner for .NET
       run: dotnet tool install --global dotnet-sonarscanner
       
+    - name: Install .NET coverage
+      run: dotnet tool install --global dotnet-coverage
+      
     - name: SonarQube Scan
       run: |
-        dotnet sonarscanner begin /k:"GustavoM96_GHM.Validator" /o:"gustavom96" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.token="$SONAR_TOKEN" /d:sonar.cs.vscoveragexml.reportsPaths="${{ env.COVERAGE_FILE_PATH }}"
+        dotnet sonarscanner begin /k:"GustavoM96_GHM.Validator" /o:"gustavom96" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.token="$SONAR_TOKEN" /d:sonar.cs.vscoveragexml.reportsPaths="./coverage/coverage.xml"
+        dotnet build --no-incremental
+        dotnet-coverage collect "dotnet test" -f xml -o "./coverage/coverage.xml"
         dotnet sonarscanner end /d:sonar.token="$SONAR_TOKEN"
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
