@@ -42,6 +42,6 @@ public class ValidationExceptionTests
         //Assert
         Assert.Null(exceptionWithEmptyErrors.ErrorType);
         Assert.Equal(ErrorType.Conflict, exceptionWithConflictError.ErrorType);
-        Assert.Equal(ErrorType.Default, exceptionWith2Errors.ErrorType);
+        Assert.Equal(ErrorType.ManyErrors, exceptionWith2Errors.ErrorType);
     }
 }
